@@ -3,12 +3,14 @@ schema_version: 1.0
 doc_type: hybrid_scratchpad
 host: acid-burn
 created_utc: "2026-05-15T08:27:00Z"
-last_modified_utc: "2026-05-15T14:08:10Z"
-last_modified_by: securatron
-project_id: scratchpad-bootstrap
-project_title: Hybrid Scratchpad Self-Validation Bootstrap
+last_modified_utc: "2026-05-15T14:22:00Z"
+last_modified_by: hermes
+project_id: wifi-recon-atom-discovery
+project_title: "WiFi Recon Tool Triage — Atom/Molecule Discovery via Live USB Antenna"
 status: active
 trust_level: metal
+parent_project: scratchpad-bootstrap
+predecessor_tag: v1.0-bootstrap-verified
 ---
 
 ## SECTION 2: FIRST PRINCIPLES BLOCK
@@ -16,51 +18,48 @@ trust_level: metal
 ```yaml
 first_principles:
   physical_constraints:
-    - constraint: Filesystem on /home/mark (ext4, mounted read-write)
-      evidence: /home/mark/Desktop/hybrid_scratchpad/PROJECT_HYBRID_SCRATCHPAD.md
-    - constraint: Python 3 available with yaml and re modules
-      evidence: /usr/bin/python3
-    - constraint: bash 5.x available for gating tests
-      evidence: /usr/bin/bash
+    - constraint: "Only networks owned/authorized by mark may be scanned"
+      evidence: "/home/mark/Desktop/hybrid_scratchpad/AUTHORIZATION.txt"
+    - constraint: "USB antenna must support monitor mode for full recon"
+      evidence: "iw list | grep -A5 'Supported interface modes' | grep monitor"
+    - constraint: "Kali Linux on Acid Burn provides aircrack-ng suite, nmap, netdiscover"
+      evidence: "/usr/bin/airodump-ng /usr/bin/nmap /usr/bin/netdiscover"
+    - constraint: "Acid Burn has 96GB unified memory — Hermes can hold large recon outputs in context"
+      evidence: "verified in v1.0-bootstrap measured_facts"
   measured_facts:
-    - fact: Desktop directory exists and is writable
-      command: "test -d /home/mark/Desktop && test -w /home/mark/Desktop"
-      measured_utc: "2026-05-15T08:27:00Z"
-      value: "PASS"
-    - fact: Python3 available with required modules
-      command: "python3 -c \"import yaml, re, hashlib, datetime, os, sys; print('ok')\""
-      measured_utc: "2026-05-15T08:27:00Z"
-      value: "ok"
-    - fact: "Filesystem type of /home"
-      command: "stat -f -c '%T' /home"
-      measured_utc: "2026-05-15T14:08:10Z"
-      value: "ext2/ext3"
-    - fact: "Mount filesystem type for Desktop path"
-      command: "findmnt -n -o FSTYPE /home/mark/Desktop"
-      measured_utc: "2026-05-15T14:08:10Z"
-      value: "ext4"
-    - fact: "File-locking status on Desktop for current shell"
-      command: "lslocks -p $$ | grep -i desktop"
-      measured_utc: "2026-05-15T14:08:10Z"
-      value: "no locks held by current shell"
+    - fact: "USB antenna chipset and driver"
+      command: "lsusb | grep -iE 'wireless|wifi|atheros|realtek|ralink|mediatek' && iw dev"
+      measured_utc: "PENDING_MEASUREMENT"
+      value: "PENDING_MEASUREMENT"
+    - fact: "Monitor mode capability of attached interface"
+      command: "iw list | grep -A8 'Supported interface modes'"
+      measured_utc: "PENDING_MEASUREMENT"
+      value: "PENDING_MEASUREMENT"
+    - fact: "Authorized target network SSID and BSSID"
+      command: "nmcli -t -f active,ssid,bssid dev wifi | grep '^yes'"
+      measured_utc: "PENDING_MEASUREMENT"
+      value: "PENDING_MEASUREMENT"
   hypotheses:
     - id: H1
-      claim: The YAML frontmatter and all fenced code blocks parse without error
-      gating_test: |
-        python3 -c "import yaml,re; blocks=re.findall(r'```yaml(.*?)```',open('/home/mark/Desktop/hybrid_scratchpad/PROJECT_HYBRID_SCRATCHPAD.md').read(),re.S); [yaml.safe_load(b) for b in blocks if b.strip()]; print('PASS')"
+      claim: "USB antenna supports monitor mode and packet capture"
+      gating_test: "iw list | grep -q monitor && echo PASS || echo FAIL"
       expected: "PASS"
       status: pending
     - id: H2
-      claim: The scratchpad_validate.sh script is executable and runs without syntax errors
-      gating_test: "bash -n /home/mark/Desktop/hybrid_scratchpad/scratchpad_validate.sh; echo $?"
-      expected: "0"
+      claim: "At least 3 of the candidate tools produce parseable output that an Atom can wrap"
+      gating_test: "see Section 4 phase P2 validation"
+      expected: "PASS"
       status: pending
     - id: H3
-      claim: The scratchpad_snapshot.sh script is executable and creates snapshot directory
-      gating_test: "bash -n /home/mark/Desktop/hybrid_scratchpad/scratchpad_snapshot.sh; echo $?"
-      expected: "0"
+      claim: "Tool output volume per scan stays under 64KB to fit in a single Hermes turn"
+      gating_test: "wc -c on each captured output file"
+      expected: "<65536"
       status: pending
-  open_questions: []
+  open_questions:
+    - q: "Which candidate tool produces the highest signal-to-noise ratio for Atom promotion?"
+      blocks: [P3]
+    - q: "Whether the Atom wraps a single tool or chains multiple tools as a Molecule"
+      blocks: [P4]
 ```
 
 ## SECTION 3: PROJECT PARAMETERS (HUMAN-EDITED)
@@ -69,160 +68,249 @@ first_principles:
 parameters:
   scope:
     in:
-      - Create PROJECT_HYBRID_SCRATCHPAD.md with all 6 sections
-      - Create scratchpad_validate.sh gating test runner
-      - Create scratchpad_snapshot.sh backup hook
-      - Validate all 3 bootstrap tests (T0.1, T0.2, T0.3)
-      - Verify YAML parseability of all sections
+      - "Recon on networks mark owns or has explicit authorization for"
+      - "Passive scanning preferred; active scans only on owned networks"
+      - "Triage 6 candidate Kali tools for Atom suitability"
+      - "Capture raw output, structured output, and execution telemetry per tool"
+      - "Score tools on: parseability, signal density, latency, side-effects, repeatability"
+      - "Promote winning tool(s) into a reusable Atom or Molecule definition"
     out:
-      - Actual pentesting engagements (out of scope for bootstrap)
-      - Network scanning or exploitation
-      - Cloud agent deployment
-      - Any destructive system operation
+      - "Any network not owned/authorized by mark"
+      - "Active exploitation, credential capture, deauth attacks"
+      - "Cracking handshakes or breaking encryption"
+      - "Data exfiltration of any kind"
+      - "Tools that require unsigned kernel modules"
   success_criteria:
     - id: SC1
-      criterion: File exists at /home/mark/Desktop/hybrid_scratchpad/PROJECT_HYBRID_SCRATCHPAD.md
-      validation_command: "test -f /home/mark/Desktop/hybrid_scratchpad/PROJECT_HYBRID_SCRATCHPAD.md"
+      criterion: "Authorization document exists and is signed by mark"
+      validation_command: "test -f /home/mark/Desktop/hybrid_scratchpad/AUTHORIZATION.txt && grep -qi 'authorized' /home/mark/Desktop/hybrid_scratchpad/AUTHORIZATION.txt"
       validation_expected: "0"
     - id: SC2
-      criterion: All 6 YAML sections parse without error
-      validation_command: |
-        python3 -c "import yaml,re; blocks=re.findall(r'```yaml(.*?)```',open('/home/mark/Desktop/hybrid_scratchpad/PROJECT_HYBRID_SCRATCHPAD.md').read(),re.S); [yaml.safe_load(b) for b in blocks if b.strip()]; print('ALL_OK')"
-      validation_expected: "ALL_OK"
+      criterion: "All 6 candidate tools executed against authorized target with output captured"
+      validation_command: "ls /home/mark/Desktop/hybrid_scratchpad/recon_outputs/*.txt | wc -l"
+      validation_expected: ">=6"
     - id: SC3
-      criterion: Validate script exists, is executable, and returns pass
-      validation_command: "test -x /home/mark/Desktop/hybrid_scratchpad/scratchpad_validate.sh && bash /home/mark/Desktop/hybrid_scratchpad/scratchpad_validate.sh | grep -c PASS"
-      validation_expected: "3"
+      criterion: "Tool scoring matrix completed for all 6 tools"
+      validation_command: "test -f /home/mark/Desktop/hybrid_scratchpad/tool_scores.yaml && python3 -c 'import yaml; d=yaml.safe_load(open(\"/home/mark/Desktop/hybrid_scratchpad/tool_scores.yaml\")); assert len(d[\"tools\"])>=6'"
+      validation_expected: "0"
     - id: SC4
-      criterion: Snapshot script exists and is executable
-      validation_command: "test -x /home/mark/Desktop/hybrid_scratchpad/scratchpad_snapshot.sh && echo YES"
-      validation_expected: "YES"
+      criterion: "At least one Atom definition file produced and validates against schema"
+      validation_command: "ls /home/mark/Desktop/hybrid_scratchpad/atoms/*.yaml | wc -l"
+      validation_expected: ">=1"
   constraints:
-    budget_tokens: 50000
-    budget_time_minutes: 30
+    budget_tokens: 80000
+    budget_time_minutes: 60
     forbidden_actions:
-      - "Network exploitation or scanning"
-      - "Credential harvesting or brute force"
-      - "Filesystem destruction"
-      - "Modification of /etc or system configs"
-      - "Execution without validation first"
+      - "Scanning networks without written authorization in AUTHORIZATION.txt"
+      - "Active deauthentication or injection attacks"
+      - "WPA/WPA2 handshake cracking"
+      - "Capturing or storing client MAC addresses outside authorized scope"
+      - "Modifying /etc, kernel modules, or firewall rules without rollback path"
+    legal_safeguards:
+      - "All commands run inside scope defined in AUTHORIZATION.txt"
+      - "Raw captures stored only in /home/mark/Desktop/hybrid_scratchpad/recon_outputs/"
+      - "No data leaves Acid Burn"
+  candidate_tools:
+    - name: iwlist
+      type: passive
+      purpose: "Baseline AP enumeration, RSSI, channel"
+      command_template: "sudo iwlist <iface> scan"
+    - name: airodump-ng
+      type: passive_monitor
+      purpose: "Full 802.11 frame capture, AP+client mapping"
+      command_template: "sudo airodump-ng <mon_iface> --write <prefix> --output-format csv"
+    - name: kismet
+      type: passive_monitor
+      purpose: "Long-running structured passive recon with JSON export"
+      command_template: "sudo kismet -c <mon_iface> --no-ncurses --daemonize"
+    - name: nmap
+      type: active_lan
+      purpose: "Host + service enumeration on authorized LAN"
+      command_template: "sudo nmap -sn -PR <authorized_cidr>"
+    - name: netdiscover
+      type: active_arp
+      purpose: "ARP-based host discovery on local segment"
+      command_template: "sudo netdiscover -i <iface> -r <authorized_cidr> -P"
+    - name: arp-scan
+      type: active_arp
+      purpose: "Fast ARP enumeration with vendor lookup"
+      command_template: "sudo arp-scan -I <iface> <authorized_cidr>"
   cloud_agent_handoff:
     scoping_agent: claude
-    adjustment_agent: claude
+    adjustment_agent: gemini
     handoff_format: yaml_block
+    handoff_trigger: "After P2 (tool execution) completes; cloud agent reviews scoring matrix"
 ```
 
-## SECTION 4: PHASE LOOP (FIRST PRINCIPLES PROBLEM SOLVING)
+## SECTION 4: PHASE LOOP
 
 ```yaml
-phase:
-  id: P0
-  title: Bootstrap Self-Validation
-  entry_state:
-    preconditions_passed:
-      - "PENDING_MEASUREMENT"
-  decompose:
-    - sub_problem: Create the scratchpad markdown file with all 6 sections
-      reduces_to: write_file(/home/mark/Desktop/hybrid_scratchpad/PROJECT_HYBRID_SCRATCHPAD.md)
-    - sub_problem: Create the validation script
-      reduces_to: write_file(/home/mark/Desktop/hybrid_scratchpad/scratchpad_validate.sh)
-    - sub_problem: Create the snapshot/backup script
-      reduces_to: write_file(/home/mark/Desktop/hybrid_scratchpad/scratchpad_snapshot.sh)
-    - sub_problem: Execute all 3 bootstrap gating tests
-      reduces_to: run_tests(./scratchpad_validate.sh)
-  act:
-    commands_executed:
-      - cmd: write_file(/home/mark/Desktop/hybrid_scratchpad/PROJECT_HYBRID_SCRATCHPAD.md)
-        utc: "2026-05-15T08:27:00Z"
-        exit_code: 0
-        stdout_hash: PENDING_MEASUREMENT
-      - cmd: write_file(/home/mark/Desktop/hybrid_scratchpad/scratchpad_validate.sh)
-        utc: "2026-05-15T08:27:00Z"
-        exit_code: 0
-        stdout_hash: PENDING_MEASUREMENT
-      - cmd: write_file(/home/mark/Desktop/hybrid_scratchpad/scratchpad_snapshot.sh)
-        utc: "2026-05-15T08:27:00Z"
-        exit_code: 0
-        stdout_hash: PENDING_MEASUREMENT
-      - cmd: chmod +x /home/mark/Desktop/hybrid_scratchpad/scratchpad_validate.sh /home/mark/Desktop/hybrid_scratchpad/scratchpad_snapshot.sh
-        utc: "2026-05-15T08:27:00Z"
-        exit_code: 0
-        stdout_hash: PENDING_MEASUREMENT
-  validate:
-    tests:
-      - test_id: T0.1
-        command: "test -f /home/mark/Desktop/hybrid_scratchpad/PROJECT_HYBRID_SCRATCHPAD.md; echo $?"
-        expected: "0"
-        actual: PENDING_MEASUREMENT
-        result: pending
-      - test_id: T0.2
-        command: |
-          python3 -c "import yaml,re; blocks=re.findall(r'```yaml(.*?)```',open('/home/mark/Desktop/hybrid_scratchpad/PROJECT_HYBRID_SCRATCHPAD.md').read(),re.S); [yaml.safe_load(b) for b in blocks if b.strip()]; print('PASS')"
-        expected: "PASS"
-        actual: PENDING_MEASUREMENT
-        result: pending
-      - test_id: T0.3
-        command: "grep -c '^---$' /home/mark/Desktop/hybrid_scratchpad/PROJECT_HYBRID_SCRATCHPAD.md"
-        expected: ">=2"
-        actual: PENDING_MEASUREMENT
-        result: pending
-  exit_state:
-    artifacts:
-      - /home/mark/Desktop/hybrid_scratchpad/PROJECT_HYBRID_SCRATCHPAD.md
-      - /home/mark/Desktop/hybrid_scratchpad/scratchpad_validate.sh
-      - /home/mark/Desktop/hybrid_scratchpad/scratchpad_snapshot.sh
-    next_phase_if_pass: P1
-    next_phase_if_fail: HALT
+phases:
+  - id: P1
+    title: "Authorization + Hardware Verification"
+    entry_state:
+      preconditions_passed: ["v1.2-wifi-recon-active tag exists"]
+    decompose:
+      - sub_problem: "Confirm written authorization for target network"
+        reduces_to: "create AUTHORIZATION.txt with explicit scope"
+      - sub_problem: "Verify USB antenna detected and supports monitor mode"
+        reduces_to: "lsusb + iw list checks"
+      - sub_problem: "Identify authorized target CIDR and SSID"
+        reduces_to: "ip addr + nmcli output"
+    act:
+      commands_executed: []
+    validate:
+      tests:
+        - test_id: T1.1
+          command: "test -f /home/mark/Desktop/hybrid_scratchpad/AUTHORIZATION.txt"
+          expected: "exit 0"
+          actual: PENDING_MEASUREMENT
+          result: pending
+        - test_id: T1.2
+          command: "iw list | grep -q monitor && echo PASS"
+          expected: "PASS"
+          actual: PENDING_MEASUREMENT
+          result: pending
+        - test_id: T1.3
+          command: "iw dev | grep -E 'Interface|type'"
+          expected: "non-empty output"
+          actual: PENDING_MEASUREMENT
+          result: pending
+    exit_state:
+      artifacts:
+        - "/home/mark/Desktop/hybrid_scratchpad/AUTHORIZATION.txt"
+        - "/home/mark/Desktop/hybrid_scratchpad/recon_outputs/hardware_inventory.txt"
+      next_phase_if_pass: P2
+      next_phase_if_fail: HALT
+
+  - id: P2
+    title: "Execute 6 Candidate Tools Against Authorized Target"
+    entry_state:
+      preconditions_passed: [T1.1, T1.2, T1.3]
+    decompose:
+      - sub_problem: "Run each tool with bounded timeout, capture stdout+stderr+exit_code+wall_time"
+        reduces_to: "for each tool in candidate_tools: timeout 60 <cmd> > recon_outputs/<tool>.txt 2>&1"
+      - sub_problem: "Compute output size, parseability score, unique-record count per tool"
+        reduces_to: "wc -c | grep -c | python parser probe"
+    act:
+      commands_executed: []
+    validate:
+      tests:
+        - test_id: T2.1
+          command: "ls /home/mark/Desktop/hybrid_scratchpad/recon_outputs/*.txt | wc -l"
+          expected: ">=6"
+          actual: PENDING_MEASUREMENT
+          result: pending
+        - test_id: T2.2
+          command: "for f in /home/mark/Desktop/hybrid_scratchpad/recon_outputs/*.txt; do test -s $f || echo EMPTY:$f; done"
+          expected: "no EMPTY lines"
+          actual: PENDING_MEASUREMENT
+          result: pending
+    exit_state:
+      artifacts:
+        - "/home/mark/Desktop/hybrid_scratchpad/recon_outputs/iwlist.txt"
+        - "/home/mark/Desktop/hybrid_scratchpad/recon_outputs/airodump.csv"
+        - "/home/mark/Desktop/hybrid_scratchpad/recon_outputs/kismet.json"
+        - "/home/mark/Desktop/hybrid_scratchpad/recon_outputs/nmap.txt"
+        - "/home/mark/Desktop/hybrid_scratchpad/recon_outputs/netdiscover.txt"
+        - "/home/mark/Desktop/hybrid_scratchpad/recon_outputs/arp-scan.txt"
+      next_phase_if_pass: P3
+      next_phase_if_fail: HALT
+
+  - id: P3
+    title: "Score Tools Against Atom-Suitability Rubric"
+    entry_state:
+      preconditions_passed: [T2.1, T2.2]
+    decompose:
+      - sub_problem: "Score each tool 0-5 on six axes"
+        reduces_to: "produce tool_scores.yaml"
+    rubric:
+      axes:
+        - parseability:    "0=raw human prose | 5=native JSON/CSV"
+        - signal_density:  "0=mostly noise | 5=every line is a fact"
+        - latency:         "0=>60s wall time | 5=<5s wall time"
+        - side_effects:    "0=writes config/sends frames | 5=read-only passive"
+        - repeatability:   "0=output varies wildly | 5=deterministic given same RF env"
+        - safety:          "0=can disrupt network | 5=zero impact on target"
+    validate:
+      tests:
+        - test_id: T3.1
+          command: "test -f /home/mark/Desktop/hybrid_scratchpad/tool_scores.yaml"
+          expected: "exit 0"
+        - test_id: T3.2
+          command: "python3 -c 'import yaml; d=yaml.safe_load(open(\"/home/mark/Desktop/hybrid_scratchpad/tool_scores.yaml\")); assert all(\"total\" in t for t in d[\"tools\"])'"
+          expected: "exit 0"
+    exit_state:
+      artifacts:
+        - "/home/mark/Desktop/hybrid_scratchpad/tool_scores.yaml"
+      next_phase_if_pass: P4
+      next_phase_if_fail: HALT
+
+  - id: P4
+    title: "Promote Winning Tool(s) to Atom or Molecule"
+    entry_state:
+      preconditions_passed: [T3.1, T3.2]
+    decompose:
+      - sub_problem: "Identify tools with total score >= 24/30"
+        reduces_to: "filter tool_scores.yaml"
+      - sub_problem: "Single high-scorer → Atom; multiple complementary → Molecule"
+        reduces_to: "atoms/<tool>.yaml or molecules/<combo>.yaml"
+      - sub_problem: "Atom must include: tool_name, command_template, output_parser, rubric_score, safety_class, idempotency_class"
+        reduces_to: "schema-validated YAML"
+    validate:
+      tests:
+        - test_id: T4.1
+          command: "ls /home/mark/Desktop/hybrid_scratchpad/atoms/*.yaml /home/mark/Desktop/hybrid_scratchpad/molecules/*.yaml 2>/dev/null | wc -l"
+          expected: ">=1"
+        - test_id: T4.2
+          command: "python3 -c 'import yaml,glob; [yaml.safe_load(open(f)) for f in glob.glob(\"/home/mark/Desktop/hybrid_scratchpad/atoms/*.yaml\")+glob.glob(\"/home/mark/Desktop/hybrid_scratchpad/molecules/*.yaml\")]'"
+          expected: "exit 0"
+    exit_state:
+      artifacts:
+        - "/home/mark/Desktop/hybrid_scratchpad/atoms/"
+        - "/home/mark/Desktop/hybrid_scratchpad/molecules/"
+      next_phase_if_pass: SHIP
+      next_phase_if_fail: HALT
 ```
 
 ## SECTION 5: APPEND-ONLY DECISION LOG
 
 ```yaml
 decisions:
-  - utc: "2026-05-15T08:27:00Z"
-    agent: hermes
-    decision: "Use self-referential bootstrap project (project_id: scratchpad-bootstrap) to validate the document schema"
-    rationale: "The bootstrap must prove the document format works before any real project work begins. Self-validation is the only test that does not depend on external assumptions."
-    backed_by: [P0]
-    rollback_command: "rm -f /home/mark/Desktop/hybrid_scratchpad/PROJECT_HYBRID_SCRATCHPAD.md /home/mark/Desktop/hybrid_scratchpad/scratchpad_validate.sh /home/mark/Desktop/hybrid_scratchpad/scratchpad_snapshot.sh"
-  - utc: "2026-05-15T08:27:00Z"
-    agent: hermes
-    decision: "Place all three artifacts on /home/mark/Desktop (not /home/mark/.hermes/ or /tmp)"
-    rationale: "Mark (human user) needs immediate visual access and OS-level file manager visibility. Desktop is persistent across agent resets and is the agreed shared workspace."
-    backed_by: [P0]
-    rollback_command: "rm -f /home/mark/Desktop/hybrid_scratchpad/PROJECT_HYBRID_SCRATCHPAD.md /home/mark/Desktop/hybrid_scratchpad/scratchpad_validate.sh /home/mark/Desktop/hybrid_scratchpad/scratchpad_snapshot.sh"
-  - utc: "2026-05-15T08:27:00Z"
-    agent: hermes
-    decision: "Use PLACEHOLDER values for measured_facts instead of fabricating data"
-    rationale: "TRUST THE METAL principle — never assert a measured value that has not been observed. PENDING_MEASUREMENT is the required placeholder until a real command produces the value."
-    backed_by: [P0]
-    rollback_command: none
-  - utc: "2026-05-15T14:08:10Z"
-    agent: securatron
-    decision: "Reorganized into /home/mark/Desktop/hybrid_scratchpad/ folder, applied three schema corrections (H1 expected pattern, next_phase split, rollback restore-first), backfilled three open questions as measured_facts, initialized git repo with v1.0-bootstrap tag"
-    rationale: "Folder consolidation prevents Desktop clutter as project count grows. Schema corrections eliminate three latent ambiguities flagged in review: stdout-vs-exit-code mismatch (H1), opaque pipe-string token (next_phase), and destroy-only rollback (no restore path). Git provides richer audit trail than snapshot directory alone."
-    backed_by: [P0]
-    rollback_command: "cd /home/mark/Desktop/hybrid_scratchpad && git reset --hard v1.0-bootstrap"
+  - utc: "2026-05-15T14:22:00Z"
+    agent: mark
+    decision: "Migrate from scratchpad-bootstrap to wifi-recon-atom-discovery as first real project"
+    rationale: "Trust the Metal requires testing the framework on a real-world workload that produces measurable, parseable output. WiFi recon with 6 candidate Kali tools provides a deterministic test bed for Atom promotion criteria."
+    backed_by: [v1.0-bootstrap-verified]
+    rollback_command: "cd /home/mark/Desktop/hybrid_scratchpad && git reset --hard v1.0-bootstrap-verified"
+  - utc: "2026-05-15T14:22:00Z"
+    agent: mark
+    decision: "Limit candidate tool list to 6 with mixed passive/active types"
+    rationale: "Six tools span the full safety spectrum (passive listen → ARP probe → service enumeration). Larger lists dilute the rubric; smaller lists miss the passive-vs-active dimension that matters for Atom safety classification."
+    backed_by: []
+    rollback_command: "edit Section 3 candidate_tools list"
+  - utc: "2026-05-15T14:22:00Z"
+    agent: mark
+    decision: "Require AUTHORIZATION.txt as gating precondition (T1.1) before any tool runs"
+    rationale: "Trust the Metal does not override legal/ethical constraints. No measured fact justifies scanning unauthorized networks. The file must exist and contain the literal string 'authorized'."
+    backed_by: []
+    rollback_command: "none"
 ```
 
 ## SECTION 6: ROLLBACK & RECOVERY
 
 ```yaml
 recovery:
-  last_known_good_utc: "2026-05-15T08:27:00Z"
-  state_snapshot_path: /home/mark/.local/share/hybrid_scratchpad/snapshots/
+  last_known_good_utc: "2026-05-15T14:08:10Z"
+  state_snapshot_path: "/home/mark/.local/share/hybrid_scratchpad/snapshots/"
   rollback_procedure:
-    - step: "cp /home/mark/.local/share/hybrid_scratchpad/snapshots/$(ls -1t /home/mark/.local/share/hybrid_scratchpad/snapshots/ | head -1) /home/mark/Desktop/hybrid_scratchpad/PROJECT_HYBRID_SCRATCHPAD.md"
-      verifies: "positive T0.1 — file restored from latest snapshot"
+    - step: "cd /home/mark/Desktop/hybrid_scratchpad && git reset --hard v1.0-bootstrap-verified"
+      verifies: "positive — repo restored to verified bootstrap state"
     - step: "bash /home/mark/Desktop/hybrid_scratchpad/scratchpad_validate.sh"
-      verifies: "all bootstrap tests pass post-restore"
+      verifies: "12/12 bootstrap tests pass post-rollback"
   destroy_procedure:
-    - step: "rm -f /home/mark/Desktop/hybrid_scratchpad/PROJECT_HYBRID_SCRATCHPAD.md"
-      verifies: "negative T0.1 — file absent after destroy"
-    - step: "rm -f /home/mark/Desktop/hybrid_scratchpad/scratchpad_validate.sh"
-      verifies: "negative — validate script absent after destroy"
-    - step: "rm -f /home/mark/Desktop/hybrid_scratchpad/scratchpad_snapshot.sh"
-      verifies: "negative — snapshot script absent after destroy"
-    - step: "rm -rf /home/mark/.local/share/hybrid_scratchpad/snapshots/"
-      verifies: "no snapshots remain"
+    - step: "rm -rf /home/mark/Desktop/hybrid_scratchpad/recon_outputs/"
+      verifies: "no recon outputs remain"
+    - step: "rm -rf /home/mark/Desktop/hybrid_scratchpad/atoms/ /home/mark/Desktop/hybrid_scratchpad/molecules/"
+      verifies: "no Atom/Molecule definitions remain"
 ```
