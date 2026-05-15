@@ -1,0 +1,257 @@
+schema_version: 1.0
+atom_type: tool_invocation
+name: nmap
+source_tool: nmap
+command_template: "nmap [OPTIONS] [TARGETS]"
+description: "Universal nmap invocation atom covering all scan types, output formats, timing, and targeting options"
+parameters:
+  - name: target
+    type: string
+    required: true
+    description: "Target host, network, or list (e.g., 192.168.1.0/24, example.com, 10.0.0.1-10.0.0.5)"
+  - name: scan_type
+    type: enum
+    required: false
+    default: host-discovery
+    options:
+      - host-discovery: "Ping sweep only (-sn)"
+      - syn-scan: "TCP SYN stealth scan (-sS)"
+      - connect-scan: "TCP connect scan (-sT)"
+      - udp-scan: "UDP scan (-sU)"
+      - os-detect: "OS detection (-O)"
+      - version-detect: "Service/version detection (-sV)"
+      - script-scan: "NSE script scan (-sC or --script=)"
+      - aggressive: "Aggressive scan (OS + versions + scripts + default) (-A)"
+      - stealth-udp: "Stealth UDP scan (-sU --top-ports 100)"
+      - traceroute: "Traceroute (-T)"
+  - name: ports
+    type: string
+    required: false
+    default: "1-1024"
+    description: "Port specification (e.g., 1-65535, 80,443, 21-25, U:53, U:123)"
+  - name: output_format
+    type: enum
+    required: false
+    default: xml
+    options:
+      - xml: "XML output (-oX)"
+      - normal: "Normal text output (-oN)"
+      - grepable: "Grepable output (-oG)"
+      - xml_and_normal: "Both XML and normal (-oX + -oN)"
+      - xml_and_grepable: "Both XML and grepable (-oX + -oG)"
+      - all: "All formats (XML, Normal, Grepable, XML interactive) (-oA)"
+  - name: output_file
+    type: path
+    required: false
+    default: "stdout"
+    description: "Output file path (required when output_format != stdout)"
+  - name: timing_template
+    type: enum
+    required: false
+    default: aggressive
+    options:
+      - paranoid: "Slowest (-T0) - evade IDS"
+      - sneaky: "Slow (-T1) - evade IDS"
+      - polite: "Polite (-T2) - reduces bandwidth"
+      - normal: "Normal (-T3) - default"
+      - aggressive: "Aggressive (-T4) - fastest reliable"
+      - insane: "Insane (-T5) - very fast, may miss hosts"
+  - name: host_timeout
+    type: integer
+    required: false
+    default: 60
+    description: "Per-host timeout in seconds (--host-timeout N)"
+  - name: max_retries
+    type: integer
+    required: false
+    default: 3
+    description: "Maximum port scan retries (--max-retries N)"
+  - name: dns_resolution
+    type: boolean
+    required: false
+    default: true
+    description: "Enable DNS resolution (-R)"
+  - name: exclude_hosts
+    type: list
+    required: false
+    default: []
+    description: "Hosts to exclude from scan (--exclude)"
+  - name: exclude_file
+    type: path
+    required: false
+    default: ""
+    description: "File of hosts to exclude (--exclude-file)"
+  - name: script
+    type: string
+    required: false
+    default: ""
+    description: "NSE script to run (--script=) — e.g., 'vuln', 'default', 'safe', 'smb-enum-shares'"
+  - name: version_intensity
+    type: integer
+    required: false
+    default: 7
+    description: "Version detection intensity (0-9) (-sV --version-intensity N)"
+  - name: version_all
+    type: boolean
+    required: false
+    default: false
+    description: "Try all version probes (-sV --version-all)"
+  - name: fragment
+    type: boolean
+    required: false
+    default: false
+    description: "Fragment packets to evade IDS (-f)"
+  - name: data_length
+    type: integer
+    required: false
+    default: 0
+    description: "Append random data to packets (--data-length N)"
+  - name: source_port
+    type: integer
+    required: false
+    default: 0
+    description: "Source port (--source-port N)"
+  - name: interface
+    type: string
+    required: false
+    default: ""
+    description: "Network interface to use (-e)"
+  - name: proxy
+    type: string
+    required: false
+    default: ""
+    description: "Use proxy (-x) — e.g., socks5://localhost:9050"
+  - name: verbose
+    type: integer
+    required: false
+    default: 0
+    description: "Verbosity level (0-3) (-v, -vv, -vvv)"
+  - name: stealth_mode
+    type: boolean
+    required: false
+    default: false
+    description: "Disable DNS, use -T4, fragment packets, randomize targets"
+
+output_parser:
+  format: xml
+  parse_command: "python3 -c \"import xml.etree.ElementTree as ET; tree = ET.parse('{output_file}'); root = tree.getroot(); hosts = root.findall('host'); results = []; [results.append({'ip': h.find('address[@addrtype=\\\\\\\"ipv4\\\\\\\"]').get('addr'), 'mac': h.find('address[@addrtype=\\\\\\\"mac\\\\\\\"]').get('addr') if h.find('address[@addrtype=\\\\\\\"mac\\\\\\\"]') is not None else 'N/A', 'vendor': h.find('address[@addrtype=\\\\\\\"mac\\\\\\\"]').get('vendor') if h.find('address[@addrtype=\\\\\\\"mac\\\\\\\"]') is not None else 'N/A', 'hostname': h.find('hostnames/hostname').get('name') if h.find('hostnames/hostname') is not None else 'N/A', 'ports': [{'port': p.get('portid'), 'protocol': p.get('protocol'), 'state': p.find('state').get('state') if p.find('state') is not None else 'closed', 'service': p.find('service').get('name') if p.find('service') is not None else 'N/A', 'version': p.find('version').text if p.find('version') is not None else 'N/A', 'cpes': [c.text for c in p.findall('cpe')]} for p in (h.find('ports') if h.find('ports') is not None else [])]}) for h in hosts if h.find('address[@addrtype=\\\\\\\"ipv4\\\\\\\"]') is not None]; import json; print(json.dumps(results, indent=2))\""
+  record_schema:
+    - field: ip_address
+      type: string
+      source: address[@addrtype="ipv4"]/@addr
+    - field: mac_address
+      type: string
+      source: address[@addrtype="mac"]/@addr
+    - field: vendor
+      type: string
+      source: address[@addrtype="mac"]/@vendor
+    - field: hostname
+      type: string
+      source: hostnames/hostname/@name
+    - field: port
+      type: integer
+      source: port/portid
+    - field: protocol
+      type: string
+      source: port/@protocol
+    - field: state
+      type: string
+      source: port/state/@state
+    - field: service
+      type: string
+      source: port/service/@name
+    - field: version
+      type: string
+      source: port/version/text()
+    - field: cpes
+      type: list
+      source: port/cpe/text()
+    - field: scripts
+      type: list
+      source: port/script/@id
+    - field: os_name
+      type: string
+      source: os/osmatch/@name
+    - field: os_accuracy
+      type: integer
+      source: os/osmatch/@accuracy
+rubric_score: 30
+safety_class: active_scan
+idempotency_class: pure
+preconditions:
+  - "test -f /usr/bin/nmap"
+  - "sudo nmap -sn -PR 127.0.0.0/24 >/dev/null 2>&1"
+postconditions:
+  - "test -f {output_file}"
+  - "python3 -c \"import xml.etree.ElementTree as ET; ET.parse('{output_file}')\""
+example_invocations:
+  - name: host-discovery
+    description: "Quick ping sweep to find live hosts on a subnet"
+    input:
+      target: "192.168.9.0/24"
+      scan_type: "host-discovery"
+      output_format: "xml"
+      output_file: "/home/mark/Desktop/hybrid_scratchpad/recon_outputs/nmap_discovery.xml"
+    expected_output_pattern: "Nmap scan report for.*Host is up.*Nmap done:.*IP addresses.*hosts up"
+  - name: syn-scan-top-ports
+    description: "Fast TCP SYN scan of top 100 ports"
+    input:
+      target: "192.168.9.1"
+      scan_type: "syn-scan"
+      ports: "--top-ports 100"
+      output_format: "xml"
+      output_file: "/home/mark/Desktop/hybrid_scratchpad/recon_outputs/nmap_syn_scan.xml"
+    expected_output_pattern: "Nmap scan report for.*Not shown:.*tcp ports.*Nmap done:"
+  - name: service-detection
+    description: "Full service/version detection on known hosts"
+    input:
+      target: "192.168.9.1 192.168.9.148 192.168.9.190 192.168.9.200"
+      scan_type: "version-detect"
+      output_format: "xml"
+      output_file: "/home/mark/Desktop/hybrid_scratchpad/recon_outputs/nmap_services.xml"
+    expected_output_pattern: "Service detection performed.*Nmap done:"
+  - name: aggressive-scan
+    description: "Aggressive scan with OS detection, version detection, and default scripts"
+    input:
+      target: "192.168.9.1"
+      scan_type: "aggressive"
+      output_format: "xml"
+      output_file: "/home/mark/Desktop/hybrid_scratchpad/recon_outputs/nmap_aggressive.xml"
+    expected_output_pattern: "Nmap scan report for.*OS details.*Service detection.*Nmap done:"
+  - name: udp-scan
+    description: "UDP scan of common ports (DNS, NTP, SNMP)"
+    input:
+      target: "192.168.9.1"
+      scan_type: "udp-scan"
+      output_format: "xml"
+      output_file: "/home/mark/Desktop/hybrid_scratchpad/recon_outputs/nmap_udp.xml"
+    expected_output_pattern: "Nmap scan report for.*UDP.*Nmap done:"
+  - name: nse-script-scan
+    description: "Run specific NSE scripts (e.g., smb-enum-shares, http-enum)"
+    input:
+      target: "192.168.9.148"
+      scan_type: "syn-scan"
+      ports: "139,445"
+      script: "smb-enum-shares,smb-os-info"
+      output_format: "xml"
+      output_file: "/home/mark/Desktop/hybrid_scratchpad/recon_outputs/nmap_smb.xml"
+    expected_output_pattern: "Nmap scan report for.*smb-enum-shares.*Nmap done:"
+  - name: stealth-scan
+    description: "Evade IDS with slow, fragmented, no-DNS scan"
+    input:
+      target: "192.168.9.0/24"
+      scan_type: "host-discovery"
+      timing_template: "paranoid"
+      fragment: true
+      dns_resolution: false
+      output_format: "xml"
+      output_file: "/home/mark/Desktop/hybrid_scratchpad/recon_outputs/nmap_stealth.xml"
+    expected_output_pattern: "Nmap scan report for.*Host is up.*Nmap done:"
+  - name: traceroute
+    description: "Traceroute to target"
+    input:
+      target: "example.com"
+      scan_type: "traceroute"
+      output_format: "normal"
+      output_file: "/home/mark/Desktop/hybrid_scratchpad/recon_outputs/nmap_traceroute.txt"
+    expected_output_pattern: "Nmap scan report for.*TRACEROUTE.*HOP.*RTT"
