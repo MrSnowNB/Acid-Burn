@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE nmaprun>
+<?xml-stylesheet href="file:///usr/share/nmap/nmap.xsl" type="text/xsl"?>
+<!-- Nmap 7.99 scan initiated Fri May 15 13:23:34 2026 as: /usr/lib/nmap/nmap -sn -PR -oX /home/mark/Desktop/hybrid_scratchpad/recon_outputs/nmap_discovery.xml 192.168.9.0/24 -->
+<nmaprun scanner="nmap" args="/usr/lib/nmap/nmap -sn -PR -oX /home/mark/Desktop/hybrid_scratchpad/recon_outputs/nmap_discovery.xml 192.168.9.0/24" start="1778865814" startstr="Fri May 15 13:23:34 2026" version="7.99" xmloutputversion="1.05">
+<verbose level="0"/>
+<debugging level="0"/>
+<host><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="192.168.9.1" addrtype="ipv4"/>
+<address addr="60:38:E0:89:9F:EC" addrtype="mac" vendor="Belkin International"/>
+<hostnames>
+<hostname name="OpenWrt.lan" type="PTR"/>
+</hostnames>
+<times srtt="4065" rttvar="3861" to="100000"/>
+</host>
+<host><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="192.168.9.148" addrtype="ipv4"/>
+<address addr="38:8D:3D:BD:2B:6E" addrtype="mac" vendor="WNC"/>
+<hostnames>
+</hostnames>
+<times srtt="34035" rttvar="34035" to="170175"/>
+</host>
+<host><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="192.168.9.190" addrtype="ipv4"/>
+<address addr="00:E0:4C:68:23:35" addrtype="mac" vendor="Realtek Semiconductor"/>
+<hostnames>
+<hostname name="Demo.lan" type="PTR"/>
+</hostnames>
+<times srtt="9087" rttvar="9087" to="100000"/>
+</host>
+<host><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="192.168.9.200" addrtype="ipv4"/>
+<address addr="04:56:E5:E2:E0:87" addrtype="mac" vendor="Intel Corporate"/>
+<hostnames>
+<hostname name="MSI.lan" type="PTR"/>
+</hostnames>
+<times srtt="10775" rttvar="10775" to="100000"/>
+</host>
+<host><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="192.168.9.203" addrtype="ipv4"/>
+<address addr="22:04:C4:1B:7E:18" addrtype="mac"/>
+<hostnames>
+</hostnames>
+<times srtt="10068" rttvar="13609" to="100000"/>
+</host>
+<host><status state="up" reason="localhost-response" reason_ttl="0"/>
+<address addr="192.168.9.208" addrtype="ipv4"/>
+<hostnames>
+<hostname name="Acid-Burn.lan" type="PTR"/>
+</hostnames>
+</host>
+<runstats><finished time="1778865817" timestr="Fri May 15 13:23:37 2026" summary="Nmap done at Fri May 15 13:23:37 2026; 256 IP addresses (6 hosts up) scanned in 2.52 seconds" elapsed="2.52" exit="success"/><hosts up="6" down="250" total="256"/>
+</runstats>
+</nmaprun>

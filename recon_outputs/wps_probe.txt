@@ -1,0 +1,6 @@
+=== WPS PROBE RESULTS ===
+Timestamp: 2026-05-15T15:37:40Z
+
+--- Reaver ---
+--- Bully ---
+--- WPS support check ---
