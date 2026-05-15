@@ -1,0 +1,41 @@
+Starting Nmap 7.99 ( https://nmap.org ) at 2026-05-15 13:49 -0400
+Nmap scan report for OpenWrt.lan (192.168.9.1)
+Host is up (0.0063s latency).
+Skipping host OpenWrt.lan (192.168.9.1) due to host timeout
+Nmap scan report for 192.168.9.148
+Host is up (0.038s latency).
+Not shown: 97 filtered tcp ports (no-response)
+PORT    STATE SERVICE       VERSION
+135/tcp open  msrpc         Microsoft Windows RPC
+139/tcp open  netbios-ssn   Microsoft Windows netbios-ssn
+445/tcp open  microsoft-ds?
+MAC Address: 38:8D:3D:BD:2B:6E (WNC)
+Service Info: OS: Windows; CPE: cpe:/o:microsoft:windows
+
+Nmap scan report for Demo.lan (192.168.9.190)
+Host is up (0.0060s latency).
+Not shown: 97 filtered tcp ports (no-response)
+PORT    STATE SERVICE       VERSION
+135/tcp open  msrpc         Microsoft Windows RPC
+139/tcp open  netbios-ssn   Microsoft Windows netbios-ssn
+445/tcp open  microsoft-ds?
+MAC Address: 00:E0:4C:68:23:35 (Realtek Semiconductor)
+Service Info: OS: Windows; CPE: cpe:/o:microsoft:windows
+
+Nmap scan report for MSI.lan (192.168.9.200)
+Host is up (0.0050s latency).
+Not shown: 97 closed tcp ports (reset)
+PORT    STATE SERVICE       VERSION
+135/tcp open  msrpc         Microsoft Windows RPC
+139/tcp open  netbios-ssn   Microsoft Windows netbios-ssn
+445/tcp open  microsoft-ds?
+MAC Address: 04:56:E5:E2:E0:87 (Intel Corporate)
+Service Info: OS: Windows; CPE: cpe:/o:microsoft:windows
+
+Nmap scan report for Acid-Burn.lan (192.168.9.208)
+Host is up.
+All 100 scanned ports on Acid-Burn.lan (192.168.9.208) are in ignored states.
+Not shown: 100 filtered tcp ports (no-response)
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 6 IP addresses (5 hosts up) scanned in 43.42 seconds

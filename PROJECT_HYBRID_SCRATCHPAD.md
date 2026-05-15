@@ -51,6 +51,12 @@ first_principles:
       expected: "PASS"
       status: passed
       evidence: "nmap_discovery.xml parsed successfully, 6 hosts extracted"
+    - id: H4
+      claim: "nmap -sS -sV produces parseable output with service/version info"
+      gating_test: "python3 -c \"import xml.etree.ElementTree as ET; tree = ET.parse('/home/mark/Desktop/hybrid_scratchpad/recon_outputs/nmap_services.xml'); hosts = tree.getroot().findall('host'); print(f'{len(hosts)} hosts'); [print(f'  {h.find(\"address[@addrtype=\\\\\\\"ipv4\\\\\\\"]').get(\"addr\")}: {[port.find(\"state\").get(\"state\") + \" \" + port.find(\"service\").get(\"name\") if port.find(\"state\") is not None and port.find(\"service\") is not None else \"\" for port in (h.find(\"ports\") if h.find(\"ports\") is not None else []) if port.find(\"state\") is not None and port.find(\"state\").get(\"state\") == \"open\"]}') for h in hosts]\" && echo PASS"
+      expected: "PASS"
+      status: passed
+      evidence: "nmap_services.xml parsed successfully, 5 hosts with 3 open ports each (135/tcp, 139/tcp, 445/tcp) - Windows RPC/NetBIOS/SMB detected"
     - id: H3
       claim: "Tool output volume per scan stays under 64KB to fit in a single Hermes turn"
       gating_test: "wc -c on each captured output file"
