@@ -80,7 +80,6 @@ echo ""
 
 # ── T0.2: YAML parseability (output test) ──
 echo "── TEST T0.2: YAML parseability ──"
-# Use a Python script file to avoid backtick escaping issues in bash
 cat > /tmp/scratchpad_yaml_test.py << 'PYEOF'
 import sys
 import re
@@ -159,14 +158,13 @@ for section in \
         SECTION_COUNT=$((SECTION_COUNT + 1))
     fi
 done
-echo "$SECTION_COUNT"
 run_test "T0.7" "All 5 required section headers present in markdown" \
     "echo $SECTION_COUNT" \
     "5" "output"
 echo ""
 
 # ── T0.8: No forbidden words (output test) ──
-echo "--- TEST T0.8: No forbidden hedge words ──"
+echo "── TEST T0.8: No forbidden hedge words ──"
 HEDGE_COUNT=$(grep -ciE 'approximately|should work|likely|probably' "$SCRATCHPAD" 2>/dev/null)
 HEDGE_COUNT=${HEDGE_COUNT:-0}
 run_test "T0.8" "No forbidden hedge words found in file content" \
@@ -180,6 +178,29 @@ REL_PATHS=$(grep -cE '~/' "$SCRATCHPAD" 2>/dev/null)
 REL_PATHS=${REL_PATHS:-0}
 run_test "T0.9" "No tilde-abbreviated paths used (must be absolute)" \
     "echo $REL_PATHS" \
+    "0" "output"
+echo ""
+
+# ── T0.10: Git repo present ──
+echo "── TEST T0.10: Git repository ──"
+run_test "T0.10" "Git repo present at expected location" \
+    "test -d /home/mark/Desktop/hybrid_scratchpad/.git; exit $?" \
+    "0" "exit"
+echo ""
+
+# ── T0.11: v1.0-bootstrap tag exists ──
+echo "── TEST T0.11: Git tag ──"
+run_test "T0.11" "v1.0-bootstrap tag exists" \
+    "cd /home/mark/Desktop/hybrid_scratchpad && git tag | grep -q v1.0-bootstrap; exit $?" \
+    "0" "exit"
+echo ""
+
+# ── T0.12: No forbidden hedge words inside YAML field values (output test) ──
+echo "── TEST T0.12: No hedge words inside YAML blocks ──"
+HEDGE_YAML=$(grep -ciE '(should|approximately|likely|probably)' /home/mark/Desktop/hybrid_scratchpad/PROJECT_HYBRID_SCRATCHPAD.md 2>/dev/null || true)
+HEDGE_YAML=${HEDGE_YAML:-0}
+run_test "T0.12" "No forbidden hedge words inside YAML field values" \
+    "echo $HEDGE_YAML" \
     "0" "output"
 echo ""
 

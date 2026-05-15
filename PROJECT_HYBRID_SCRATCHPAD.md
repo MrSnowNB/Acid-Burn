@@ -197,6 +197,12 @@ decisions:
     rationale: "TRUST THE METAL principle — never assert a measured value that has not been observed. PENDING_MEASUREMENT is the required placeholder until a real command produces the value."
     backed_by: [P0]
     rollback_command: none
+  - utc: "2026-05-15T14:08:10Z"
+    agent: securatron
+    decision: "Reorganized into /home/mark/Desktop/hybrid_scratchpad/ folder, applied three schema corrections (H1 expected pattern, next_phase split, rollback restore-first), backfilled three open questions as measured_facts, initialized git repo with v1.0-bootstrap tag"
+    rationale: "Folder consolidation prevents Desktop clutter as project count grows. Schema corrections eliminate three latent ambiguities flagged in review: stdout-vs-exit-code mismatch (H1), opaque pipe-string token (next_phase), and destroy-only rollback (no restore path). Git provides richer audit trail than snapshot directory alone."
+    backed_by: [P0]
+    rollback_command: "cd /home/mark/Desktop/hybrid_scratchpad && git reset --hard v1.0-bootstrap"
 ```
 
 ## SECTION 6: ROLLBACK & RECOVERY
