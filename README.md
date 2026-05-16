@@ -1,95 +1,60 @@
-# SecuraTron: Autonomous Security Orchestration Harness
+# Acid Burn 🗡️🔥
 
-SecuraTron is a first-principles-based security harness designed for autonomous agent operations on AMD Strix Halo hardware. It implements a strictly gated tool-chaining engine, a multi-tier persistent memory organ, and a recursive self-improvement loop.
+**The White Hat Multi-Tool for Modern Security Auditing**
 
-## Core Architecture
+Acid Burn is a powerful, extensible security toolkit branched from the SecuraTron architecture. Designed for ethical hackers, penetration testers, and security researchers, it provides a centralized platform for reconnaissance, vulnerability scanning, and automated security assessments.
 
-SecuraTron is built on three foundational pillars:
+## 🚀 Overview
 
-### 1. The Multi-Tier Memory Organ
-- **Tier 0 (Hot):** Volatile session context and scratchpad.
-- **Tier 1 (Warm):** Rebuildable SQLite + FTS5 index (`index.db`) for rapid discovery.
-- **Tier 2 (Cold):** Immutable, append-only JSONL ledgers and Markdown post-mortems (Source of Truth).
+Acid Burn (named after the legendary *Hackers* character) is built to be fast, corrosive to vulnerabilities, and intuitive to operate. It streamlines the "identify and analyze" phase of security engagements.
 
-### 2. The Gated Dispatch Engine
-- **Atoms:** Atomic tool wrappers (e.g., `kali.nmap`, `auth.hydra`, `web.browser.inspect`, `exploit.search`).
-- **Molecules:** Composed DAG workflows (e.g., `recon.host.full`, `auth.network.spray`, `ctf.full.pwn`) with topological sorting and recursive template resolution.
-- **Conditional Execution:** Support for dynamic gating within molecules. Steps can define a `condition` field that evaluates Python expressions or prior step results (e.g., `{{steps.port_scan.result.port_22_open}}`). Supports nested key access (e.g., `{{steps.X.result.data.key}}`) and Python-style truthiness.
-- **The Gate:** Strict enforcement of project scope, input validation, and execution preconditions.
+## ✨ Key Features
 
-## Key Skills & Tools
+- **Multi-Vector Recon:** Integrated tools for sub-domain discovery, port scanning, and service identification.
+- **Vulnerability Corroder:** Automated scanning modules for web applications and network services.
+- **Unified Reporting:** Consolidates output from various tools (like Nikto, Nmap, etc.) into structured JSON/Markdown formats.
+- **Extensible Architecture:** Easily add new modules to the `bin/` and `projects/` directories.
+- **Terminal-First Design:** Optimized for power users who live in the CLI.
 
-### `ctf.full.pwn` (Molecule)
-- **Capability:** End-to-end machine compromise.
-- **Workflow:** 
-    1. **Recon:** Service discovery and version fingerprinting.
-    2. **Web Assault:** Automated vulnerability scanning and exploit attempt.
-    3. **PrivEsc:** Local reconnaissance and privilege escalation vector detection.
-    4. **Persistence:** Credential extraction and session persistence.
+## 📁 Project Structure
 
-### `web.browser.inspect` / `interact` / `drill` (Atoms)
-- **Capability:** Multi-modal browser automation and element-level analysis.
-- **Output:** Structured DOM analysis, interaction results, and visual context.
+- `bin/`: Core execution scripts and automated agents.
+- `global/`: Shared configuration and global asset management.
+- `inbox/`: Staging area for incoming scan data and raw results.
+- `logs/`: Detailed execution history and error tracking.
+- `projects/`: Specific engagement workspaces and targets.
+- `sessions/`: Persistent state management for long-running audits.
+- `terminal/`: Custom terminal environments and visual configurations.
 
-### `exploit.search` (Atom)
-- **Capability:** Structured exploit database (Searchsploit) searching.
-- **Output:** Parsed CVEs, exploit paths, and CVSS scores.
+## 🛠️ Getting Started
 
-### `post.exploit.recon` (Atom)
-- **Capability:** Automated post-exploitation system analysis.
-- **Output:** Identity, sudo rules, SUID binaries, and identified priv-esc vectors.
+### Prerequisites
+Ensure you have the following installed on your system:
+- Git
+- Python 3.10+
+- Node.js (for web-based modules)
+- Common security tools (Nmap, Nikto, etc.)
 
-### 4. Persistent State Management
-- **Observe:** Automatic failure classification into a canonical taxonomy (FM-1 to FM-11).
-- **Extract:** Pattern detection across trial ledgers to identify recurring bottlenecks.
-- **Act:** Formal Improvement Tickets (IT-NNN) track fixes to cards, parsers, or engine logic.
-- **Verify:** Mandatory evidence-based closing of tickets via trial re-runs.
-
-### 4. Persistent State Management
-- **Context Persistence:** Maintains project-level state (`state.json`) to survive context compaction and session restarts.
-- **State Tools:** Standardized CLI utilities (`manage_state.py`, `sync_session_state.py`) for atomic state updates.
-- **Continuity:** Ensures autonomous loops pick up exactly where they left off by reading persistent priorities and known issues.
-
-## Directory Structure
-
-```text
-~/.securatron/
-├── global/
-│   ├── bin/           # Harness binaries (dispatch, reindex, analyze)
-│   ├── charters/      # Governance (Memory Charter, Inbox Charter)
-│   ├── doctrine/      # Operational rules (SIL, fp-loop, memory-rules)
-│   ├── ledger/        # Cold canonical trial and improvement logs
-│   ├── post-mortems/  # Knowledge compounding for every skill
-│   ├── skills/        # Hardened Molecules (v1+)
-│   └── tools/         # Draft Atoms and Molecules
-├── projects/          # Engagement-specific scope and findings
-├── sessions/          # Active execution traces and artifacts
-└── terminal/          # Multi-modal SOC interface (v2.0)
-```
-
-## Quick Start
-
-### 1. Start the Brain
+### Installation
 ```bash
-sudo systemctl start lemond
+git clone https://github.com/MrSnowNB/Acid-Burn.git
+cd Acid-Burn
+# Run the setup script (if available) or explore the bin directory
+./bin/setup.sh
 ```
 
-### 2. Start the Tools (MCP)
-```bash
-python3 ~/.securatron/global/bin/mcp_server.py
-```
+## 📜 Usage
+Typical workflow:
+1. Define a target in `projects/`.
+2. Launch a scan via the agents in `bin/`.
+3. Review results in `inbox/` and `logs/`.
 
-### 3. Run a Recon Molecule
-```bash
-python3 ~/.securatron/global/bin/dispatch.py --skill recon.host.full --input target=127.0.0.1 --project lab-internal
-```
-
-## Operational Doctrine
-
-SecuraTron adheres to the **Hermes Soul** protocol:
-- **Verify Before Success:** Never claim completion without artifact proof.
-- **Canonical Schema Always:** Data integrity is non-negotiable.
-- **Surfaced Failure Over Silent Pass:** Failures are the primary source of improvement.
+## 🤝 Contributing
+Contributions are welcome! Please follow the ethical guidelines and ensure all tools are designed for legal, authorized testing only.
 
 ---
-*Built for the Strix Halo AI Homelab. Engineered from first principles.*
+
+**Disclaimer:** *Acid Burn is intended for authorized security auditing and educational purposes only. Unauthorized use against systems without explicit permission is illegal and unethical.*
+
+---
+*Created by [MrSnowNB](https://github.com/MrSnowNB)*
