@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-SecuraTron Stagecraft Inbox Watcher
+Acid Burn Stagecraft Inbox Watcher
 
 Monitors inbox/new/ directories using os.inotify, validates tickets against
 the JSON Schema, dispatches to molecules via dispatch.py, and moves files on
@@ -502,7 +502,7 @@ def main():
     """Start the inbox watcher."""
     import argparse
     
-    parser = argparse.ArgumentParser(description='SecuraTron Inbox Watcher')
+    parser = argparse.ArgumentParser(description='Acid Burn Inbox Watcher')
     parser.add_argument('--config', help='Path to config.yaml')
     parser.add_argument('--daemon', action='store_true', help='Run as daemon')
     parser.add_argument('--log-level', default='DEBUG', help='Log level (default: DEBUG)')

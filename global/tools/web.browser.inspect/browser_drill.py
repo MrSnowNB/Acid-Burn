@@ -150,7 +150,7 @@ def drill_element(page_id, ref_id, url=None):
         browser = p.chromium.launch(executable_path="/usr/bin/chromium", headless=True)
         context = browser.new_context(
             viewport={"width": 1280, "height": 720},
-            user_agent="SecuraTron/1.0 (Drill)"
+            user_agent="Acid Burn/1.0 (Drill)"
         )
         page = context.new_page()
 

@@ -166,7 +166,7 @@ def interact(url, selector, action, selector_type="css", value="", simulate=Fals
         )
         context = browser.new_context(
             viewport={"width": 1280, "height": 720},
-            user_agent="SecuraTron/1.0 (Browser Interactor)"
+            user_agent="Acid Burn/1.0 (Browser Interactor)"
         )
         page = context.new_page()
         

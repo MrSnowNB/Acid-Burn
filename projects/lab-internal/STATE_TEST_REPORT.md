@@ -3,7 +3,7 @@
 **Date:** 2026-05-06
 **Version:** 1.0
 **Test Suite:** State Management System Phased Validation
-**Executor:** SecuraTron outer builder (state-persistence-testing skill)
+**Executor:** Acid Burn outer builder (state-persistence-testing skill)
 
 ## Executive Summary
 

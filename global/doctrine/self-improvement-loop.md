@@ -2,7 +2,7 @@
 
 ## Purpose
 
-The Self-Improvement Loop is the mechanism by which the SecuraTron harness
+The Self-Improvement Loop is the mechanism by which the Acid Burn harness
 learns from its own failures and amplifies its own successes. It closes the
 feedback cycle between **observation** (what happened), **extraction** (why it
 happened), **action** (what we change), and **verification** (confirming the

@@ -2,7 +2,7 @@
 
 **The White Hat Multi-Tool for Modern Security Auditing**
 
-Acid Burn is a powerful, extensible security toolkit branched from the SecuraTron architecture. Designed for ethical hackers, penetration testers, and security researchers, it provides a centralized platform for reconnaissance, vulnerability scanning, and automated security assessments.
+Acid Burn is a powerful, extensible security toolkit branched from the Acid Burn architecture. Designed for ethical hackers, penetration testers, and security researchers, it provides a centralized platform for reconnaissance, vulnerability scanning, and automated security assessments.
 
 ## 🚀 Overview
 
@@ -10,11 +10,13 @@ Acid Burn (named after the legendary *Hackers* character) is built to be fast, c
 
 ## ✨ Key Features
 
+- **Grok-Driven Intelligence:** Integrated with xAI's Grok CLI for autonomous auditing, code review, and strategic planning.
+- **5-Gate Validation Protocol:** Rigorous execution safety including Network Reachability, Postcondition Evaluation, Timeout Enforcement, Output Schema Validation, and an Atomic Test Harness.
 - **Multi-Vector Recon:** Integrated tools for sub-domain discovery, port scanning, and service identification.
 - **Vulnerability Corroder:** Automated scanning modules for web applications and network services.
 - **Unified Reporting:** Consolidates output from various tools (like Nikto, Nmap, etc.) into structured JSON/Markdown formats.
 - **Extensible Architecture:** Easily add new modules to the `bin/` and `projects/` directories.
-- **Terminal-First Design:** Optimized for power users who live in the CLI.
+- **Terminal-First Design:** Optimized for power users who live in the CLI with built-in Cyberpunk visuals.
 
 ## 📁 Project Structure
 

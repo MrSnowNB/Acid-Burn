@@ -153,4 +153,4 @@ To ensure system stability and data integrity, the interface must adhere to the 
 4. **Validation Failure**: If any of the 8 core health checks fail, HALT all active tool-chains and display the failure state on the main dashboard.
 5. **Unauthorized Scope**: If a command is issued against a target not present in the active project's `scope.yaml`, the interface must hard-refuse the execution.
 
-**Doctrine Reference**: These protocols derive from the SecuraTron First Principles Loop (fp-loop) and the Identity of the Memory Organ Charter.
+**Doctrine Reference**: These protocols derive from the Acid Burn First Principles Loop (fp-loop) and the Identity of the Memory Organ Charter.

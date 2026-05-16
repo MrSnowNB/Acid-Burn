@@ -1,13 +1,13 @@
 # Post-Mortem: web.whatweb Atom
 
 **Date:** 2026-04-26
-**Author:** Hermes / SecuraTron Outer Builder
+**Author:** Hermes / Acid Burn Outer Builder
 **Skill:** web.whatweb (atom)
 **Reference:** kali.nmap (pattern)
 
 ## Objective
 
-Create a SecuraTron atom using WhatWeb to fingerprint web technologies on targets.
+Create a Acid Burn atom using WhatWeb to fingerprint web technologies on targets.
 The atom must:
 1. Exist in `global/tools/`
 2. Record 3 trials with canonical ledger schema

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-SecuraTron Stagecraft Inbox - Gated Validation Test Suite
+Acid Burn Stagecraft Inbox - Gated Validation Test Suite
 
 Tests the full pipeline: schema -> watcher -> dispatch -> ledger.
 Usage: python3 global/bin/test_inbox_validation.py --all
@@ -513,7 +513,7 @@ def phase_5():
 
 def main():
     import argparse
-    parser = argparse.ArgumentParser(description='SecuraTron Inbox Validation Tests')
+    parser = argparse.ArgumentParser(description='Acid Burn Inbox Validation Tests')
     parser.add_argument('--all', action='store_true')
     parser.add_argument('--phase', type=int, action='append')
     args = parser.parse_args()
@@ -537,7 +537,7 @@ def main():
     total_failed = 0
 
     print("=" * 60)
-    print("SecuraTron Stagecraft Inbox - Gated Validation Tests")
+    print("Acid Burn Stagecraft Inbox - Gated Validation Tests")
     print("=" * 60)
     print(f"Inbox root: {INBOX_ROOT}")
     print(f"Schema path: {SCHEMA_PATH}")

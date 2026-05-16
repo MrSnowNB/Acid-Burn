@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-WebSocket streaming server for SecuraTron SOC.
+WebSocket streaming server for Acid Burn SOC.
 
 First-Principles Design:
 - WebSockets provide full-duplex communication in a single connection
@@ -66,7 +66,7 @@ class LLMClient:
             {
                 "role": "system",
                 "content": (
-                    f"You are a SecuraTron security assistant operating in "
+                    f"You are a Acid Burn security assistant operating in "
                     f"{persona} mode. Provide concise, actionable security "
                     f"analysis. Format output using markdown when appropriate."
                 ),

@@ -1,10 +1,10 @@
-# SecuraTron SOC Interface (Terminal)
+# Acid Burn SOC Interface (Terminal)
 
 ## Overview
 
-The Terminal is the multi-modal front-end for the SecuraTron harness. It provides a visual and voice-driven interface for human operators to monitor, direct, and audit the autonomous activities of the underlying engine.
+The Terminal is the multi-modal front-end for the Acid Burn harness. It provides a visual and voice-driven interface for human operators to monitor, direct, and audit the autonomous activities of the underlying engine.
 
-## Integration with SecuraTron
+## Integration with Acid Burn
 
 The Terminal acts as a high-level **Outer Builder** and observer:
 1. **Visualization:** Renders real-time telemetry from `lemond` and the `mcp_server`.

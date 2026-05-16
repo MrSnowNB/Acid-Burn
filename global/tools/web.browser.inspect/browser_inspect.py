@@ -184,7 +184,7 @@ def inspect_page(url, max_summary_chars=500, include_interactive=True, include_i
         )
         context = browser.new_context(
             viewport={"width": 1280, "height": 720},
-            user_agent="SecuraTron/1.0 (Automated Inspector)"
+            user_agent="Acid Burn/1.0 (Automated Inspector)"
         )
         page = context.new_page()
         

@@ -1,6 +1,6 @@
 # Skill: Atom Builder
 
-This skill defines the canonical process for building a new SecuraTron Atom from scratch.
+This skill defines the canonical process for building a new Acid Burn Atom from scratch.
 
 ## 1. Research & Reference
 - Inspect an existing Atom card as a reference (default: `kali.nmap`).

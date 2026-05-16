@@ -1,6 +1,6 @@
 author: hermes
 created: '2026-05-13T20:30:00-04:00'
-description: Execute a SecuraTron atom or molecule with safe mock data and verify its output. Used by the audit suite CI/CD pipeline to test all tools against a safe baseline.
+description: Execute a Acid Burn atom or molecule with safe mock data and verify its output. Used by the audit suite CI/CD pipeline to test all tools against a safe baseline.
 id: system.tool.test
 implementation:
   cmd: python3 {runner_script} {tool_id} {tool_kind} {evidence_dir} {project_id}

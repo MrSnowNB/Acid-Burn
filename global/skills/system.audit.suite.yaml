@@ -1,7 +1,7 @@
 author: hermes
 created: '2026-05-13T20:30:00-04:00'
 description: >
-  Autonomous CI/CD audit pipeline. Discovers all SecuraTron atoms and molecules,
+  Autonomous CI/CD audit pipeline. Discovers all Acid Burn atoms and molecules,
   executes each against a safe baseline (127.0.0.1), verifies outputs, and
   generates a cryptographically-logged evidence report in the Evidence Locker.
   Every tool must pass to achieve a green audit.

@@ -9,7 +9,7 @@ description: >
   avoiding context bloat from full accessibility tree dumps.
   Supports progressive drilling into elements and interactive actions.
 
-author: SecuraTron Outer Builder
+author: Acid Burn Outer Builder
 created: 2026-05-02T00:00:00Z
 tier: 1
 isolation_path: ~/.securatron/global/tools/web.browser.inspect/

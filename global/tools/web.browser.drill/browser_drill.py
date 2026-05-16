@@ -288,7 +288,7 @@ def drill_element(url, selector, selector_type="css", max_depth=2):
         )
         context = browser.new_context(
             viewport={"width": 1280, "height": 720},
-            user_agent="SecuraTron/1.0 (Element Driller)"
+            user_agent="Acid Burn/1.0 (Element Driller)"
         )
         page = context.new_page()
         

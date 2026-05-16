@@ -2,9 +2,14 @@ import re
 import yaml
 import ipaddress
 import os
+import socket
 from pathlib import Path
 
 BASE_DIR = Path.home() / ".securatron"
+
+# Default ports to probe for reachability check
+_REACHABILITY_PORTS = [22, 80, 443, 8080, 3389]
+_REACHABILITY_TIMEOUT = 1  # seconds per port (reduced for speed)
 
 # Template resolution guard: detect unresolved {{inputs.*}} patterns
 _UNRESOLVED_TEMPLATE_RE = re.compile(r'\{\{inputs\.\w+\}\}')
@@ -80,6 +85,52 @@ def check_scope(card: dict, inputs: dict, project_id: str, scope_file: str = Non
         
     return True
 
+def _resolve_target_host(inputs: dict) -> str | None:
+    """Extract the target host from inputs, stripping port and protocol."""
+    target = inputs.get("target") or inputs.get("host") or inputs.get("url")
+    if not target:
+        return None
+    # Strip protocol
+    target = re.sub(r"^(http|https)://", "", target)
+    # Strip port
+    clean = target.split(":")[0]
+    return clean
+
+
+def check_network_reachable(inputs: dict) -> tuple[bool, str]:
+    """Check if a target host is reachable via TCP on common ports.
+    
+    Returns (is_reachable, error_message).
+    Probes ports [_REACHABILITY_PORTS] with _REACHABILITY_TIMEOUT seconds each.
+    If ANY port is open, the host is considered reachable.
+    
+    Special case: only 127.0.0.1, localhost, and ::1 are always reachable.
+    Private ranges (10.x, 172.16-31.x, 192.168.x) are probed — they may be
+    reachable on the local network.
+    """
+    host = _resolve_target_host(inputs)
+    if not host:
+        return True, ""  # No target to check
+    
+    # Always reachable: loopback only
+    if host in ("127.0.0.1", "localhost", "::1"):
+        return True, ""
+    
+    # Try TCP connect on common ports for all other addresses
+    for port in _REACHABILITY_PORTS:
+        try:
+            sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            sock.settimeout(_REACHABILITY_TIMEOUT)
+            result = sock.connect_ex((host, port))
+            sock.close()
+            if result == 0:
+                return True, ""
+        except (socket.gaierror, socket.timeout, OSError):
+            continue
+    
+    return False, f"network_unreachable: host '{host}' not reachable on ports {_REACHABILITY_PORTS}"
+
+
 def check_preconditions(card: dict, inputs: dict, 
                         session_dir: str = None,
                         scope_file: str = None) -> tuple[bool, list[str]]:
@@ -119,14 +170,15 @@ def check_preconditions(card: dict, inputs: dict,
                 failures.append(f"Target '{val}' is OUT OF SCOPE")
             continue
 
-        # 2. network.reachable(inputs.X)
+        # 2. network.reachable(inputs.X) — GATE 1: REAL IMPLEMENTATION
         match = re.match(r"network\.reachable\(inputs\.(\w+)\)", expr)
         if match:
-            # TODO: implement with socket.connect or ping check
-            print(f"WARNING: network.reachable is a stub — not actually verified for {match.group(1)}")
+            is_reachable, err = check_network_reachable(inputs)
+            if not is_reachable:
+                failures.append(err)
             continue
 
-        # 3. artifact_exists(outputs.X)
+        # 3. artifact_exists(outputs.X) — GATE 2: STUB (implement later)
         match = re.match(r"artifact_exists\(outputs\.(\w+)\)", expr)
         if match:
             # TODO: Add real postcondition evaluation logic in Phase 4

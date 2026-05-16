@@ -1,13 +1,13 @@
 Post-Mortem: web.gobuster Atom
 
 Date: 2026-04-26
-Author: Hermes / SecuraTron Outer Builder
+Author: Hermes / Acid Burn Outer Builder
 Skill: web.gobuster (atom)
 Reference: web.whatweb (pattern)
 
 ## Objective
 
-Create a SecuraTron atom using Gobuster for web directory enumeration. The atom must:
+Create a Acid Burn atom using Gobuster for web directory enumeration. The atom must:
 1. Exist in global/tools/
 2. Record 3 trials with canonical ledger schema
 3. Produce 3 artifact files on disk

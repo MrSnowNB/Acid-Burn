@@ -1,4 +1,4 @@
-# SecuraTron Capability Benchmark: Browser Molecule
+# Acid Burn Capability Benchmark: Browser Molecule
 
 **Date:** 2026-05-05T19:20:52Z
 **Target:** `https://en.wikipedia.org/wiki/Intelligent_agent`

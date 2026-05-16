@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-system.tool.test runner — execute a SecuraTron atom or molecule with safe mock data
+system.tool.test runner — execute a Acid Burn atom or molecule with safe mock data
 and verify its output. Called by the auth.network.test atom.
 
 Arguments (positional):

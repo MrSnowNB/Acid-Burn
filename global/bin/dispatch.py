@@ -553,7 +553,7 @@ def cli_memory_precheck(args):
 
 def main():
     import argparse
-    parser = argparse.ArgumentParser(description="SecuraTron Dispatcher CLI")
+    parser = argparse.ArgumentParser(description="Acid Burn Dispatcher CLI")
     subparsers = parser.add_subparsers(dest="command", help="Sub-commands")
 
     # --- default: dispatch (backward-compatible) ---

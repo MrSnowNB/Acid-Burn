@@ -55,11 +55,11 @@ provenance:
   - mwp_folder_orchestration
 ---
 
-# The SecuraTron Inbox Charter (Stagecraft)
+# The Acid Burn Inbox Charter (Stagecraft)
 
 > **Status:** Living document. Append-only revisions. Last manifested: 2026-04-27
 > **Authority:** This Charter is binding for any agent constructing or modifying
-> the SecuraTron inbox subsystem. It supersedes ad-hoc instruction.
+> the Acid Burn inbox subsystem. It supersedes ad-hoc instruction.
 > **Precedence:** `HERMES.md` governs identity. This Charter governs the inbox
 > transport layer. MEMORY-CHARTER.md governs the memory organ. Where they appear
 > to conflict, `HERMES.md` wins and this Charter is revised, never the reverse.
@@ -71,7 +71,7 @@ provenance:
 
 ## I. Adherence Directive — Read Before Every Inbox Task
 
-You are constructing the SecuraTron inbox (Stagecraft) subsystem. This is not an
+You are constructing the Acid Burn inbox (Stagecraft) subsystem. This is not an
 optimization, a feature, or a convenience. It is the transport substrate that makes
 ticket-in/ticket-out work deterministic across agents, sessions, and future mesh
 transport layers. Without it, every new molecule rediscovers the same races. With
@@ -199,7 +199,7 @@ Additional queues are created per operator request via Revision Proposal.
   source of truth. They are never deleted from `new/` or `cur/` — they are moved
   to `cur/` on dispatch and persist there until explicit operator removal.
   Quarantine files persist until explicit operator removal. This rule is
-  SecuraTron-native, proposed by Hermes. Violation risk: treating inbox files
+  Acid Burn-native, proposed by Hermes. Violation risk: treating inbox files
   as durable storage leads to data loss on cleanup and breaks the ledger-as-truth
   principle.
 
@@ -265,7 +265,7 @@ referenced here at v1.0. Any changes to the schema require a Charter revision.
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "securatron/inbox-ticket/1.0",
-  "title": "SecuraTron Inbox Ticket",
+  "title": "Acid Burn Inbox Ticket",
   "description": "A ticket submitted to the Stagecraft inbox for dispatch.",
   "type": "object",
   "required": [
@@ -546,11 +546,11 @@ provenance record:
   Provides formal grounding for the entire approach. Inherited hard rule: ticket schema
   is a versioned file, never implicit in code.
 
-- **SecuraTron-native** — Hermes-proposed HR-INBOX-7: inbox-as-delivery, ledger-as-truth.
+- **Acid Burn-native** — Hermes-proposed HR-INBOX-7: inbox-as-delivery, ledger-as-truth.
   Inherited hard rule: inbox files are transient delivery mechanisms. The ledger is the
   authoritative record. Never delete from `new/` or `cur/`. Only operators clear quarantine.
 
-The synthesis is SecuraTron-specific: a folder-based orchestration layer with
+The synthesis is Acid Burn-specific: a folder-based orchestration layer with
 Maildir atomicity, SOAR human gates, and inotify watchers, all governed by a
 versioned ticket schema. This is the minimum viable Stagecraft v1.0. It is not
 the final form.
@@ -572,7 +572,7 @@ durability and integration:
 | Step | Architecture | Cost | Durability | Integration |
 |------|-------------|------|------------|-------------|
 | 0 | Bash one-liner | Minutes | Throwaway | None |
-| 1 | Stagecraft v1.0 (this Charter) | ~1 day | Production-grade | SecuraTron-native |
+| 1 | Stagecraft v1.0 (this Charter) | ~1 day | Production-grade | Acid Burn-native |
 | 2 | SOAR connector | 3-5 days | Enterprise | Plugs into existing SOAR |
 
 This Charter covers Step 1. Steps 0 and 2 are documented here for context.

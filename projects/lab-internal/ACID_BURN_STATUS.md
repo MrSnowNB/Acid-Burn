@@ -1,4 +1,4 @@
-# SecuraTron Lab-Internal Project Status
+# Acid Burn Lab-Internal Project Status
 
 **Last Updated:** 2026-05-02T12:00:00Z
 **Current Session:** None

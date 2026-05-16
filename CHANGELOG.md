@@ -1,10 +1,36 @@
-# Changelog: SecuraTron Engine & Skill Expansion
+# Changelog: Acid Burn - White Hat Multi-Tool
 
-All notable changes to the SecuraTron harness and the COBOL-to-AI pipeline are documented here.
+All notable changes to the Acid Burn toolkit and the security auditing pipeline are documented here.
+
+## [v2.2.0] - 2026-05-16 - "The Cyberpunk Expansion"
+
+### Core & Rebranding
+- **Rebranded:** Project officially branched from Acid Burn to **Acid Burn**.
+- **Added:** New comprehensive `README.md` with multi-tool architecture mapping.
+- **Added:** **Grok-Driven Intelligence** integration. Leverages xAI Grok Build CLI for autonomous evaluation and strategic planning.
+- **Added:** **5-Gate Validation Protocol** design (Network, Postcondition, Timeout, Schema, and Test Harness).
+- **Added:** Mandatory **Template Resolution** enforcement in `HERMES.md` to prevent placeholder hallucinations.
+- **Repository:** Migration to official repository: `https://github.com/MrSnowNB/Acid-Burn`.
+
+### Environment & Tools
+- **Added:** Official **Visual Studio Code** installation via Microsoft repository.
+- **Added:** **Google Antigravity** AI-powered IDE installation for agentic workflows.
+- **Added:** Official **xAI Grok CLI** (version 0.1.211) for SuperGrok Heavy accounts.
+- **Desktop:** Added launcher shortcuts for VS Code, Antigravity, and Screensaver Settings.
+
+### Cyberpunk Hub Visuals
+- **Added:** **XScreenSaver** suite with classic hacker visuals:
+    - **GLMatrix:** 3D Matrix digital rain.
+    - **Phosphor:** Retro 1980s green-screen terminal simulation.
+    - **GLSlideshow:** Integrated for tech-feed visualization.
+- **Added:** **CMatrix** for terminal-based digital rain effects.
+- **Added:** Full suite of official **Kali Linux Wallpapers** (2019-2025).
+- **Added:** **Telnet** integration for ASCII-based Star Wars animation.
+- **Fixed:** Resolved conflicts between `xfce4-screensaver` and `xscreensaver`, ensuring cyberpunk visuals autostart on login.
 
 ## [v2.1.0] - 2026-05-13
 
-### SecuraTron Engine
+### Acid Burn Engine
 - **Added:** Advanced Conditional Execution for Molecules. Steps now support `condition` gates with Python expression evaluation and nested key access (e.g., `{{steps.X.result.key}}`).
 - **Added:** `base_dir` injection into all tool execution contexts.
 - **Improved:** `parsers.py` now includes structured output handlers for:

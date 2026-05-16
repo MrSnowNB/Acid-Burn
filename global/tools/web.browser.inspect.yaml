@@ -2,7 +2,7 @@ id: web.browser.inspect
 kind: atom
 tier: global
 version: 1
-author: SecuraTron Outer Builder
+author: Acid Burn Outer Builder
 description: Progressive Browser Inspection Suite — lightweight page summaries with interactive element mapping, drill-down, and browser interaction. 14x token reduction vs raw curl on JS-heavy targets.
 
 implementation:

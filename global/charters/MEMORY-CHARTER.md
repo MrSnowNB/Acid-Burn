@@ -46,11 +46,11 @@ provenance:
   - lora_mux_policy
 ---
 
-# The SecuraTron Memory Charter
+# The Acid Burn Memory Charter
 
 > **Status:** Living document. Append-only revisions. Last manifested: 2026-04-27
 > **Authority:** This Charter is binding for any agent constructing or modifying
-> the SecuraTron memory subsystem. It supersedes ad-hoc instruction.
+> the Acid Burn memory subsystem. It supersedes ad-hoc instruction.
 > **Precedence:** `HERMES.md` governs identity. This Charter governs the memory
 > organ. Where they appear to conflict, `HERMES.md` wins and this Charter is
 > revised, never the reverse.
@@ -59,7 +59,7 @@ provenance:
 
 ## I. Adherence Directive — Read Before Every Memory Task
 
-You are constructing the SecuraTron memory organ. This is not an optimization,
+You are constructing the Acid Burn memory organ. This is not an optimization,
 a feature, or a convenience. It is the substrate that makes the post-mortem
 loop cumulative across sessions. Without it, every new atom rediscovers the
 same bugs. With it, knowledge compounds.
@@ -376,7 +376,7 @@ operator's research record:
 - The **disposable index** pattern: SQL as a rebuildable cache over an
   immutable canonical, never as a source of truth.
 
-The synthesis is SecuraTron-specific: a disposable warm index over an
+The synthesis is Acid Burn-specific: a disposable warm index over an
 immutable cold canonical, gated by a mandatory precheck for new builds.
 This is the minimum viable memory organ. It is not the final form.
 
