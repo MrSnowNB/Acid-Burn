@@ -1,0 +1,19 @@
+Starting Nmap 7.99 ( https://nmap.org ) at 2026-05-15 13:23 -0400
+Nmap scan report for OpenWrt.lan (192.168.9.1)
+Host is up (0.0041s latency).
+MAC Address: 60:38:E0:89:9F:EC (Belkin International)
+Nmap scan report for 192.168.9.148
+Host is up (0.034s latency).
+MAC Address: 38:8D:3D:BD:2B:6E (WNC)
+Nmap scan report for Demo.lan (192.168.9.190)
+Host is up (0.0091s latency).
+MAC Address: 00:E0:4C:68:23:35 (Realtek Semiconductor)
+Nmap scan report for MSI.lan (192.168.9.200)
+Host is up (0.011s latency).
+MAC Address: 04:56:E5:E2:E0:87 (Intel Corporate)
+Nmap scan report for 192.168.9.203
+Host is up (0.010s latency).
+MAC Address: 22:04:C4:1B:7E:18 (Unknown)
+Nmap scan report for Acid-Burn.lan (192.168.9.208)
+Host is up.
+Nmap done: 256 IP addresses (6 hosts up) scanned in 2.52 seconds
