@@ -1,42 +1,50 @@
-author: hermes
-created: '2026-04-26T17:00:00-04:00'
-description: Web directory enumeration using Gobuster — discovers hidden directories and files on web servers.
 id: web.gobuster
+kind: atom
+tier: global
+version: 4
+author: hermes
+description: Web directory enumeration using Gobuster — discovers hidden directories and files on web servers.
+
 implementation:
-  cmd: gobuster dir -u http://{target} -w {wordlist} {flags}
   kind: shell
+  cmd: gobuster dir -u http://{target} -w {wordlist} {flags}
+
+execution:
+  timeout_seconds: 120
+
 inputs:
   flags:
     default: -f --no-error -q -t 10
     type: string
   target:
-    required: true
     type: string
+    required: true
     validator: rfc1123_host_or_ip
   wordlist:
     default: /usr/share/wordlists/dirb/small.txt
     type: string
-kind: atom
+
 outputs:
-  artifact_path: '{session}/artifacts/gobuster-{ts}.raw'
-  type: shell.run.v1
-postconditions:
-- artifact_exists(outputs.artifact_path)
-- result|length > 0
+  artifact_path: sessions/{session}/artifacts/gobuster-{ts}.raw
+  type: gobuster.enum.v1
+
 preconditions:
 - scope.includes(inputs.target)
 - network.reachable(inputs.target)
-promotion:
-  required_distinct_inputs: 3
-  required_success: 3
-  requires_human_review: false
-reversible: true
+
+postconditions:
+- artifact_exists(outputs.artifact_path)
+- result.total_findings is not None
+
 risk: low
 side_effects:
 - network_probe
-tier: global
+reversible: true
+promotion:
+  required_success: 3
+  required_distinct_inputs: 3
+  requires_human_review: false
 trials:
+  success: 0
   failure: 0
   last_run: null
-  success: 0
-version: 1

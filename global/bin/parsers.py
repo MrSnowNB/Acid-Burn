@@ -495,6 +495,118 @@ def parse_browser_inspect(raw_stdout, **kwargs):
         return {"ok": False, "reason": "json_parse_failure", "error": str(e), "raw": raw_stdout[:500]}
 
 
+@register("gobuster.enum.v1")
+def parse_gobuster_enum(raw_stdout, **kwargs):
+    """Parse gobuster directory enumeration output into structured findings.
+
+    Gobuster stdout format (v3.x):
+        ===============================================================
+        Gobuster v3.8.2
+        ...
+        [+] Url:            http://TARGET
+        [+] Wordlist:       /path/to/wordlist
+        [+] Thread:         10
+        ...
+        2026/05/16 17:00:00 Starting gobuster in directory enumeration mode
+        ===============================================================
+        /admin                (Status: 403) [Size: 567]
+        /about                (Status: 200) [Size: 1234]
+        /login                (Status: 302) [Size: 0]
+        ...
+        ===============================================================
+        2026/05/16 17:00:05 Finished
+        ===============================================================
+
+    Returns structured dict with found_paths, scan_info, stats, total_findings.
+    """
+    found_paths = []
+    scan_info = {}
+    start_time = None
+    end_time = None
+
+    # Pattern for found path lines:
+    # /path  (Status: 200) [Size: 1234]
+    path_re = re.compile(
+        r'^(\S+)\s+\(Status:\s*(\d+)\)\s+\[Size:\s*(\d+)\]'
+    )
+
+    # Pattern for gobuster log lines:
+    # [2026/05/16 17:00:00] or 2026/05/16 17:00:00
+    timestamp_re = re.compile(r'(\d{4}/\d{2}/\d{2}\s+\d{2}:\d{2}:\d{2})')
+
+    # Pattern for [+] key-value lines
+    info_re = re.compile(r'\[.*\]\s+(\S+):\s+(.*)')
+
+    for line in raw_stdout.split('\n'):
+        line = line.strip()
+
+        # Skip empty lines and separator lines
+        if not line or line.startswith('='):
+            continue
+
+        # Try to capture start time
+        ts_match = timestamp_re.search(line)
+        if ts_match:
+            if 'Starting gobuster' in line or start_time is None:
+                start_time = ts_match.group(1)
+            if 'Finished' in line or end_time is None:
+                end_time = ts_match.group(1)
+
+        # Try to capture [+] info lines
+        info_match = info_re.match(line)
+        if info_match:
+            key = info_match.group(1).lower().rstrip(':')
+            val = info_match.group(2).strip()
+            scan_info[key] = val
+
+        # Try to match path findings
+        path_match = path_re.match(line)
+        if path_match:
+            found_paths.append({
+                "path": path_match.group(1),
+                "status_code": int(path_match.group(2)),
+                "size": int(path_match.group(3)),
+            })
+
+    # Compute elapsed time if both timestamps available
+    elapsed_seconds = 0
+    if start_time and end_time:
+        try:
+            from datetime import datetime
+            fmt = "%Y/%m/%d %H:%M:%S"
+            t_start = datetime.strptime(start_time, fmt)
+            t_end = datetime.strptime(end_time, fmt)
+            elapsed_seconds = int((t_end - t_start).total_seconds())
+        except (ValueError, TypeError):
+            pass
+
+    scan_info.setdefault("start_time", start_time or "")
+    scan_info.setdefault("end_time", end_time or "")
+
+    # Extract target and wordlist from scan_info
+    target = scan_info.get("url", "")
+    wordlist = scan_info.get("wordlist", "")
+
+    result = {
+        "total_findings": len(found_paths),
+        "found_paths": found_paths,
+        "scan_info": {
+            "target": target,
+            "wordlist": wordlist,
+            "concurrency": scan_info.get("thread", "10"),
+            "start_time": start_time or "",
+            "end_time": end_time or "",
+        },
+        "stats": {
+            "elapsed_seconds": elapsed_seconds,
+            "requests_sent": len(found_paths),
+            "unique_status_codes": len(set(p["status_code"] for p in found_paths)) if found_paths else 0,
+        }
+    }
+
+    return result
+
+
 def parse(type_name, raw_stdout, **kwargs):
     """Entry point for parsing raw output into structured data."""
     if type_name not in PARSERS:
