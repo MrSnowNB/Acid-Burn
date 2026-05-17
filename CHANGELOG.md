@@ -11,6 +11,9 @@ All notable changes to the Acid Burn toolkit and the security auditing pipeline 
 - **Repository:** Official synchronization with `https://github.com/MrSnowNB/Acid-Burn`.
 
 ### Hardening & Field Readiness
+- **Biometrics:** Integrated biometric (fingerprint) authorization into the system authentication pipeline (PAM/fprintd).
+- **Vectors:** Verified PolicyKit as a reliable high-speed authorization vector (`pkexec`).
+- **Doctrine:** Added `global/doctrine/biometrics.md` documenting hardware bypass blueprints for field readiness.
 - **Swarm Repair:** Fixed the "Blank Check Bug" (P-1) by blocking empty DAG plans in the inbox watcher.
 - **Crypto-Integrity:** Fixed session ID predictability (P-3) using a cryptographic generator (`sha256(urandom + timestamp)`).
 - **Wireless Atom:** Implemented the "Gold Standard" `wifi.airodump_ng.passive_discovery` atom with a specialized Python toolchain.
