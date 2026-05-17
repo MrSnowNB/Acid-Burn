@@ -39,7 +39,7 @@ outputs:
   type: web.browser.inspect.v1
   artifact_path: '{session}/artifacts/web.browser.inspect-{ts}.json'
 
-atom_dir: ~/.securatron/global/tools/web.browser.inspect
+atom_dir: ~/.acid-burn/global/tools/web.browser.inspect
 
 preconditions:
 - scope.includes(inputs.url)

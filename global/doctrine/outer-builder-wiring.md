@@ -11,7 +11,7 @@
 - **Base URL:** http://localhost:13305/api/v1
 - **Primary model:** Qwen3.6-27B-GGUF
 - **Fast model:** Qwen3.6-35B-A3B-GGUF
-- **SOUL.md:** Configured to reference Securatron doctrine and observe harness boundaries.
+- **SOUL.md:** Configured to reference Acid Burn doctrine and observe harness boundaries.
 - **Smoke test:** PASS.
 - **Tool-call validation:** PASS. Hermes utilizes internal tools to access the filesystem and provides high-quality summaries.
 - **Side-by-side comparison vs Codex 0.72:** 

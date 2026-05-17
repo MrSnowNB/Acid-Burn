@@ -17,7 +17,7 @@ import yaml
 import xml.etree.ElementTree as ET
 from io import StringIO
 
-ATOM_PATH = "/home/mark/Desktop/hybrid_scratchpad/atoms/nmap.yaml"
+ATOM_PATH = "/home/mark/Acid-Burn/atoms/nmap.yaml"
 with open(ATOM_PATH) as f:
     atom = yaml.safe_load(f)
 

@@ -1,12 +1,12 @@
 #!/bin/bash
-# SecuraTron Gated Validation: Progressive Browser Molecule
+# Acid Burn Gated Validation: Progressive Browser Molecule
 # Target: Wikipedia (Dense DOM, heavy links)
 # Goal: Prove token efficiency and interaction accuracy.
 
 set -e
 
 TARGET_URL="https://en.wikipedia.org/wiki/Intelligent_agent"
-TOOL_DIR="$HOME/.securatron/global/tools/web.browser.inspect"
+TOOL_DIR="$HOME/.acid-burn/global/tools/web.browser.inspect"
 VENV_PYTHON="$TOOL_DIR/.venv/bin/python"
 REPORT_FILE="benchmark_report.md"
 JSON_OUTPUT="benchmark_results.json"
@@ -118,7 +118,7 @@ fi
 echo "[*] Phase 5: Generating Report artifacts..."
 
 cat <<EOF > $REPORT_FILE
-# SecuraTron Capability Benchmark: Browser Molecule
+# Acid Burn Capability Benchmark: Browser Molecule
 
 **Date:** $(date -u +"%Y-%m-%dT%H:%M:%SZ")
 **Target:** \`$TARGET_URL\`

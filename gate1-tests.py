@@ -14,7 +14,7 @@ import yaml
 
 # ── Load atom under test ──────────────────────────────────────────────
 
-ATOM_PATH = "/home/mark/Desktop/hybrid_scratchpad/atoms/nmap.yaml"
+ATOM_PATH = "/home/mark/Acid-Burn/atoms/nmap.yaml"
 
 with open(ATOM_PATH) as f:
     atom = yaml.safe_load(f)

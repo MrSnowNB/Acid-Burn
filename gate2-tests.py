@@ -13,7 +13,7 @@ import yaml
 import subprocess
 import shlex
 
-ATOM_PATH = "/home/mark/Desktop/hybrid_scratchpad/atoms/nmap.yaml"
+ATOM_PATH = "/home/mark/Acid-Burn/atoms/nmap.yaml"
 
 with open(ATOM_PATH) as f:
     atom = yaml.safe_load(f)
@@ -219,7 +219,7 @@ for ex in examples:
 
 print("\n=== CHECK 7: Privilege Model Documented ===")
 import os
-priv_model_path = "/home/mark/Desktop/hybrid_scratchpad/atoms/_reference/privilege-model.md"
+priv_model_path = "/home/mark/Acid-Burn/atoms/_reference/privilege-model.md"
 if os.path.exists(priv_model_path):
     with open(priv_model_path) as f:
         content = f.read()

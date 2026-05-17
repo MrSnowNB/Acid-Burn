@@ -33,7 +33,7 @@ from collections import defaultdict
 from pathlib import Path
 from datetime import datetime, timezone
 
-BASE_DIR = Path.home() / ".securatron"
+BASE_DIR = Path.home() / ".acid-burn"
 LEDGER_DIR = BASE_DIR / "global" / "ledger"
 IMPROVEMENT_LEDGER = BASE_DIR / "global" / "ledger" / "improvements.jsonl"
 POST_MORTEM_DIR = BASE_DIR / "global" / "post-mortems"

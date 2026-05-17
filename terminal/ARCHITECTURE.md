@@ -1,4 +1,4 @@
-# Securatron Security Interface — Architecture Document
+# Acid Burn Security Interface — Architecture Document
 
 ## First Principles Analysis
 
@@ -124,7 +124,7 @@ Each stage transforms data into a higher-value form. The interface is the system
 ## File Structure
 
 ```
-~/.securatron/terminal/
+~/.acid-burn/terminal/
 ├── ARCHITECTURE.md          # This file
 ├── index.html               # Fallout CRT terminal (original)
 ├── recon-dashboard.html     # Multi-modal recon dashboard

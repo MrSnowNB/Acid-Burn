@@ -1,9 +1,10 @@
 # Post-Mortem: Autonomous Build Failures
 
-**Date**: 2026-05-02
-**Scope**: 87 autonomous sessions (2026-04-26 to 2026-05-02)
-**Trigger**: Cron job 88962226f2c3 (every 30m, 24 iterations)
-**Status**: Deep-dive analysis in progress
+**Date**: 2026-05-02  
+**Scope**: 87 autonomous sessions (2026-04-26 to 2026-05-02)  
+**Trigger**: Cron job 88962226f2c3 (every 30m, 24 iterations)  
+**Status**: Deep-dive analysis in progress  
+**Archive**: Legacy Acid Burn record — preserved as part of Acid Burn historical archive
 
 ---
 
@@ -143,7 +144,7 @@ All 45 sessions that wrote a `plan.json` contain `"steps": []` — zero steps.
 3. Is there a session creation validation?
 
 **Action items:**
-- [ ] Read the session lifecycle doctrine (`~/.securatron/global/doctrine/session-lifecycle.md`)
+- [ ] Read the session lifecycle doctrine (`~/.acid-burn/global/doctrine/session-lifecycle.md`)
 - [ ] Check how the cron job triggers new sessions
 - [ ] Verify the ULID generation is deterministic
 

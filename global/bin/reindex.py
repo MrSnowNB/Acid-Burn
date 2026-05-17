@@ -6,7 +6,7 @@ import time
 from datetime import datetime
 
 # Standard paths
-BASE_DIR = Path.home() / ".securatron"
+BASE_DIR = Path.home() / ".acid-burn"
 LEDGER_DIR = BASE_DIR / "global" / "ledger"
 POSTMORTEM_DIR = BASE_DIR / "global" / "post-mortems"
 DB_PATH = BASE_DIR / "global" / "memory" / "index.db"

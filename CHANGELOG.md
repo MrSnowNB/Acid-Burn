@@ -2,15 +2,21 @@
 
 All notable changes to the Acid Burn toolkit and the security auditing pipeline are documented here.
 
-## [v2.2.0] - 2026-05-16 - "The Cyberpunk Expansion"
+## [v2.2.0] - 2026-05-17 - "The Cyberpunk Expansion & Hardening"
 
 ### Core & Rebranding
-- **Rebranded:** Project officially branched from Acid Burn to **Acid Burn**.
-- **Added:** New comprehensive `README.md` with multi-tool architecture mapping.
-- **Added:** **Grok-Driven Intelligence** integration. Leverages xAI Grok Build CLI for autonomous evaluation and strategic planning.
-- **Added:** **5-Gate Validation Protocol** design (Network, Postcondition, Timeout, Schema, and Test Harness).
-- **Added:** Mandatory **Template Resolution** enforcement in `HERMES.md` to prevent placeholder hallucinations.
-- **Repository:** Migration to official repository: `https://github.com/MrSnowNB/Acid-Burn`.
+- **Migration:** 100% complete nomenclature migration from SecuraTron to **Acid Burn**. All 66+ files updated.
+- **Root:** System root migrated from `~/.securatron` to `~/.acid-burn`.
+- **Identity:** Renamed core binaries to `acid-burn` and `acid_burn.py`.
+- **Repository:** Official synchronization with `https://github.com/MrSnowNB/Acid-Burn`.
+
+### Hardening & Field Readiness
+- **Swarm Repair:** Fixed the "Blank Check Bug" (P-1) by blocking empty DAG plans in the inbox watcher.
+- **Crypto-Integrity:** Fixed session ID predictability (P-3) using a cryptographic generator (`sha256(urandom + timestamp)`).
+- **Wireless Atom:** Implemented the "Gold Standard" `wifi.airodump_ng.passive_discovery` atom with a specialized Python toolchain.
+- **Generalized Dispatch:** Refactored engine to support `kali_cli` implementation kind, enabling first-class Python toolchains for all security tools.
+- **Payloads:** Initialized `global/payloads/field_readiness_suite.yaml` with verified, IDS-safe scan configurations.
+- **Sudoers:** Configured specialized `sudoers.d/airodump-ng` rules for autonomous, passwordless execution of airodump, airmon, and nmap.
 
 ### Environment & Tools
 - **Added:** Official **Visual Studio Code** installation via Microsoft repository.
@@ -19,13 +25,9 @@ All notable changes to the Acid Burn toolkit and the security auditing pipeline 
 - **Desktop:** Added launcher shortcuts for VS Code, Antigravity, and Screensaver Settings.
 
 ### Cyberpunk Hub Visuals
-- **Added:** **XScreenSaver** suite with classic hacker visuals:
-    - **GLMatrix:** 3D Matrix digital rain.
-    - **Phosphor:** Retro 1980s green-screen terminal simulation.
-    - **GLSlideshow:** Integrated for tech-feed visualization.
+- **Added:** **XScreenSaver** suite with classic hacker visuals (GLMatrix, Phosphor, GLSlideshow).
 - **Added:** **CMatrix** for terminal-based digital rain effects.
 - **Added:** Full suite of official **Kali Linux Wallpapers** (2019-2025).
-- **Added:** **Telnet** integration for ASCII-based Star Wars animation.
 - **Fixed:** Resolved conflicts between `xfce4-screensaver` and `xscreensaver`, ensuring cyberpunk visuals autostart on login.
 
 ## [v2.1.0] - 2026-05-13

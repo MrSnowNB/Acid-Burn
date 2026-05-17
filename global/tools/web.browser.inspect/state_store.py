@@ -6,7 +6,7 @@ Keeps element mappings between inspect -> drill -> interact calls.
 import json
 import os
 
-STATE_DIR = os.path.expanduser("~/.securatron/global/tools/web.browser.inspect/.state")
+STATE_DIR = os.path.expanduser("~/.acid-burn/global/tools/web.browser.inspect/.state")
 
 
 def save_page_state(page_id, url, title, interactive_elements):

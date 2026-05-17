@@ -1,4 +1,4 @@
-# Securatron Status Report
+# Acid Burn Status Report
 **Time:** April 28, 2026 ~21:40 UTC
 
 ## Current State

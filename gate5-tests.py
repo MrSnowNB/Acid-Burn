@@ -16,7 +16,7 @@ import sys
 import subprocess
 import yaml
 
-ATOM_PATH = "/home/mark/Desktop/hybrid_scratchpad/atoms/nmap.yaml"
+ATOM_PATH = "/home/mark/Acid-Burn/atoms/nmap.yaml"
 
 errors = []
 passed = 0
@@ -35,10 +35,10 @@ def check(name, condition, detail=""):
 print("\n=== CHECK 1: Independent Gate Execution ===")
 
 gate_scripts = [
-    "/home/mark/Desktop/hybrid_scratchpad/gate1-tests.py",
-    "/home/mark/Desktop/hybrid_scratchpad/gate2-tests.py",
-    "/home/mark/Desktop/hybrid_scratchpad/gate3-tests.py",
-    "/home/mark/Desktop/hybrid_scratchpad/gate4-tests.py",
+    "/home/mark/Acid-Burn/gate1-tests.py",
+    "/home/mark/Acid-Burn/gate2-tests.py",
+    "/home/mark/Acid-Burn/gate3-tests.py",
+    "/home/mark/Acid-Burn/gate4-tests.py",
 ]
 
 gate_results = {}

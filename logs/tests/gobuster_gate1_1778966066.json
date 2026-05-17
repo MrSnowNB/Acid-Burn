@@ -1,0 +1,299 @@
+[
+  {
+    "ts": "2026-05-16T21:14:11.099802+00:00Z",
+    "tool": "web.gobuster",
+    "card_version": 1,
+    "gate": "GATE_1_NETWORK_REACHABILITY",
+    "test": "gate1.0.1_valid_inputs_no_templates",
+    "status": "PASS",
+    "detail": "valid inputs should pass: err="
+  },
+  {
+    "ts": "2026-05-16T21:14:11.099823+00:00Z",
+    "tool": "web.gobuster",
+    "card_version": 1,
+    "gate": "GATE_1_NETWORK_REACHABILITY",
+    "test": "gate1.0.2_catch_unresolved_template_in_target",
+    "status": "PASS",
+    "detail": "should reject unresolved template: err=template_not_resolved: input 'target' contains unresolved template '{inputs.target}' \u2014 resolve to actual value"
+  },
+  {
+    "ts": "2026-05-16T21:14:11.099834+00:00Z",
+    "tool": "web.gobuster",
+    "card_version": 1,
+    "gate": "GATE_1_NETWORK_REACHABILITY",
+    "test": "gate1.0.3_catch_unresolved_template_in_flags",
+    "status": "PASS",
+    "detail": "should reject unresolved template: err=template_not_resolved: input 'flags' contains unresolved template '{inputs.flags}' \u2014 resolve to actual value"
+  },
+  {
+    "ts": "2026-05-16T21:14:11.099842+00:00Z",
+    "tool": "web.gobuster",
+    "card_version": 1,
+    "gate": "GATE_1_NETWORK_REACHABILITY",
+    "test": "gate1.0.4_catch_unresolved_template_in_wordlist",
+    "status": "PASS",
+    "detail": "should reject unresolved template: err=template_not_resolved: input 'wordlist' contains unresolved template '{inputs.wordlist}' \u2014 resolve to actual value"
+  },
+  {
+    "ts": "2026-05-16T21:14:11.099848+00:00Z",
+    "tool": "web.gobuster",
+    "card_version": 1,
+    "gate": "GATE_1_NETWORK_REACHABILITY",
+    "test": "gate1.0.5_no_false_positive_safe_inputs",
+    "status": "PASS",
+    "detail": "safe inputs should not trigger false positive"
+  },
+  {
+    "ts": "2026-05-16T21:14:11.099857+00:00Z",
+    "tool": "web.gobuster",
+    "card_version": 1,
+    "gate": "GATE_1_NETWORK_REACHABILITY",
+    "test": "gate1.0.6_catch_nested_template",
+    "status": "PASS",
+    "detail": "should catch nested unresolved template: err=template_not_resolved in 'flags.sub': contains '{inputs.*}' pattern"
+  },
+  {
+    "ts": "2026-05-16T21:14:11.099864+00:00Z",
+    "tool": "web.gobuster",
+    "card_version": 1,
+    "gate": "GATE_1_NETWORK_REACHABILITY",
+    "test": "gate1.1.1_reject_missing_target",
+    "status": "PASS",
+    "detail": "missing target should be rejected"
+  },
+  {
+    "ts": "2026-05-16T21:14:11.099872+00:00Z",
+    "tool": "web.gobuster",
+    "card_version": 1,
+    "gate": "GATE_1_NETWORK_REACHABILITY",
+    "test": "gate1.1.2_reject_empty_target",
+    "status": "PASS",
+    "detail": "empty target resolved to: None"
+  },
+  {
+    "ts": "2026-05-16T21:14:11.099938+00:00Z",
+    "tool": "web.gobuster",
+    "card_version": 1,
+    "gate": "GATE_1_NETWORK_REACHABILITY",
+    "test": "gate1.1.3_accept_valid_ip",
+    "status": "PASS",
+    "detail": "valid IP resolved to: 127.0.0.1"
+  },
+  {
+    "ts": "2026-05-16T21:14:11.099947+00:00Z",
+    "tool": "web.gobuster",
+    "card_version": 1,
+    "gate": "GATE_1_NETWORK_REACHABILITY",
+    "test": "gate1.1.4_accept_valid_hostname",
+    "status": "PASS",
+    "detail": "hostname resolved to: example.com"
+  },
+  {
+    "ts": "2026-05-16T21:14:11.099954+00:00Z",
+    "tool": "web.gobuster",
+    "card_version": 1,
+    "gate": "GATE_1_NETWORK_REACHABILITY",
+    "test": "gate1.1.5_strip_protocol_from_target",
+    "status": "PASS",
+    "detail": "URL resolved to: 127.0.0.1"
+  },
+  {
+    "ts": "2026-05-16T21:14:11.099960+00:00Z",
+    "tool": "web.gobuster",
+    "card_version": 1,
+    "gate": "GATE_1_NETWORK_REACHABILITY",
+    "test": "gate1.1.6_strip_port_from_target",
+    "status": "PASS",
+    "detail": "URL with port resolved to: 127.0.0.1"
+  },
+  {
+    "ts": "2026-05-16T21:14:11.099988+00:00Z",
+    "tool": "web.gobuster",
+    "card_version": 1,
+    "gate": "GATE_1_NETWORK_REACHABILITY",
+    "test": "gate1.1.7_default_wordlist_exists",
+    "status": "PASS",
+    "detail": "default wordlist /usr/share/wordlists/dirb/small.txt exists: True"
+  },
+  {
+    "ts": "2026-05-16T21:14:11.099995+00:00Z",
+    "tool": "web.gobuster",
+    "card_version": 1,
+    "gate": "GATE_1_NETWORK_REACHABILITY",
+    "test": "gate1.1.8_command_uses_safe_vars",
+    "status": "PASS",
+    "detail": "cmd uses {target}/True, {wordlist}/True, {flags}/True"
+  },
+  {
+    "ts": "2026-05-16T21:14:11.100003+00:00Z",
+    "tool": "web.gobuster",
+    "card_version": 1,
+    "gate": "GATE_1_NETWORK_REACHABILITY",
+    "test": "gate1.2.1_loopback_reachable_IPv4 loopback",
+    "status": "PASS",
+    "detail": "IPv4 loopback (127.0.0.1): reachable=True, err="
+  },
+  {
+    "ts": "2026-05-16T21:14:11.100011+00:00Z",
+    "tool": "web.gobuster",
+    "card_version": 1,
+    "gate": "GATE_1_NETWORK_REACHABILITY",
+    "test": "gate1.2.2_loopback_reachable_hostname loopback",
+    "status": "PASS",
+    "detail": "hostname loopback (localhost): reachable=True, err="
+  },
+  {
+    "ts": "2026-05-16T21:14:11.100018+00:00Z",
+    "tool": "web.gobuster",
+    "card_version": 1,
+    "gate": "GATE_1_NETWORK_REACHABILITY",
+    "test": "gate1.2.3_loopback_reachable_IPv6 loopback",
+    "status": "PASS",
+    "detail": "IPv6 loopback (::1): reachable=True, err="
+  },
+  {
+    "ts": "2026-05-16T21:14:16.107434+00:00Z",
+    "tool": "web.gobuster",
+    "card_version": 1,
+    "gate": "GATE_1_NETWORK_REACHABILITY",
+    "test": "gate1.3._1_external_unreachable_192.0.2.1",
+    "status": "PASS",
+    "detail": "192.0.2.1: reachable=False (should be False), err=network_unreachable: host '192.0.2.1' not reachable on ports [22, 80, 443, 8080, 3389]"
+  },
+  {
+    "ts": "2026-05-16T21:14:21.114001+00:00Z",
+    "tool": "web.gobuster",
+    "card_version": 1,
+    "gate": "GATE_1_NETWORK_REACHABILITY",
+    "test": "gate1.3._2_external_unreachable_198.51.100.1",
+    "status": "PASS",
+    "detail": "198.51.100.1: reachable=False (should be False), err=network_unreachable: host '198.51.100.1' not reachable on ports [22, 80, 443, 8080, 3389]"
+  },
+  {
+    "ts": "2026-05-16T21:14:26.121559+00:00Z",
+    "tool": "web.gobuster",
+    "card_version": 1,
+    "gate": "GATE_1_NETWORK_REACHABILITY",
+    "test": "gate1.3._3_external_unreachable_203.0.113.1",
+    "status": "PASS",
+    "detail": "203.0.113.1: reachable=False (should be False), err=network_unreachable: host '203.0.113.1' not reachable on ports [22, 80, 443, 8080, 3389]"
+  },
+  {
+    "ts": "2026-05-16T21:14:26.121691+00:00Z",
+    "tool": "web.gobuster",
+    "card_version": 1,
+    "gate": "GATE_1_NETWORK_REACHABILITY",
+    "test": "gate1.4.1_card_has_explicit_timeout",
+    "status": "FAIL",
+    "detail": "card should have execution.timeout_seconds, found: None"
+  },
+  {
+    "ts": "2026-05-16T21:14:26.121711+00:00Z",
+    "tool": "web.gobuster",
+    "card_version": 1,
+    "gate": "GATE_1_NETWORK_REACHABILITY",
+    "test": "gate1.4.2_timeout_sufficient",
+    "status": "PASS",
+    "detail": "timeout should be >= 60s, found: None"
+  },
+  {
+    "ts": "2026-05-16T21:14:26.121722+00:00Z",
+    "tool": "web.gobuster",
+    "card_version": 1,
+    "gate": "GATE_1_NETWORK_REACHABILITY",
+    "test": "gate1.4.3_timeout_reasonable",
+    "status": "PASS",
+    "detail": "timeout should be <= 300s, found: None"
+  },
+  {
+    "ts": "2026-05-16T21:14:26.121737+00:00Z",
+    "tool": "web.gobuster",
+    "card_version": 1,
+    "gate": "GATE_1_NETWORK_REACHABILITY",
+    "test": "gate1.5.1_no_double_brace_in_cmd",
+    "status": "PASS",
+    "detail": "command should not use {inputs.*} templates, found: False"
+  },
+  {
+    "ts": "2026-05-16T21:14:26.121752+00:00Z",
+    "tool": "web.gobuster",
+    "card_version": 1,
+    "gate": "GATE_1_NETWORK_REACHABILITY",
+    "test": "gate1.5.2_no_dangerous_shell_ops_in_template",
+    "status": "PASS",
+    "detail": "dangerous operators in template: []"
+  },
+  {
+    "ts": "2026-05-16T21:14:26.121783+00:00Z",
+    "tool": "web.gobuster",
+    "card_version": 1,
+    "gate": "GATE_1_NETWORK_REACHABILITY",
+    "test": "gate1.5.3_no_dollar_brace_in_template",
+    "status": "PASS",
+    "detail": "command should use {var} not dollar-brace: False"
+  },
+  {
+    "ts": "2026-05-16T21:14:26.123965+00:00Z",
+    "tool": "web.gobuster",
+    "card_version": 1,
+    "gate": "GATE_1_NETWORK_REACHABILITY",
+    "test": "gate1.5.4_safe_expand_no_injection",
+    "status": "PASS",
+    "detail": "expanded command: gobuster dir -u http://127.0.0.1 -w /usr/share/wordlists/dirb/small.txt -f --no-error -q -t 10..."
+  },
+  {
+    "ts": "2026-05-16T21:14:26.123997+00:00Z",
+    "tool": "web.gobuster",
+    "card_version": 1,
+    "gate": "GATE_1_NETWORK_REACHABILITY",
+    "test": "gate1.6.1_parser_registered_for_output_type",
+    "status": "PASS",
+    "detail": "output type 'shell.run.v1' registered in PARSERS: ['shell.run.v1', 'fs.read.v1', 'nmap.scan.v1', 'whatweb.fingerprint.v1', 'nikto.scan.v1', 'web.browser.drill.v1', 'web.browser.interact.v1', 'exploit.search.v1', 'post.exploit.recon.v1', 'web.browser.inspect.v1']"
+  },
+  {
+    "ts": "2026-05-16T21:14:26.124010+00:00Z",
+    "tool": "web.gobuster",
+    "card_version": 1,
+    "gate": "GATE_1_NETWORK_REACHABILITY",
+    "test": "gate1.6.2_parser_returns_dict",
+    "status": "PASS",
+    "detail": "parser returns dict: <class 'dict'> \u2014 note: shell.run.v1 returns raw (needs dedicated parser)"
+  },
+  {
+    "ts": "2026-05-16T21:14:26.124026+00:00Z",
+    "tool": "web.gobuster",
+    "card_version": 1,
+    "gate": "GATE_1_NETWORK_REACHABILITY",
+    "test": "gate1.7.1_path_has_session_placeholder",
+    "status": "PASS",
+    "detail": "artifact path: {session}/artifacts/gobuster-{ts}.raw"
+  },
+  {
+    "ts": "2026-05-16T21:14:26.124032+00:00Z",
+    "tool": "web.gobuster",
+    "card_version": 1,
+    "gate": "GATE_1_NETWORK_REACHABILITY",
+    "test": "gate1.7.2_path_has_ts_placeholder",
+    "status": "PASS",
+    "detail": "artifact path: {session}/artifacts/gobuster-{ts}.raw"
+  },
+  {
+    "ts": "2026-05-16T21:14:26.124037+00:00Z",
+    "tool": "web.gobuster",
+    "card_version": 1,
+    "gate": "GATE_1_NETWORK_REACHABILITY",
+    "test": "gate1.7.3_path_is_relative",
+    "status": "PASS",
+    "detail": "artifact path should be relative, found: {session}/artifacts/gobuster-{ts}.raw"
+  },
+  {
+    "ts": "2026-05-16T21:14:26.124042+00:00Z",
+    "tool": "web.gobuster",
+    "card_version": 1,
+    "gate": "GATE_1_NETWORK_REACHABILITY",
+    "test": "gate1.7.4_path_uses_raw_extension",
+    "status": "PASS",
+    "detail": "artifact path extension: {session}/artifacts/gobuster-{ts}.raw"
+  }
+]

@@ -1,0 +1,146 @@
+schema_version: 1.2
+id: wifi.airodump_ng.passive_discovery
+kind: atom
+name: airodump-ng Passive Discovery
+version: 0.9.0
+
+description: |
+  Passive 802.11 frame capture and discovery of nearby Access Points and clients
+  using monitor mode. This is the foundational WiFi reconnaissance primitive.
+  It performs no active attacks, no deauthentication, and no targeted injection.
+
+  Intended as the primary starting point for most wireless assessments.
+
+author: Acid Burn (Gold Standard Reference)
+safety_class: passive_monitor
+idempotency_class: network_impure
+blast_radius: local_rf_only
+
+implementation:
+  kind: kali_cli
+  binary: airodump-ng
+  toolchain:
+    python_package: atoms.wifi.airodump_ng.passive_discovery
+    command_builder: command_builder.build_command
+    output_parser: output_parser.parse_output
+  requires_sudo: true
+
+parameters:
+  - name: interface
+    type: string
+    required: true
+    description: Monitor-mode wireless interface (e.g. wlan1mon, wlan0mon)
+    validation_regex: "^[a-zA-Z0-9_]+$"
+    examples: ["wlan1mon", "wlan0mon"]
+
+  - name: duration
+    type: integer
+    required: false
+    default: 30
+    minimum: 5
+    maximum: 300
+    description: Duration to run the capture in seconds before automatically stopping.
+    unit: seconds
+
+  - name: band
+    type: string
+    required: false
+    default: "abg"
+    enum: ["2.4", "5", "6", "abg"]
+    description: |
+      Frequency band(s) to scan.
+      - "2.4" : 2.4 GHz only
+      - "5"   : 5 GHz only
+      - "6"   : 6 GHz only (Wi-Fi 6E)
+      - "abg" : All bands (default)
+
+  - name: channels
+    type: list
+    required: false
+    items:
+      type: integer
+    description: Specific channels to scan (overrides band if provided). Use with caution on wide ranges.
+    examples: [[1, 6, 11], [36, 40, 44]]
+
+  - name: include_clients
+    type: boolean
+    required: false
+    default: true
+    description: Whether to also capture and return associated client information.
+
+  - name: output_prefix
+    type: string
+    required: false
+    default: "/tmp/airodump-passive"
+    description: Base path prefix for output files. airodump-ng will append -01.csv, -01.cap, etc.
+
+preconditions:
+  - "command -v airodump-ng >/dev/null 2>&1"
+  - "test -d /sys/class/net/{interface}"
+  - "iw dev {interface} info 2>/dev/null | grep -q 'type: monitor' || echo 'WARNING: Interface may not be in monitor mode'"
+
+output_schema:
+  access_points:
+    type: list
+    description: List of discovered Access Points
+    items:
+      type: object
+      properties:
+        bssid:
+          type: string
+          description: MAC address of the Access Point
+        essid:
+          type: string
+          nullable: true
+          description: Network name (may be hidden)
+        channel:
+          type: integer
+          nullable: true
+        signal:
+          type: integer
+          nullable: true
+          description: Signal strength in dBm
+        encryption:
+          type: string
+          nullable: true
+          description: "WPA2, WPA3, WEP, OPN, etc."
+        cipher:
+          type: string
+          nullable: true
+        authentication:
+          type: string
+          nullable: true
+        beacons:
+          type: integer
+        data_packets:
+          type: integer
+        first_seen:
+          type: string
+        last_seen:
+          type: string
+
+  clients:
+    type: list
+    description: List of discovered client stations (only if include_clients=true)
+    items:
+      type: object
+      properties:
+        station_mac:
+          type: string
+        bssid:
+          type: string
+          nullable: true
+        signal:
+          type: integer
+          nullable: true
+        packets:
+          type: integer
+        probes:
+          type: string
+          nullable: true
+          description: Probe requests (ESSIDs the client has tried to connect to)
+
+notes: |
+  This Atom is deliberately narrow. It performs passive discovery only.
+  For targeted capture against a specific BSSID, use the `targeted_capture` Atom.
+  For active attacks or handshake capture, different (higher risk) Atoms will be used.

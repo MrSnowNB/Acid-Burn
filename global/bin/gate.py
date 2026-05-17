@@ -5,7 +5,7 @@ import os
 import socket
 from pathlib import Path
 
-BASE_DIR = Path.home() / ".securatron"
+BASE_DIR = Path.home() / ".acid-burn"
 
 # Default ports to probe for reachability check
 _REACHABILITY_PORTS = [22, 80, 443, 8080, 3389]

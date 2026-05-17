@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Securatron Threat Correlation Engine
+Acid Burn Threat Correlation Engine
 First Principles Architecture — Correlation Layer
 
 Usage:

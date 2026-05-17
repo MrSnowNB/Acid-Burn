@@ -1,0 +1,2 @@
+# This file exists so the results directory is tracked in git.
+# Actual result files are gitignored via .gitignore in the parent tests/ folder.

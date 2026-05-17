@@ -102,7 +102,7 @@ def parse_nikto_scan(raw_stdout, **kwargs):
     session = inputs.get("session", "unknown")
     ts = inputs.get("ts", "unknown")
     
-    BASE_DIR = Path.home() / ".securatron"
+    BASE_DIR = Path.home() / ".acid-burn"
     
     # Try both naming conventions: nikto-{ts}.json and web.nikto-{ts}.json
     json_path = None

@@ -179,29 +179,29 @@ At the end of each build sprint (or before cron job iteration N is complete):
 
 ```bash
 # Step 1: Scan ledgers and extract patterns
-python3 ~/.securatron/global/bin/analyze_trials.py
+python3 ~/.Acid Burn/global/bin/analyze_trials.py
 
 # Step 2: Review detected patterns
-python3 ~/.securatron/global/bin/apply_improvements.py list --open
+python3 ~/.Acid Burn/global/bin/apply_improvements.py list --open
 
 # Step 3: View details of a specific ticket
-python3 ~/.securatron/global/bin/apply_improvements.py view IT-web.nikto-001
+python3 ~/.Acid Burn/global/bin/apply_improvements.py view IT-web.nikto-001
 
 # Step 4: Verify an improvement ticket
-python3 ~/.securatron/global/bin/apply_improvements.py verify IT-web.nikto-001 --trial 01KQ5YWR4JZZN77TF6RMN1HK20
+python3 ~/.Acid Burn/global/bin/apply_improvements.py verify IT-web.nikto-001 --trial 01KQ5YWR4JZZN77TF6RMN1HK20
 
 # Step 5: Close a verified ticket
-python3 ~/.securatron/global/bin/apply_improvements.py close IT-web.nikto-001 --evidence "re-run on scanme.nmap.org succeeded, 3 consecutive passes"
+python3 ~/.Acid Burn/global/bin/apply_improvements.py close IT-web.nikto-001 --evidence "re-run on scanme.nmap.org succeeded, 3 consecutive passes"
 ```
 
 ### Automated Extraction (Cron)
 
 ```bash
 # Run every 30 minutes during build sprints
-* * 9-21 * * * cd ~/.securatron/global && python3 bin/analyze_trials.py --json >> global/ledger/extraction.log 2>&1
+* * 9-21 * * * cd ~/.Acid Burn/global && python3 bin/analyze_trials.py --json >> global/ledger/extraction.log 2>&1
 
 # Daily summary at 22:00
-0 22 * * * python3 ~/.securatron/global/bin/apply_improvements.py list >> ~/.hermes/logs/sil-daily.txt 2>&1
+0 22 * * * python3 ~/.Acid Burn/global/bin/apply_improvements.py list >> ~/.hermes/logs/sil-daily.txt 2>&1
 ```
 
 ### Quick Reference: Failure Mode Codes

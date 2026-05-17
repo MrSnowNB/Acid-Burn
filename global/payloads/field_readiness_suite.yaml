@@ -1,0 +1,40 @@
+id: acid-burn-field-ready-v1
+version: 1.0.0
+description: "Hardened payload suite for Nmap and Gobuster verification"
+
+test_cases:
+  - id: nmap_stealth_recon
+    tool: kali.nmap
+    inputs:
+      target: "127.0.0.1"
+      scan_type: "syn-scan"
+      ports: "22,80,443"
+      timing_template: "polite"
+      dns_resolution: false
+      max_rate: 100
+      reason: "Field readiness check: Stealth recon"
+
+  - id: nmap_service_audit
+    tool: kali.nmap
+    inputs:
+      target: "127.0.0.1"
+      scan_type: "version-detect"
+      ports: "1-100"
+      version_intensity: 7
+      max_rate: 500
+      reason: "Field readiness check: Service versioning"
+
+  - id: gobuster_directory_burst
+    tool: web.gobuster
+    inputs:
+      target: "127.0.0.1"
+      wordlist: "/usr/share/wordlists/dirb/small.txt"
+      flags: "-f --no-error -q -t 5"
+
+  - id: wifi_passive_scan
+    tool: wifi.airodump_ng.passive_discovery
+    inputs:
+      interface: "wlan1mon"
+      duration: 10
+      band: "abg"
+      reason: "Field readiness check: Wireless discovery"

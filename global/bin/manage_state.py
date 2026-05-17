@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Securatron State Management Tool
+Acid Burn State Management Tool
 
 Manages the persistent state file that survives context compaction.
 This file is the source of truth for project state between sessions.
@@ -31,7 +31,7 @@ from datetime import datetime, timezone
 
 def get_state_path(project_id: str) -> Path:
     """Get the path to the state file for a project."""
-    return Path.home() / ".securatron" / "projects" / project_id / "state.json"
+    return Path.home() / ".acid-burn" / "projects" / project_id / "state.json"
 
 
 def read_state(project_id: str) -> dict:
@@ -133,7 +133,7 @@ def validate_state(state: dict) -> tuple[bool, list[str]]:
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Securatron State Management Tool")
+    parser = argparse.ArgumentParser(description="Acid Burn State Management Tool")
     parser.add_argument("--project", required=True, help="Project ID")
     parser.add_argument("--action", required=True, choices=["read", "update", "append", "delete", "validate"],
                        help="Action to perform")

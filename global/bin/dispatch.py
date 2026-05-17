@@ -1,4 +1,5 @@
 import sys
+import os
 import subprocess
 import time
 import json
@@ -13,7 +14,15 @@ import ledger
 import mem
 import parsers
 
-BASE_DIR = Path.home() / ".securatron"
+# Standardize project root detection (Acid Burn Field Readiness)
+ACID_BURN_ROOT = os.environ.get("ACID_BURN_ROOT") or str(Path(__file__).parent.parent.parent.absolute())
+BASE_DIR = Path(ACID_BURN_ROOT)
+if not (BASE_DIR / "global" / "tools").exists():
+    BASE_DIR = Path.home() / ".acid-burn"
+
+# Ensure directories exist
+(BASE_DIR / "sessions").mkdir(parents=True, exist_ok=True)
+(BASE_DIR / "global" / "ledger").mkdir(parents=True, exist_ok=True)
 
 # Template resolution guard: regex to detect unresolved {{inputs.*}} patterns
 _UNRESOLVED_TEMPLATE_RE = re.compile(r'\{\{inputs\.\w+\}\}')
@@ -85,6 +94,8 @@ def dispatch(card: dict, inputs: dict, project_id: str, session_id: str) -> dict
     try:
         if impl["kind"] == "shell":
             result = run_shell_atom(card, inputs, session_id)
+        elif impl["kind"] == "kali_cli":
+            result = run_kali_cli_atom(card, inputs, session_id)
         elif impl["kind"] == "python":
             result = run_python_atom(card, inputs, session_id)
         elif impl["kind"] == "compose":
@@ -123,6 +134,66 @@ def dispatch(card: dict, inputs: dict, project_id: str, session_id: str) -> dict
             trial_entry["steps"] = []
         ledger.record_trial(skill_id, trial_entry)
         return {"ok": False, "reason": "dispatch_exception", "error": str(e)}
+
+def run_kali_cli_atom(card: dict, inputs: dict, session_id: str) -> dict:
+    """Execute a kali_cli-kind Atom using its Python toolchain."""
+    try:
+        from atom_loader import load_atom
+        from atom_runner import run_atom
+        
+        # Ensure project root is in sys.path so atoms.* packages are importable
+        project_root = str(BASE_DIR)
+        if project_root not in sys.path:
+            sys.path.insert(0, project_root)
+            
+        # Locate the YAML — for kali_cli, it should be in global/tools
+        # but the toolchain source lives in atoms/
+        skill_id = card["id"]
+        yaml_path = BASE_DIR / f"global/tools/{skill_id}.yaml"
+        if not yaml_path.exists():
+            # Fallback to searching atoms/ tree if not in global/tools
+            atom_root = BASE_DIR / "atoms"
+            possible_paths = list(atom_root.rglob(f"**/{skill_id.split('.')[-1]}.yaml"))
+            if not possible_paths:
+                return {"ok": False, "reason": "atom_yaml_not_found", "skill_id": skill_id}
+            yaml_path = possible_paths[0]
+            
+        atom_def = load_atom(yaml_path)
+        
+        # Merge built-ins into inputs for the runner
+        expand_inputs = dict(inputs)
+        expand_inputs['session'] = session_id
+        expand_inputs['ts'] = str(int(time.time()))
+        expand_inputs['base_dir'] = str(BASE_DIR)
+        
+        result = run_atom(atom_def, expand_inputs, session_id=session_id, base_dir=BASE_DIR)
+        
+        # Map runner status to dispatch status
+        status = result.get("status")
+        if status == "success":
+            return {
+                "ok": True,
+                "result": result.get("parsed_output"),
+                "artifact_path": result.get("artifact_path")
+            }
+        elif status == "tool_error":
+             return {
+                "ok": False,
+                "reason": "tool_error",
+                "result": result.get("parsed_output"),
+                "returncode": result.get("returncode"),
+                "artifact_path": result.get("artifact_path")
+            }
+        else:
+            return {
+                "ok": False,
+                "reason": status,
+                "error": result.get("error"),
+                "artifact_path": result.get("artifact_path")
+            }
+            
+    except Exception as e:
+        return {"ok": False, "reason": "kali_cli_execution_exception", "error": str(e)}
 
 def run_shell_atom(card: dict, inputs: dict, session_id: str) -> dict:
     """Execute a shell-kind Skill Card."""

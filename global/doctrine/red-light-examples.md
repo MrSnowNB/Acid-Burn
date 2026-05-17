@@ -1,6 +1,6 @@
 # Doctrine: Red-Light Examples
 
-This document tracks instances where the Securatron harness or operator intentionally "red-lighted" (halted) an action due to a mismatch between expected and actual system state.
+This document tracks instances where the Acid Burn harness or operator intentionally "red-lighted" (halted) an action due to a mismatch between expected and actual system state.
 
 ## Example 1 — 2026-04-26 10:15 EDT — Stopped Before False Cleanup
 

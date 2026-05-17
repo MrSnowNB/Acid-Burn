@@ -3,7 +3,8 @@ Post-Mortem: web.gobuster Atom
 Date: 2026-04-26
 Author: Hermes / Acid Burn Outer Builder
 Skill: web.gobuster (atom)
-Reference: web.whatweb (pattern)
+Reference: web.whatweb (pattern)  
+Archive: Legacy Acid Burn record — preserved as part of Acid Burn historical archive
 
 ## Objective
 
@@ -33,7 +34,7 @@ All five criteria met.
 
 ### 1. No CLI Entry Point on dispatch.py
 
-The task description mentions `python3 ~/.securatron/global/bin/dispatch.py --skill web.gobuster`
+The task description mentions `python3 ~/.acid-burn/global/bin/dispatch.py --skill web.gobuster`
 but dispatch.py has no CLI entry point (no argparse, no sys.argv handling, no main()).
 The dispatch function is invoked via run_trials.py scripts or via the MCP server
 (mcp_server.py) which wraps dispatch in invoke_skill().

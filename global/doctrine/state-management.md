@@ -2,7 +2,7 @@
 
 ## Overview
 
-Securatron uses a persistent state file to maintain project context between sessions and during context compaction. This state file is the source of truth for:
+Acid Burn uses a persistent state file to maintain project context between sessions and during context compaction. This state file is the source of truth for:
 - Current progress and priorities
 - Known issues and their status
 - Atom status and trial results
@@ -11,7 +11,7 @@ Securatron uses a persistent state file to maintain project context between sess
 
 ## State File Location
 
-`~/.securatron/projects/<project_id>/state.json`
+`~/.Acid Burn/projects/<project_id>/state.json`
 
 ## State File Schema
 
@@ -51,25 +51,25 @@ Use the `manage_state.py` tool:
 
 ```bash
 # Read the current state
-python3 ~/.securatron/global/bin/manage_state.py --project lab-internal --action read
+python3 ~/.Acid Burn/global/bin/manage_state.py --project lab-internal --action read
 
 # Update a key
-python3 ~/.securatron/global/bin/manage_state.py --project lab-internal --action update --key progress.total_sessions --value 88
+python3 ~/.Acid Burn/global/bin/manage_state.py --project lab-internal --action update --key progress.total_sessions --value 88
 
 # Append to a list
-python3 ~/.securatron/global/bin/manage_state.py --project lab-internal --action append --key recent_sessions --value '{"session_id": "abc123"}'
+python3 ~/.Acid Burn/global/bin/manage_state.py --project lab-internal --action append --key recent_sessions --value '{"session_id": "abc123"}'
 
 # Delete a key
-python3 ~/.securatron/global/bin/manage_state.py --project lab-internal --action delete --key current_session
+python3 ~/.Acid Burn/global/bin/manage_state.py --project lab-internal --action delete --key current_session
 
 # Validate the state
-python3 ~/.securatron/global/bin/manage_state.py --project lab-internal --action validate
+python3 ~/.Acid Burn/global/bin/manage_state.py --project lab-internal --action validate
 ```
 
 Use the `sync_session_state.py` tool to sync the current session's results:
 
 ```bash
-python3 ~/.securatron/global/bin/sync_session_state.py --project lab-internal --session 01KQGKSK03QY35VDPJWDVX7K30 --status success --findings 1 --notes "Template resolution issue"
+python3 ~/.Acid Burn/global/bin/sync_session_state.py --project lab-internal --session 01KQGKSK03QY35VDPJWDVX7K30 --status success --findings 1 --notes "Template resolution issue"
 ```
 
 ## State Updates During Session

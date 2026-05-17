@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Securatron Validation Suite
+Acid Burn Validation Suite
 First Principles Architecture — Validation Layer
 
 Usage:
@@ -157,13 +157,13 @@ def check_filesystem(v):
     def fn():
         import os
         required_files = [
-            "/home/mark/.securatron/terminal/security-interface.html",
-            "/home/mark/.securatron/terminal/ARCHITECTURE.md",
-            "/home/mark/.securatron/terminal/README.md",
-            "/home/mark/.securatron/terminal/scripts/analyze.py",
-            "/home/mark/.securatron/terminal/scripts/correlate.py",
-            "/home/mark/.securatron/terminal/scripts/scanner.py",
-            "/home/mark/.securatron/bin/model_manager.py",
+            "/home/mark/.acid-burn/terminal/security-interface.html",
+            "/home/mark/.acid-burn/terminal/ARCHITECTURE.md",
+            "/home/mark/.acid-burn/terminal/README.md",
+            "/home/mark/.acid-burn/terminal/scripts/analyze.py",
+            "/home/mark/.acid-burn/terminal/scripts/correlate.py",
+            "/home/mark/.acid-burn/terminal/scripts/scanner.py",
+            "/home/mark/.acid-burn/bin/model_manager.py",
         ]
         return all(os.path.exists(f) for f in required_files)
     return v.check("Filesystem Structure", fn)
@@ -184,7 +184,7 @@ def check_http_server(v):
 def main():
     fast_only = "--fast" in sys.argv
     
-    print(f"\n  Securatron Validation Suite")
+    print(f"\n  Acid Burn Validation Suite")
     print(f"  Time: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
     print(f"{'='*60}")
     

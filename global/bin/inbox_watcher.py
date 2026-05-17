@@ -115,7 +115,7 @@ class StructuredFormatter(logging.Formatter):
 def setup_logging(log_level="DEBUG", log_dir=None):
     """Set up comprehensive logging infrastructure."""
     if log_dir is None:
-        log_dir = Path.home() / '.securatron' / 'logs'
+        log_dir = Path.home() / '.acid-burn' / 'logs'
     
     log_dir = Path(log_dir)
     log_dir.mkdir(parents=True, exist_ok=True)
@@ -150,7 +150,7 @@ class WatcherConfig:
     """Watcher configuration loaded from config.yaml or defaults."""
     
     DEFAULT_CONFIG = {
-        'root': str(Path.home() / '.securatron' / 'projects' / 'lab-internal' / 'inbox'),
+        'root': str(Path.home() / '.acid-burn' / 'projects' / 'lab-internal' / 'inbox'),
         'queues': [
             {'name': 'inbox', 'path': 'inbox', 'priority': 'normal'},
             {'name': 'inbox.urgent', 'path': 'inbox.urgent', 'priority': 'urgent'},
@@ -162,7 +162,7 @@ class WatcherConfig:
         },
         'age_threshold': 86400,  # 24 hours
         'max_retries': 1,
-        'schema_path': str(Path.home() / '.securatron' / 'global' / 'charters' / 'inbox-ticket.schema.json'),
+        'schema_path': str(Path.home() / '.acid-burn' / 'global' / 'charters' / 'inbox-ticket.schema.json'),
     }
     
     def __init__(self, config_path=None):

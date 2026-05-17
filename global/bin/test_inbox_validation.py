@@ -13,7 +13,7 @@ import time
 from datetime import datetime, timezone
 from pathlib import Path
 
-BASEDIR = Path.home() / '.securatron'
+BASEDIR = Path.home() / '.acid-burn'
 INBOX_ROOT = BASEDIR / 'projects' / 'lab-internal' / 'inbox'
 SCHEMA_PATH = BASEDIR / 'global' / 'charters' / 'inbox-ticket.schema.json'
 WATCHER_PATH = BASEDIR / 'global' / 'bin' / 'inbox_watcher.py'
@@ -140,7 +140,7 @@ def phase_0():
         tests.append({'name': '$schema = draft 2020-12', 'fn': check_schema_draft})
 
         def check_id_prefix():
-            assert schema.get('$id', '').startswith('securatron/inbox-ticket/')
+            assert schema.get('$id', '').startswith('acid-burn/inbox-ticket/')
         tests.append({'name': '$id prefix correct', 'fn': check_id_prefix})
 
         def check_no_extra_props():

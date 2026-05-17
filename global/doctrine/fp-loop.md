@@ -43,7 +43,7 @@ Make only that change. Re-run from Step 2.
 ### Step 6 — Promote
 After required_success successes across required_distinct_inputs,
 the atom is eligible for promotion. Run the promoter:
-  python3 ~/.securatron/global/bin/promoter.py --card {skill_id}
+  python3 ~/.Acid Burn/global/bin/promoter.py --card {skill_id}
 
 Do not promote manually. Let the promoter evaluate the ledger.
 

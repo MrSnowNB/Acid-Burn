@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Securatron Scanner Integration
+Acid Burn Scanner Integration
 First Principles Architecture — Scan Integration Layer
 
 Usage:
@@ -16,7 +16,7 @@ import os
 import urllib.request
 
 LLM_URL = "http://localhost:13305"
-SCAN_DIR = "/tmp/securatron_scans"
+SCAN_DIR = "/tmp/acid_burn_scans"
 
 def ensure_scan_dir():
     os.makedirs(SCAN_DIR, exist_ok=True)

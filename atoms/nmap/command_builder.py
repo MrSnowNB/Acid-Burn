@@ -133,16 +133,15 @@ def build_command(params: dict, dry_run: bool = True) -> str:
     if params.get("skip_host_discovery"):
         cmd.extend(["-Pn"])
 
-    # 7. Add output format
-    of = params.get("output_format")
-    if of and of != "xml":
-        if of in FLAG_MAP["output_format"]:
-            cmd.extend(FLAG_MAP["output_format"][of])
-
-    # 8. Add output file
-    ofile = params.get("output_file")
-    if ofile and ofile != "stdout":
-        cmd.extend(["-o", ofile])
+    # 7. Add output format and file
+    of = params.get("output_format", "xml")
+    ofile = params.get("output_file", "stdout")
+    
+    if of in FLAG_MAP["output_format"]:
+        flags = FLAG_MAP["output_format"][of]
+        target_file = "-" if ofile == "stdout" else ofile
+        for f in flags:
+            cmd.extend([f, target_file])
 
     # 9. Add safety controls
     mr = params.get("max_rate")

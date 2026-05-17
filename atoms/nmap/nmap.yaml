@@ -272,8 +272,8 @@ parameters:
       - --reason
 output_parser:
   format: xml
-  parse_command: "python3 /home/mark/Desktop/hybrid_scratchpad/atoms/nmap_xml_parser.py {output_file}"
-  parser_module: /home/mark/Desktop/hybrid_scratchpad/atoms/nmap_xml_parser.py
+  parse_command: "python3 /home/mark/Acid-Burn/atoms/nmap_xml_parser.py {output_file}"
+  parser_module: /home/mark/Acid-Burn/atoms/nmap_xml_parser.py
   record_schema:
     - field: ip_address
       type: string
@@ -349,7 +349,7 @@ example_invocations:
       target: "192.168.9.0/24"
       scan_type: "host-discovery"
       output_format: "xml"
-      output_file: "/home/mark/Desktop/hybrid_scratchpad/recon_outputs/nmap_discovery.xml"
+      output_file: "/home/mark/Acid-Burn/recon_outputs/nmap_discovery.xml"
       max_rate: 1000
       reason: "Authorized local network discovery"
     expected_output_pattern: "Nmap scan report for.*Host is up.*Nmap done:.*IP addresses.*hosts up"
@@ -360,7 +360,7 @@ example_invocations:
       scan_type: "syn-scan"
       top_ports: 100
       output_format: "xml"
-      output_file: "/home/mark/Desktop/hybrid_scratchpad/recon_outputs/nmap_syn_scan.xml"
+      output_file: "/home/mark/Acid-Burn/recon_outputs/nmap_syn_scan.xml"
       max_rate: 500
       reason: "Authorized service enumeration"
     expected_output_pattern: "Nmap scan report for.*Not shown:.*tcp ports.*Nmap done:"
@@ -370,7 +370,7 @@ example_invocations:
       target: "192.168.9.1 192.168.9.148 192.168.9.190 192.168.9.200"
       scan_type: "version-detect"
       output_format: "xml"
-      output_file: "/home/mark/Desktop/hybrid_scratchpad/recon_outputs/nmap_services.xml"
+      output_file: "/home/mark/Acid-Burn/recon_outputs/nmap_services.xml"
       max_rate: 200
       reason: "Authorized service version detection"
     expected_output_pattern: "Service detection performed.*Nmap done:"
@@ -384,7 +384,7 @@ example_invocations:
       script: "default,safe"
       timing_template: "aggressive"
       output_format: "xml"
-      output_file: "/home/mark/Desktop/hybrid_scratchpad/recon_outputs/nmap_aggressive.xml"
+      output_file: "/home/mark/Acid-Burn/recon_outputs/nmap_aggressive.xml"
       max_rate: 300
       reason: "Authorized security assessment on owned infrastructure"
     expected_output_pattern: "Nmap scan report for.*OS details.*Service detection.*Nmap done:"
@@ -394,7 +394,7 @@ example_invocations:
       target: "192.168.9.1"
       scan_type: "udp-scan"
       output_format: "xml"
-      output_file: "/home/mark/Desktop/hybrid_scratchpad/recon_outputs/nmap_udp.xml"
+      output_file: "/home/mark/Acid-Burn/recon_outputs/nmap_udp.xml"
       max_rate: 50
       reason: "Authorized UDP service discovery"
     expected_output_pattern: "Nmap scan report for.*UDP.*Nmap done:"
@@ -406,7 +406,7 @@ example_invocations:
       ports: "139,445"
       script: "smb-enum-shares,smb-os-info"
       output_format: "xml"
-      output_file: "/home/mark/Desktop/hybrid_scratchpad/recon_outputs/nmap_smb.xml"
+      output_file: "/home/mark/Acid-Burn/recon_outputs/nmap_smb.xml"
       max_rate: 100
       reason: "Authorized SMB share enumeration"
     expected_output_pattern: "Nmap scan report for.*smb-enum-shares.*Nmap done:"
@@ -419,7 +419,7 @@ example_invocations:
       fragment: true
       dns_resolution: false
       output_format: "xml"
-      output_file: "/home/mark/Desktop/hybrid_scratchpad/recon_outputs/nmap_stealth.xml"
+      output_file: "/home/mark/Acid-Burn/recon_outputs/nmap_stealth.xml"
       max_rate: 10
       reason: "Authorized IDS-evasion reconnaissance"
     expected_output_pattern: "Nmap scan report for.*Host is up.*Nmap done:"
@@ -429,7 +429,7 @@ example_invocations:
       target: "example.com"
       scan_type: "traceroute"
       output_format: "normal"
-      output_file: "/home/mark/Desktop/hybrid_scratchpad/recon_outputs/nmap_traceroute.txt"
+      output_file: "/home/mark/Acid-Burn/recon_outputs/nmap_traceroute.txt"
       max_rate: 20
       reason: "Network topology assessment"
     expected_output_pattern: "Nmap scan report for.*TRACEROUTE.*HOP.*RTT"

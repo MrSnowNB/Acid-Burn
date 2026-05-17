@@ -1,0 +1,108 @@
+schema_version: 1.1
+id: wifi.airodump_ng
+kind: atom
+name: airodump-ng Passive 802.11 Recon
+version: 0.1.0
+tier: global
+
+description: >
+  Passive monitor-mode 802.11 frame capture and AP/client discovery using airodump-ng.
+  Returns structured list of access points and associated clients with encryption,
+  channel, signal strength, and vendor information. Core WiFi recon primitive.
+
+author: Acid Burn (WiFi Recon Sprint)
+safety_class: passive_monitor
+idempotency_class: network_impure   # RF environment changes over time
+blast_radius: local_rf_only
+
+# This Atom requires a monitor-mode interface (usually created via airmon-ng or iw)
+preconditions:
+  - "command -v airodump-ng >/dev/null 2>&1"
+  - "test -d /sys/class/net/{interface} || echo 'interface may not exist yet'"
+  - "iw dev {interface} info 2>/dev/null | grep -q 'type: monitor' || echo 'warning: interface may not be in monitor mode'"
+
+implementation:
+  kind: kali_cli
+  binary: airodump-ng
+  toolchain:
+    python_package: atoms.wifi.airodump_ng
+    command_builder: command_builder.build_command
+    output_parser: output_parser.parse_csv_output
+  requires_sudo: true   # monitor mode + packet capture almost always needs root
+
+parameters:
+  - name: interface
+    type: string
+    required: true
+    description: Monitor-mode wireless interface (e.g. wlan1mon, wlan0mon)
+    validation_regex: "^[a-zA-Z0-9_]+$"
+    examples: ["wlan1mon", "wlan0mon"]
+
+  - name: duration
+    type: integer
+    required: false
+    default: 30
+    minimum: 5
+    maximum: 300
+    description: How long to capture (seconds). airodump-ng will be killed after this time.
+    unit: seconds
+
+  - name: channel
+    type: integer
+    required: false
+    minimum: 1
+    maximum: 165
+    description: Specific channel to lock on (highly recommended for faster results)
+    examples: [1, 6, 11, 36, 149]
+
+  - name: bssid
+    type: string
+    required: false
+    description: Filter to a specific BSSID (AP MAC)
+    validation_regex: "^([0-9A-Fa-f]{2}:){5}[0-9A-Fa-f]{2}$"
+
+  - name: essid
+    type: string
+    required: false
+    description: Filter to a specific ESSID (network name)
+
+  - name: output_prefix
+    type: string
+    required: false
+    default: "/tmp/airodump"
+    description: Base path for airodump-ng output files (it will append -01.csv, -01.cap, etc.)
+
+output_schema:
+  access_points:
+    type: list
+    items:
+      type: object
+      properties:
+        bssid: { type: string }
+        essid: { type: string, nullable: true }
+        channel: { type: integer }
+        signal: { type: integer }
+        encryption: { type: string }          # WPA2, WPA3, WEP, OPN
+        cipher: { type: string, nullable: true }
+        authentication: { type: string, nullable: true }
+        beacons: { type: integer }
+        data_packets: { type: integer }
+        first_seen: { type: string }
+        last_seen: { type: string }
+
+  clients:
+    type: list
+    items:
+      type: object
+      properties:
+        station_mac: { type: string }
+        bssid: { type: string, nullable: true }
+        signal: { type: integer }
+        packets: { type: integer }
+        probes: { type: string, nullable: true }
+
+rubric_score: null   # To be scored during promotion
+notes: |
+  This is a narrow, safety-class-coherent Atom focused purely on passive 802.11 discovery.
+  It deliberately avoids active attacks (deauth, handshake capture, cracking).
+  Requires a physical monitor-mode capable interface.

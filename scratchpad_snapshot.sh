@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
 # scratchpad_snapshot.sh — Creates a timestamped backup of PROJECT_HYBRID_SCRATCHPAD.md
-# Usage: bash /home/mark/Desktop/hybrid_scratchpad/scratchpad_snapshot.sh
+# Usage: bash /home/mark/Acid-Burn/scratchpad_snapshot.sh
 # Creates: ~/.local/share/hybrid_scratchpad/snapshots/<ISO-8601>.md
 # This script is idempotent — calling it multiple times creates separate snapshots.
 # Always call this BEFORE any destructive edit to the scratchpad.
 
 set -euo pipefail
 
-SCRATCHPAD="/home/mark/Desktop/hybrid_scratchpad/PROJECT_HYBRID_SCRATCHPAD.md"
+SCRATCHPAD="/home/mark/Acid-Burn/PROJECT_HYBRID_SCRATCHPAD.md"
 SNAPSHOT_DIR="/home/mark/.local/share/hybrid_scratchpad/snapshots"
 
 # ── Pre-flight checks ──

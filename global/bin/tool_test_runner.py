@@ -19,7 +19,7 @@ import time
 import subprocess
 from pathlib import Path
 
-BASE_DIR = Path.home() / ".securatron"
+BASE_DIR = Path.home() / ".acid-burn"
 TOOLS_DIR = BASE_DIR / "global" / "tools"
 SKILLS_DIR = BASE_DIR / "global" / "skills"
 EVIDENCE_DIR = BASE_DIR / "global" / "evidence" / "locker"
@@ -61,7 +61,7 @@ def safe_mock_inputs(tool_id: str, tool_kind: str) -> dict:
             mock[field_name] = field_def.get("default", "-h")
         elif field_name in ("user_list", "pass_list", "wordlist"):
             # Create a safe temporary wordlist
-            tmp = Path(f"/tmp/securatron-test-{tool_id}-{field_name}.txt")
+            tmp = Path(f"/tmp/acid-burn-test-{tool_id}-{field_name}.txt")
             with open(tmp, "w") as wf:
                 wf.write("admin\ntest\nguest\n")
             mock[field_name] = str(tmp)

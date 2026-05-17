@@ -328,7 +328,7 @@ def run_gate5_tests():
         test("gate5.4_parser_handles_actual_output", False, f"parser exception: {e}")
 
     # 5.5: Artifacts directory can be created
-    artifact_dir = Path.home() / ".securatron" / "sessions" / "test-5" / "artifacts"
+    artifact_dir = Path.home() / ".acid-burn" / "sessions" / "test-5" / "artifacts"
     artifact_dir.mkdir(parents=True, exist_ok=True)
     test("gate5.5_artifacts_directory_writable",
          artifact_dir.exists() and os.access(artifact_dir, os.W_OK),

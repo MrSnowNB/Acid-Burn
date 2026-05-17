@@ -1,6 +1,6 @@
 ---
 document_type: charter
-document_id: securatron.memory.charter
+document_id: acid-burn.memory.charter
 version: 1.1
 status: living
 authority: binding
@@ -29,11 +29,11 @@ forbidden_dependencies:
   - orm_framework
   - migration_tooling
 canonical_paths:
-  charter: ~/.securatron/global/charters/MEMORY-CHARTER.md
-  warm_index: ~/.securatron/global/memory/index.db
-  cold_ledger: ~/.securatron/global/ledger/*.jsonl
-  cold_postmortems: ~/.securatron/global/post-mortems/*.md
-  reindex_script: ~/.securatron/global/bin/reindex.py
+  charter: ~/.acid-burn/global/charters/MEMORY-CHARTER.md
+  warm_index: ~/.acid-burn/global/memory/index.db
+  cold_ledger: ~/.acid-burn/global/ledger/*.jsonl
+  cold_postmortems: ~/.acid-burn/global/post-mortems/*.md
+  reindex_script: ~/.acid-burn/global/bin/reindex.py
 fulfillment_criteria_section: VII
 hard_rules_section: III
 forbidden_actions_section: VIII

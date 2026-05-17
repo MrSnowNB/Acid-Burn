@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "securatron/inbox-ticket/1.0",
-  "title": "SecuraTron Inbox Ticket",
+  "$id": "acid-burn/inbox-ticket/1.0",
+  "title": "Acid Burn Inbox Ticket",
   "description": "A ticket submitted to the Stagecraft inbox for dispatch. This schema is the authoritative definition for all inbox tickets. Any changes require a Charter revision per HR-INBOX-6.",
   "type": "object",
   "definitions": {

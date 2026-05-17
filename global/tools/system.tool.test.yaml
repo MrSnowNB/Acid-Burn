@@ -7,7 +7,7 @@ implementation:
   kind: shell
 inputs:
   evidence_dir:
-    default: ~/.securatron/global/evidence/locker
+    default: ~/.acid-burn/global/evidence/locker
     description: Directory to store test evidence artifacts.
     type: string
   project_id:
@@ -15,7 +15,7 @@ inputs:
     description: Project ID to use for dispatch.
     type: string
   runner_script:
-    default: ~/.securatron/global/bin/tool_test_runner.py
+    default: ~/.acid-burn/global/bin/tool_test_runner.py
     description: Path to the Python test runner script.
     type: string
   tool_id:

@@ -6,7 +6,7 @@ description: >
   redirects, and new DOM content.
 id: web.browser.interact
 implementation:
-  atom_dir: ~/.securatron/global/tools/web.browser.interact
+  atom_dir: ~/.acid-burn/global/tools/web.browser.interact
   cmd: '{atom_dir}/browser_interact.py --url {url} --selector {selector} --action {action} --value {value}'
   kind: shell
 inputs:

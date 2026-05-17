@@ -10,7 +10,7 @@ sys.path.append(str(Path(__file__).parent))
 
 import ledger
 
-BASE_DIR = Path.home() / ".securatron"
+BASE_DIR = Path.home() / ".acid-burn"
 INBOX = BASE_DIR / "global" / "inbox"
 TOOLS = BASE_DIR / "global" / "tools"
 

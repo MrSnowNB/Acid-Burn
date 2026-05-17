@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Securatron Model Manager — backend tool for swapping models on the lemonade server.
+Acid Burn Model Manager — backend tool for swapping models on the lemonade server.
 
 Usage:
     python3 model_manager.py status                -- show current model state

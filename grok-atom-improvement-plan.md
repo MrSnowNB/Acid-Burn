@@ -2,7 +2,7 @@
 
 **Created:** 2026-05-16T19:06Z
 **Host:** Acid Burn (Kali Linux, AMD Ryzen AI MAX+ PRO 395)
-**Atom:** /home/mark/Desktop/hybrid_scratchpad/atoms/nmap.yaml
+**Atom:** /home/mark/Acid-Burn/atoms/nmap.yaml
 **Schema Version:** 1.0 → target 1.1
 **Grok Model:** grok-code-fast-1 (via grok CLI 0.1.211)
 **Status:** ACTIVE — Gate 1 in progress

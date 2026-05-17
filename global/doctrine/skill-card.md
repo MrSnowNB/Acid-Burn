@@ -1,7 +1,7 @@
 # Doctrine: Skill Cards (v1)
 
 ## Overview
-A **Skill Card** is a structured definition of a tool or capability within the Securatron harness. It serves as the single source of truth for tool discovery, input validation, execution, and structured result parsing.
+A **Skill Card** is a structured definition of a tool or capability within the Acid Burn harness. It serves as the single source of truth for tool discovery, input validation, execution, and structured result parsing.
 
 ## Atoms vs. Molecules
 - **Atoms:** Atomic operations that map directly to a system command (shell), a Python script, or a Docker Compose stack.

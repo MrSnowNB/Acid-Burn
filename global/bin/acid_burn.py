@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """
-Securatron CLI — Registry and Inspection Tool
+Acid Burn CLI — Registry and Inspection Tool
 
-Operator-facing CLI for managing and querying the atom/molecule registry.
+Operator-facing CLI for managing and querying the Acid Burn atom/molecule registry.
 Separate from dispatch.py to keep concerns clean.
 """
 
@@ -16,7 +16,7 @@ from pathlib import Path
 from datetime import datetime, timezone
 from difflib import get_close_matches
 
-BASE_DIR = Path.home() / ".securatron"
+BASE_DIR = Path.home() / ".acid-burn"
 REGISTRY_DIR = BASE_DIR / "global" / "registry"
 ATOMS_DIR = REGISTRY_DIR / "atoms"
 MOLECULES_DIR = REGISTRY_DIR / "molecules"
@@ -457,8 +457,8 @@ def cmd_diff(args):
 
 def main():
     parser = argparse.ArgumentParser(
-        prog="securatron",
-        description="Securatron Registry CLI — inspect atoms, molecules, and registry health"
+        prog="acid-burn",
+        description="Acid Burn Registry CLI — inspect atoms, molecules, and registry health"
     )
     subparsers = parser.add_subparsers(dest="command", help="Sub-commands")
     

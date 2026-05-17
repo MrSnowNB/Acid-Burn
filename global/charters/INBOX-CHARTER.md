@@ -1,13 +1,13 @@
 ---
 document_type: charter
-document_id: securatron.stagecraft.inbox
+document_id: acid-burn.stagecraft.inbox
 version: 0.1
 status: living
 authority: binding
 precedence_above: []
 precedence_below:
   - hermes.soul
-  - securatron.charters.MEMORY-CHARTER
+  - acid-burn.charters.MEMORY-CHARTER
 target_audience: ai_agent
 agent_compatibility:
   - claude_code
@@ -32,13 +32,13 @@ forbidden_dependencies:
   - orm_framework
   - migration_tooling
 canonical_paths:
-  charter: ~/.securatron/global/charters/INBOX-CHARTER.md
-  mesh_transport: ~/.securatron/global/charters/MESH-TRANSPORT-CHARTER.md
-  ticket_schema: ~/.securatron/global/charters/inbox-ticket.schema.json
-  inbox_root: ~/.securatron/projects/lab-internal/inbox/
-  watcher: ~/.securatron/global/bin/inbox_watcher.py
-  dispatcher: ~/.securatron/global/bin/dispatch.py
-  ledger: ~/.securatron/global/ledger/*.jsonl
+  charter: ~/.acid-burn/global/charters/INBOX-CHARTER.md
+  mesh_transport: ~/.acid-burn/global/charters/MESH-TRANSPORT-CHARTER.md
+  ticket_schema: ~/.acid-burn/global/charters/inbox-ticket.schema.json
+  inbox_root: ~/.acid-burn/projects/lab-internal/inbox/
+  watcher: ~/.acid-burn/global/bin/inbox_watcher.py
+  dispatcher: ~/.acid-burn/global/bin/dispatch.py
+  ledger: ~/.acid-burn/global/ledger/*.jsonl
 hard_rules_section: III
 directory_architecture_section: IV
 ticket_schema_section: V
@@ -207,7 +207,7 @@ Additional queues are created per operator request via Revision Proposal.
 
 ## IV. Directory Architecture
 
-The inbox root lives at `~/.securatron/projects/lab-internal/inbox/`. Each queue
+The inbox root lives at `~/.acid-burn/projects/lab-internal/inbox/`. Each queue
 is a sub-directory with four mandatory sub-directories.
 
 ```
@@ -256,7 +256,7 @@ inbox.batch/
 ## V. Ticket Schema (Authoritative)
 
 The ticket schema is versioned and lives at
-`~/.securatron/global/charters/inbox-ticket.schema.json`. The schema file is
+`~/.acid-burn/global/charters/inbox-ticket.schema.json`. The schema file is
 referenced here at v1.0. Any changes to the schema require a Charter revision.
 
 ### v1.0 Schema (Draft)
@@ -264,7 +264,7 @@ referenced here at v1.0. Any changes to the schema require a Charter revision.
 ```json
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "securatron/inbox-ticket/1.0",
+  "$id": "acid-burn/inbox-ticket/1.0",
   "title": "Acid Burn Inbox Ticket",
   "description": "A ticket submitted to the Stagecraft inbox for dispatch.",
   "type": "object",
@@ -364,7 +364,7 @@ referenced here at v1.0. Any changes to the schema require a Charter revision.
 ## VI. Watcher Contract
 
 The watcher is a long-running Python process at
-`~/.securatron/global/bin/inbox_watcher.py`. It is the heartbeat of the inbox
+`~/.acid-burn/global/bin/inbox_watcher.py`. It is the heartbeat of the inbox
 subsystem.
 
 ### Responsibilities
@@ -386,7 +386,7 @@ Configuration is in `config.yaml` under `stagecraft.inbox`:
 ```yaml
 stagecraft:
   inbox:
-    root: ~/.securatron/projects/lab-internal/inbox/
+    root: ~/.acid-burn/projects/lab-internal/inbox/
     queues:
       - name: inbox
         path: inbox
@@ -402,7 +402,7 @@ stagecraft:
       poll_interval: 5         # seconds (only used if backend=poll)
     age_threshold: 86400       # seconds (24h)
     max_retries: 1
-    schema_path: ~/.securatron/global/charters/inbox-ticket.schema.json
+    schema_path: ~/.acid-burn/global/charters/inbox-ticket.schema.json
 ```
 
 ### Error Handling

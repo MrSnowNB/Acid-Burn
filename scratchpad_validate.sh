@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 # scratchpad_validate.sh — Runs all gating tests for PROJECT_HYBRID_SCRATCHPAD.md
-# Usage: bash /home/mark/Desktop/hybrid_scratchpad/scratchpad_validate.sh
+# Usage: bash /home/mark/Acid-Burn/scratchpad_validate.sh
 # Exit code: 0 if all tests pass, 1 if any fail
 
 set -uo pipefail
 
-SCRATCHPAD="/home/mark/Desktop/hybrid_scratchpad/PROJECT_HYBRID_SCRATCHPAD.md"
+SCRATCHPAD="/home/mark/Acid-Burn/PROJECT_HYBRID_SCRATCHPAD.md"
 PYTHON="/usr/bin/python3"
 PASS_COUNT=0
 FAIL_COUNT=0
@@ -90,7 +90,7 @@ except ImportError:
     print("FAIL")
     sys.exit(1)
 
-filepath = "/home/mark/Desktop/hybrid_scratchpad/PROJECT_HYBRID_SCRATCHPAD.md"
+filepath = "/home/mark/Acid-Burn/PROJECT_HYBRID_SCRATCHPAD.md"
 with open(filepath, 'r') as f:
     content = f.read()
 
@@ -127,21 +127,21 @@ echo ""
 # ── T0.4: Validate script executable (exit test) ──
 echo "── TEST T0.4: Validate script ──"
 run_test "T0.4" "scratchpad_validate.sh exists and is executable" \
-    "test -x /home/mark/Desktop/hybrid_scratchpad/scratchpad_validate.sh; exit $?" \
+    "test -x /home/mark/Acid-Burn/scratchpad_validate.sh; exit $?" \
     "0" "exit"
 echo ""
 
 # ── T0.5: Snapshot script executable (exit test) ──
 echo "── TEST T0.5: Snapshot script ──"
 run_test "T0.5" "scratchpad_snapshot.sh exists and is executable" \
-    "test -x /home/mark/Desktop/hybrid_scratchpad/scratchpad_snapshot.sh; exit $?" \
+    "test -x /home/mark/Acid-Burn/scratchpad_snapshot.sh; exit $?" \
     "0" "exit"
 echo ""
 
 # ── T0.6: Snapshot directory creation (exit test) ──
 echo "── TEST T0.6: Snapshot directory ──"
 run_test "T0.6" "Snapshot directory can be created" \
-    "bash /home/mark/Desktop/hybrid_scratchpad/scratchpad_snapshot.sh > /dev/null 2>&1; exit $?" \
+    "bash /home/mark/Acid-Burn/scratchpad_snapshot.sh > /dev/null 2>&1; exit $?" \
     "0" "exit"
 echo ""
 
@@ -184,20 +184,20 @@ echo ""
 # ── T0.10: Git repo present ──
 echo "── TEST T0.10: Git repository ──"
 run_test "T0.10" "Git repo present at expected location" \
-    "test -d /home/mark/Desktop/hybrid_scratchpad/.git; exit $?" \
+    "test -d /home/mark/Acid-Burn/.git; exit $?" \
     "0" "exit"
 echo ""
 
 # ── T0.11: v1.0-bootstrap tag exists ──
 echo "── TEST T0.11: Git tag ──"
 run_test "T0.11" "v1.0-bootstrap tag exists" \
-    "cd /home/mark/Desktop/hybrid_scratchpad && git tag | grep -q v1.0-bootstrap; exit $?" \
+    "cd /home/mark/Acid-Burn && git tag | grep -q v1.0-bootstrap; exit $?" \
     "0" "exit"
 echo ""
 
 # ── T0.12: No forbidden hedge words inside YAML field values (output test) ──
 echo "── TEST T0.12: No hedge words inside YAML blocks ──"
-HEDGE_YAML=$(grep -ciE '(should|approximately|likely|probably)' /home/mark/Desktop/hybrid_scratchpad/PROJECT_HYBRID_SCRATCHPAD.md 2>/dev/null || true)
+HEDGE_YAML=$(grep -ciE '(should|approximately|likely|probably)' /home/mark/Acid-Burn/PROJECT_HYBRID_SCRATCHPAD.md 2>/dev/null || true)
 HEDGE_YAML=${HEDGE_YAML:-0}
 run_test "T0.12" "No forbidden hedge words inside YAML field values" \
     "echo $HEDGE_YAML" \

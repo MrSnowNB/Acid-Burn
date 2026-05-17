@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Securatron Threat Analysis Engine
+Acid Burn Threat Analysis Engine
 First Principles Architecture — Analysis Layer
 
 Usage:

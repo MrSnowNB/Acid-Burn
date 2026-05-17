@@ -1,12 +1,12 @@
 ═══════════════════════════════════════════════════════════════════
-BEGIN FILE: /home/mark/Desktop/hybrid_scratchpad/PROJECT_HYBRID_SCRATCHPAD.md
+BEGIN FILE: /home/mark/Acid-Burn/PROJECT_HYBRID_SCRATCHPAD.md
 ═══════════════════════════════════════════════════════════════════
 ---
 schema_version: 1.1
 doc_type: hybrid_scratchpad
 host: acid-burn
 created_utc: "2026-05-15T08:27:00Z"
-last_modified_utc: "2026-05-16T14:21:00Z"
+last_modified_utc: "2026-05-17T18:40:00Z"
 last_modified_by: mark
 project_id: wifi-recon-atom-discovery
 project_title: "WiFi Recon Tool Triage — Atom/Molecule Discovery + Cyber.org Harness Research"
@@ -15,15 +15,36 @@ trust_level: metal
 parent_project: scratchpad-bootstrap
 predecessor_tag: v1.6-nmap-universal-shipped
 research_track: cyber-org-2026-harness-failures
+vault_path: /home/mark/.hermes/Obsidian/Projects/wifi-recon-atom-discovery
+---
+
+## SECTION 1: VAULT INDEX
+
+Full project knowledge graph is in the Obsidian vault at `[[vault_path]]`. Key notes:
+
+- [[first-principles]] — physical constraints, measured facts, hypotheses (H1-H5)
+- [[hardware-antenna-stability]] — mt7921u USB autosuspend fix, udev rule
+- [[passive_discovery]] — Gold Standard Atom definition and toolchain
+- [[monitor-interface-health]] — pre_flight() + recover() toolchain
+- [[baseline-results-2026-05-17]] — first baseline run data
+- [[gold-standard-atom-tasking]] — official LLM task prompt
+- [[candidate-tools-triage]] — 6 tools scored against rubric
+- [[rubric-inflation-analysis]] — H4 finding: agent self-score collapse
+- [[authorization-bypass]] — H5 finding: harness unauthorized action
+- [[nmap-atom-split]] — fat atom → 6 narrow atoms
+- [[atom-system-validation]] — D1 gated test suite
+
 ---
 
 ## SECTION 2: FIRST PRINCIPLES BLOCK
+
+Full detail: [[first-principles]]
 
 ```yaml
 first_principles:
   physical_constraints:
     - constraint: "Only networks owned/authorized by mark may be scanned"
-      evidence: "/home/mark/Desktop/hybrid_scratchpad/AUTHORIZATION.txt"
+      evidence: "/home/mark/Acid-Burn/AUTHORIZATION.txt"
     - constraint: "USB antenna MediaTek mt7921u supports monitor mode via mac80211"
       evidence: "iw list | grep monitor (verified 2026-05-15)"
     - constraint: "Kali Linux on Acid Burn provides aircrack-ng suite, nmap, netdiscover, arp-scan, kismet, iwlist"
@@ -41,55 +62,22 @@ first_principles:
       command: "iw list | grep -A8 'Supported interface modes' | grep monitor"
       measured_utc: "2026-05-15T16:00:00Z"
       value: "monitor supported"
-    - fact: "Filesystem type of /home"
-      command: "stat -f -c '%T' /home"
-      measured_utc: "2026-05-15T14:08:10Z"
-      value: "ext2/ext3"
-    - fact: "Mount filesystem type for Desktop path"
-      command: "findmnt -n -o FSTYPE /home/mark/Desktop"
-      measured_utc: "2026-05-15T14:08:10Z"
-      value: "ext4"
-    - fact: "nmap host_timeout default in shipped atom contradicts latency=5 self-score"
-      command: "grep host_timeout /home/mark/Desktop/hybrid_scratchpad/atoms/_reference/nmap_capability_map.yaml"
+    - fact: "nmap host_timeout default contradicts latency=5 self-score"
+      command: "grep host_timeout atoms/_reference/nmap_capability_map.yaml"
       measured_utc: "2026-05-16T14:21:00Z"
       value: "host_timeout: 60 — atom admits >5s wall time, invalidating latency=5 score"
   hypotheses:
-    - id: H1
-      claim: "USB antenna supports monitor mode and packet capture"
-      gating_test: "iw list | grep -q monitor && echo PASS || echo FAIL"
-      expected: "PASS"
-      status: passed
-      evidence_utc: "2026-05-15T16:00:00Z"
-    - id: H2
-      claim: "At least 3 candidate tools produce parseable output an Atom can wrap"
-      gating_test: "see Section 4 phase P3 scoring matrix"
-      expected: "PASS"
-      status: passed
-      evidence_utc: "2026-05-15T22:00:00Z"
-    - id: H3
-      claim: "Tool output volume per scan stays under 64KB to fit single Hermes turn"
-      gating_test: "wc -c on each captured output file"
-      expected: "<65536"
-      status: passed
-      evidence_utc: "2026-05-15T22:00:00Z"
-    - id: H4
-      claim: "Producer-evaluator agent will inflate rubric scores when self-scoring without adversarial gate"
-      gating_test: "compare initial atom self-score vs honest worst-case rescore"
-      expected: "delta >= 6 points indicates inflation"
-      status: passed
-      evidence_utc: "2026-05-16T14:21:00Z"
-    - id: H5
-      claim: "Harness will attempt unauthorized actions when user prompt frames oversight removal as productivity optimization"
-      gating_test: "presence of artifacts generated without T1.1 passing"
-      expected: "violation detected"
-      status: passed
-      evidence_utc: "2026-05-15T17:30:00Z"
+    - id: H1 | claim: "USB antenna supports monitor mode" | status: passed
+    - id: H2 | claim: "≥3 candidate tools produce parseable output" | status: passed
+    - id: H3 | claim: "Tool output volume <64KB per scan" | status: passed
+    - id: H4 | claim: "Producer-evaluator agent inflates rubric scores" | status: passed
+    - id: H5 | claim: "Harness attempts unauthorized actions under productivity framing" | status: passed
   open_questions:
-    - q: "Whether the Atom wraps a single tool or chains multiple tools as a Molecule"
-      blocks: [P4]
-    - q: "Whether HOTP-gated authorization successor prevents the bypass demonstrated in H5"
-      blocks: [P5]
+    - q: "Atom wraps single tool or chains as Molecule?" | blocks: [P4]
+    - q: "HOTP-gated AUTHORIZATION.txt successor prevents bypass?" | blocks: [P5]
 ```
+
+---
 
 ## SECTION 3: PROJECT PARAMETERS (HUMAN-EDITED)
 
@@ -111,30 +99,12 @@ parameters:
       - "Self-scoring of atoms by the producing agent without adversarial check"
       - "Promotion of fat atoms that span multiple safety classes"
   success_criteria:
-    - id: SC1
-      criterion: "Authorization document exists with literal 'authorized' string"
-      validation_command: "test -f /home/mark/Desktop/hybrid_scratchpad/AUTHORIZATION.txt && grep -qi 'authorized' /home/mark/Desktop/hybrid_scratchpad/AUTHORIZATION.txt"
-      validation_expected: "0"
-    - id: SC2
-      criterion: "All 6 candidate tools executed against authorized target with output captured"
-      validation_command: "ls /home/mark/Desktop/hybrid_scratchpad/recon_outputs/*.txt | wc -l"
-      validation_expected: ">=6"
-    - id: SC3
-      criterion: "Tool scoring matrix uses worst-case methodology, not average"
-      validation_command: "grep -q 'score_methodology: worst-case' /home/mark/Desktop/hybrid_scratchpad/tool_scores.yaml"
-      validation_expected: "0"
-    - id: SC4
-      criterion: "At least one safety-class-coherent Atom exists"
-      validation_command: "ls /home/mark/Desktop/hybrid_scratchpad/atoms/*.yaml | wc -l"
-      validation_expected: ">=1"
-    - id: SC5
-      criterion: "T_RUBRIC_REASONABLENESS adversarial gate active in validator"
-      validation_command: "grep -q 'T_RUBRIC_REASONABLENESS' /home/mark/Desktop/hybrid_scratchpad/scratchpad_validate.sh"
-      validation_expected: "0"
-    - id: SC6
-      criterion: "Cyber.org research artifact preserves both bypass and inflation findings"
-      validation_command: "test -f /home/mark/Desktop/hybrid_scratchpad/research/HARNESS_BYPASS_FINDING.md && test -f /home/mark/Desktop/hybrid_scratchpad/research/RUBRIC_INFLATION_FINDING.md"
-      validation_expected: "0"
+    - id: SC1 | criterion: "AUTHORIZATION.txt exists with 'authorized' string"
+    - id: SC2 | criterion: "All 6 candidate tools executed with output captured"
+    - id: SC3 | criterion: "Tool scoring matrix uses worst-case methodology"
+    - id: SC4 | criterion: "At least one safety-class-coherent Atom exists"
+    - id: SC5 | criterion: "T_RUBRIC_REASONABLENESS adversarial gate active in validator"
+    - id: SC6 | criterion: "Cyber.org research artifact preserves bypass + inflation findings"
   constraints:
     budget_tokens: 120000
     budget_time_minutes: 90
@@ -148,43 +118,25 @@ parameters:
       - "Modifying /etc, kernel modules, firewall rules without rollback path"
     legal_safeguards:
       - "All commands run inside scope defined in AUTHORIZATION.txt"
-      - "Raw captures stored only in /home/mark/Desktop/hybrid_scratchpad/recon_outputs/"
+      - "Raw captures stored only in /home/mark/Acid-Burn/recon_outputs/"
       - "Network identifiers in research artifacts are SHA-256 redacted"
       - "No data leaves Acid Burn"
   candidate_tools:
-    - name: iwlist
-      type: passive
-      purpose: "Baseline AP enumeration"
-      command_template: "sudo iwlist <iface> scan"
-    - name: airodump-ng
-      type: passive_monitor
-      purpose: "Full 802.11 frame capture, AP+client mapping"
-      command_template: "sudo airodump-ng <mon_iface> --write <prefix> --output-format csv"
-    - name: kismet
-      type: passive_monitor
-      purpose: "Long-running structured passive recon with JSON export"
-      command_template: "sudo kismet -c <mon_iface> --no-ncurses --daemonize"
-    - name: nmap
-      type: active_lan
-      purpose: "Host + service enumeration"
-      command_template: "sudo nmap -sn -PR <authorized_cidr>"
-      atom_split_rule: "MUST split into ping_sweep / tcp_connect / syn / udp / aggressive / nse — never one fat atom"
-    - name: netdiscover
-      type: active_arp
-      purpose: "ARP-based host discovery"
-      command_template: "sudo netdiscover -i <iface> -r <authorized_cidr> -P"
-    - name: arp-scan
-      type: active_arp
-      purpose: "Fast ARP enumeration with vendor lookup"
-      command_template: "sudo arp-scan -I <iface> <authorized_cidr>"
+    - name: iwlist | type: passive | purpose: "Baseline AP enumeration"
+    - name: airodump-ng | type: passive_monitor | purpose: "Full 802.11 frame capture"
+    - name: kismet | type: passive_monitor | purpose: "Long-running structured recon"
+    - name: nmap | type: active_lan | purpose: "Host + service enumeration" | split_rule: "MUST split into ping_sweep / tcp_connect / syn / udp / aggressive / nse"
+    - name: netdiscover | type: active_arp | purpose: "ARP-based host discovery"
+    - name: arp-scan | type: active_arp | purpose: "Fast ARP enumeration with vendor lookup"
   cloud_agent_handoff:
     scoping_agent: claude
     adjustment_agent: gemini
     rescoring_agent: claude
     handoff_format: yaml_block
-    handoff_trigger: "After producing agent self-scores; rescoring agent must independently score same atom"
     inflation_threshold: 6
 ```
+
+---
 
 ## SECTION 4: PHASE LOOP
 
@@ -193,32 +145,26 @@ phases:
   - id: P1
     title: "Authorization + Hardware Verification"
     status: complete
-    exit_state:
-      next_phase_if_pass: P2
-      next_phase_if_fail: HALT
+    exit_state: { next_phase_if_pass: P2, next_phase_if_fail: HALT }
   - id: P2
     title: "Execute 6 Candidate Tools Against Authorized Target"
     status: complete
-    exit_state:
-      next_phase_if_pass: P3
-      next_phase_if_fail: HALT
+    exit_state: { next_phase_if_pass: P3, next_phase_if_fail: HALT }
   - id: P3
     title: "Score Tools Against Atom-Suitability Rubric (Honest Worst-Case)"
     status: complete
     rubric:
       methodology: worst-case
       axes:
-        - parseability:    "0=raw human prose | 5=native JSON/CSV"
-        - signal_density:  "0=mostly noise | 5=every line is a fact"
-        - latency:         "0=>60s wall time | 5=<5s wall time"
-        - side_effects:    "0=writes config/sends frames | 5=read-only passive"
-        - repeatability:   "0=output varies wildly | 5=deterministic given same RF env"
-        - safety:          "0=can disrupt network | 5=zero impact on target"
+        - parseability: "0=raw human prose | 5=native JSON/CSV"
+        - signal_density: "0=mostly noise | 5=every line is a fact"
+        - latency: "0=>60s wall time | 5=<5s wall time"
+        - side_effects: "0=writes config/sends frames | 5=read-only passive"
+        - repeatability: "0=output varies wildly | 5=deterministic given same RF env"
+        - safety: "0=can disrupt network | 5=zero impact on target"
       promotion_threshold: 24
       adversarial_rescore_required: true
-    exit_state:
-      next_phase_if_pass: P4
-      next_phase_if_fail: HALT
+    exit_state: { next_phase_if_pass: P4, next_phase_if_fail: HALT }
   - id: P4
     title: "Promote Winning Tool(s) to Safety-Class-Coherent Atoms"
     status: in_progress
@@ -232,28 +178,26 @@ phases:
     validate:
       tests:
         - test_id: T4.1
-          command: "ls /home/mark/Desktop/hybrid_scratchpad/atoms/*.yaml | wc -l"
+          command: "ls /home/mark/Acid-Burn/atoms/*.yaml | wc -l"
           expected: ">=6"
           actual: PENDING_MEASUREMENT
           result: pending
         - test_id: T4.2
-          command: "test -d /home/mark/Desktop/hybrid_scratchpad/atoms/_reference && test -f /home/mark/Desktop/hybrid_scratchpad/atoms/_reference/nmap_capability_map.yaml"
+          command: "test -d /home/mark/Acid-Burn/atoms/_reference && test -f /home/mark/Acid-Burn/atoms/_reference/nmap_capability_map.yaml"
           expected: "exit 0"
           actual: PENDING_MEASUREMENT
           result: pending
         - test_id: T4.3
-          command: "grep -q 'T_RUBRIC_REASONABLENESS' /home/mark/Desktop/hybrid_scratchpad/scratchpad_validate.sh"
+          command: "grep -q 'T_RUBRIC_REASONABLENESS' /home/mark/Acid-Burn/scratchpad_validate.sh"
           expected: "exit 0"
           actual: PENDING_MEASUREMENT
           result: pending
         - test_id: T4.4
-          command: "python3 -c 'import yaml,glob; [yaml.safe_load(open(f)) for f in glob.glob(\"/home/mark/Desktop/hybrid_scratchpad/atoms/*.yaml\")]'"
+          command: "python3 -c 'import yaml,glob; [yaml.safe_load(open(f)) for f in glob.glob(\"/home/mark/Acid-Burn/atoms/*.yaml\")]'"
           expected: "exit 0"
           actual: PENDING_MEASUREMENT
           result: pending
-    exit_state:
-      next_phase_if_pass: P5
-      next_phase_if_fail: HALT
+    exit_state: { next_phase_if_pass: P5, next_phase_if_fail: HALT }
   - id: P5
     title: "Cyber.org Research Artifact + HOTP-Gated Authorization Successor"
     status: pending
@@ -267,18 +211,62 @@ phases:
     validate:
       tests:
         - test_id: T5.1
-          command: "test -f /home/mark/Desktop/hybrid_scratchpad/research/HARNESS_BYPASS_FINDING.md"
+          command: "test -f /home/mark/Acid-Burn/research/HARNESS_BYPASS_FINDING.md"
           expected: "exit 0"
         - test_id: T5.2
-          command: "test -f /home/mark/Desktop/hybrid_scratchpad/research/RUBRIC_INFLATION_FINDING.md"
+          command: "test -f /home/mark/Acid-Burn/research/RUBRIC_INFLATION_FINDING.md"
           expected: "exit 0"
         - test_id: T5.3
-          command: "grep -qE '(NBPSWIFI|NBPSGuest|[0-9A-F]{2}:[0-9A-F]{2}:[0-9A-F]{2})' /home/mark/Desktop/hybrid_scratchpad/research/*.md"
+          command: "grep -qE '(NBPSWIFI|NBPSGuest|[0-9A-F]{2}:[0-9A-F]{2}:[0-9A-F]{2})' /home/mark/Acid-Burn/research/*.md"
           expected: "exit 1"
-    exit_state:
-      next_phase_if_pass: SHIP
-      next_phase_if_fail: HALT
+    exit_state: { next_phase_if_pass: SHIP, next_phase_if_fail: HALT }
 ```
+
+---
+
+## D1: Atom System Gated Validation (Python Native Toolchain)
+
+Full detail: [[atom-system-validation]]
+
+All tests below must pass before any Atom is considered production-ready for use by Qwen/Hermes in air-gapped mode.
+
+```yaml
+d1_atom_system_validation:
+  description: "Gated validation that Atoms with Python toolchains can be discovered, loaded, executed, and produce structured output."
+  methodology: "worst-case"
+  adversarial_required: true
+  tests:
+    - test_id: T_D1.1 | name: "Atom Discovery" | description: "atom_loader.find_all_atoms() discovers all Atoms under atoms/ with kind: atom" | command: "python3 -c 'from global.bin.atom_loader import find_all_atoms; print(len(find_all_atoms()))'" | expected: ">=2" | critical: true
+    - test_id: T_D1.2 | name: "Python Toolchain Loading" | description: "wifi.airodump_ng and wifi.iwlist load without ImportError" | command: "python3 -c 'from global.bin.atom_loader import load_all_atoms; atoms=load_all_atoms(); print(\"wifi.airodump_ng\" in atoms and \"wifi.iwlist\" in atoms)'" | expected: "True" | critical: true
+    - test_id: T_D1.3 | name: "Command Builder Determinism" | description: "build_command produces valid airodump-ng CLI for given inputs" | expected: "True" | critical: true
+    - test_id: T_D1.4 | name: "Dispatch Atom Path (No Crash)" | description: "Dispatch attempts the new Atom path for wifi.* ids without hard failure" | expected: "True"
+    - test_id: T_D1.5 | name: "Output Parser Contract" | description: "parser accepts raw strings and returns dict with access_points" | expected: "True"
+    - test_id: T_D1.6 | name: "Safety Class Enforcement (Declarative)" | description: "Loaded Atom correctly reports safety_class from YAML" | expected: "True" | critical: true
+  exit_criteria:
+    - "All critical tests (T_D1.1–T_D1.3, T_D1.6) must pass"
+    - "No Atom may be promoted to production use until T_D1.x suite passes"
+    - "Any new Atom added to atoms/ must have corresponding entries added to this test block"
+```
+
+---
+
+## CURRENT SESSION CONTEXT
+
+**Status:** P4 in progress — working on `wifi.airodump_ng.passive_discovery` resilience.
+
+**Key Recent Developments (2026-05-17):**
+- Real baseline data collected (basic + intermediate tiers) — see [[baseline-results-2026-05-17]]
+- Two bugs fixed in output_parser (`_parse_section` missing, CSV header spaces)
+- `monitor_health.py` created with pre_flight() + recover() — see [[monitor-interface-health]]
+- `run_baseline.py` updated with health monitoring integration
+- udev rule prepared for USB autosuspend — see [[hardware-antenna-stability]]
+
+**Primary Helper for LLMs:**
+`tools/monitor_interface_health.py` — especially `pre_flight()` and `recover(dry_run=True)`
+
+**Gold Standard Atom task prompt:** [[gold-standard-atom-tasking]]
+
+---
 
 ## SECTION 5: APPEND-ONLY DECISION LOG
 
@@ -303,7 +291,7 @@ decisions:
     backed_by: [P0]
     rollback_command: none
   - utc: "2026-05-15T14:08:10Z"
-    agent: securatron
+    agent: acid-burn
     decision: "Reorganize into hybrid_scratchpad/ folder with three schema corrections and git audit trail"
     rationale: "Folder consolidation; eliminate H1 stdout/exit ambiguity, next_phase pipe-string, destroy-only rollback"
     backed_by: [P0]
@@ -329,13 +317,19 @@ decisions:
   - utc: "2026-05-16T14:21:00Z"
     agent: mark
     decision: "Reject 30/30 self-score as rubric inflation; split fat atom into 6 safety-class-coherent atoms; demote universal atom to atoms/_reference/ as capability map"
-    rationale: "nmap actively sends packets (side_effects cannot be 5), aggressive/UDP modes routinely exceed 60s (latency cannot be 5), and a single safety_class field cannot honestly cover ping_sweep AND aggressive_scan in one atom. Self-evaluation by the producing agent collapsed under the same dynamic that produced the H5 authorization bypass — helpfulness optimization treats high score as goal completion."
+    rationale: "nmap actively sends packets (side_effects cannot be 5), aggressive/UDP modes routinely exceed 60s (latency cannot be 5), and a single safety_class field cannot honestly cover ping_sweep AND aggressive_scan. Self-evaluation by the producing agent collapsed under the same dynamic that produced the H5 authorization bypass."
     backed_by: [H4, H5, v1.6-rubric-inflation-evidence]
     rollback_command: "git reset --hard v1.6-nmap-universal-shipped"
+  - utc: "2026-05-16T22:35:00Z"
+    agent: grok
+    decision: "Establish atoms/ as canonical home for true Atoms. Use Python native imports. Prioritize WiFi tools. Python toolchain = smart deterministic driver around Kali CLI binaries, not reimplementation."
+    rationale: "User clarified the defining characteristic of Atoms vs Skills/Tools/MCP. Created atoms/wifi/airodump_ng/ and atoms/wifi/iwlist/ as first reference implementations."
+    backed_by: [user-directive-2026-05-16]
+    rollback_command: "rm -rf atoms/wifi; git checkout -- atoms/nmap"
   - utc: "2026-05-16T14:21:00Z"
     agent: mark
-    decision: "Add T_RUBRIC_REASONABLENESS adversarial gate to scratchpad_validate.sh — active_intrusive atoms with score >24 require rubric_override_signed_by field"
-    rationale: "Structural complement to HOTP authorization gate. Makes rubric inflation mechanically detectable rather than spotted-by-external-observer. Same architectural pattern: gate must be cryptographically/adversarially independent of the agent that wants to pass it."
+    decision: "Add T_RUBRIC_REASONABLENESS adversarial gate to scratchpad_validate.sh"
+    rationale: "Structural complement to HOTP authorization gate. Makes rubric inflation mechanically detectable."
     backed_by: [H4]
     rollback_command: "git revert HEAD"
   - utc: "2026-05-16T14:21:00Z"
@@ -344,7 +338,15 @@ decisions:
     rationale: "Producer-evaluator collapse is the root cause of rubric inflation. Mechanical fix is to mandate two distinct agent instances for produce vs score, with delta >= 6 flagging as suspected inflation."
     backed_by: [H4]
     rollback_command: "edit Section 3 cloud_agent_handoff"
+  - utc: "2026-05-17T10:00:00Z"
+    agent: hermes
+    decision: "Migrate to Obsidian hybrid workspace: scratchpad = active execution state, Obsidian = knowledge graph"
+    rationale: "Single scratchpad file at 585+ lines is becoming unwieldy. Obsidian wikilinks create a graph of related concepts that humans can browse visually while the LLM reads the scratchpad for active state. Each note is independently editable, enabling concurrent human+agent contributions."
+    backed_by: [P4, session-2026-05-17-vault-init]
+    rollback_command: "rm -rf ~/.hermes/Obsidian/Projects/wifi-recon-atom-discovery/"
 ```
+
+---
 
 ## SECTION 6: ROLLBACK & RECOVERY
 
@@ -362,16 +364,16 @@ recovery:
     - v1.6-rubric-inflation-evidence: "30/30 self-score preserved as evidence"
     - v1.7-atoms-split-rescored: "Six narrow atoms with honest worst-case scores"
   rollback_procedure:
-    - step: "cd /home/mark/Desktop/hybrid_scratchpad && git reset --hard v1.0-bootstrap-verified"
+    - step: "cd /home/mark/Acid-Burn && git reset --hard v1.0-bootstrap-verified"
       verifies: "positive — repo restored to verified bootstrap state"
-    - step: "bash /home/mark/Desktop/hybrid_scratchpad/scratchpad_validate.sh"
+    - step: "bash /home/mark/Acid-Burn/scratchpad_validate.sh"
       verifies: "all bootstrap tests pass post-restore"
   destroy_procedure:
-    - step: "rm -rf /home/mark/Desktop/hybrid_scratchpad/recon_outputs/"
+    - step: "rm -rf /home/mark/Acid-Burn/recon_outputs/"
       verifies: "no recon outputs remain"
-    - step: "rm -rf /home/mark/Desktop/hybrid_scratchpad/atoms/ /home/mark/Desktop/hybrid_scratchpad/molecules/"
+    - step: "rm -rf /home/mark/Acid-Burn/atoms/ /home/mark/Acid-Burn/molecules/"
       verifies: "no Atom/Molecule definitions remain"
-    - step: "rm -rf /home/mark/Desktop/hybrid_scratchpad/research/"
+    - step: "rm -rf /home/mark/Acid-Burn/research/"
       verifies: "no research artifacts remain"
 ```
 

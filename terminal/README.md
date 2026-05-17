@@ -47,7 +47,7 @@ Raw Data → Ingestion → Processing → Intelligence → Action
 ## File Structure
 
 ```
-~/.securatron/terminal/
+~/.acid-burn/terminal/
 ├── README.md                    # This file
 ├── ARCHITECTURE.md              # Detailed architecture document
 ├── security-interface.html      # Main SOC dashboard (v2.0)
@@ -116,13 +116,13 @@ python3 scripts/report.py generate "192.168.1.100"
 
 ```bash
 # Check model status
-python3 /home/mark/.securatron/bin/model_manager.py status
+python3 /home/mark/.acid-burn/bin/model_manager.py status
 
 # List all models
-python3 /home/mark/.securatron/bin/model_manager.py list
+python3 /home/mark/.acid-burn/bin/model_manager.py list
 
 # Swap LLM model
-python3 /home/mark/.securatron/bin/model_manager.py swap Gemma-4-31B-it-GGUF
+python3 /home/mark/.acid-burn/bin/model_manager.py swap Gemma-4-31B-it-GGUF
 ```
 
 ## API Endpoints
@@ -160,4 +160,4 @@ The lemonade server exposes these endpoints:
 
 ## Credits
 
-Built on the Securatron harness by Mark. First Principles Architecture v1.0.
+Built on the Acid Burn harness by Mark. First Principles Architecture v1.0.

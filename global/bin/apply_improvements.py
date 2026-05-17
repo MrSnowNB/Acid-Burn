@@ -17,7 +17,7 @@ import sys
 from pathlib import Path
 from datetime import datetime
 
-BASE_DIR = Path.home() / ".securatron"
+BASE_DIR = Path.home() / ".acid-burn"
 IMPROVEMENT_LEDGER = BASE_DIR / "global" / "ledger" / "improvements.jsonl"
 LEDGER_DIR = BASE_DIR / "global" / "ledger"
 

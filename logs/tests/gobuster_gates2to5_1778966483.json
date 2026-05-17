@@ -1,0 +1,191 @@
+[
+  {
+    "ts": "2026-05-16T21:21:22.913630+00:00Z",
+    "tool": "web.gobuster",
+    "card_version": 4,
+    "gate": "GATE_GATE2TO5",
+    "test": "gate2.1_artifact_path_has_placeholders",
+    "status": "PASS",
+    "detail": "artifact path template: sessions/{session}/artifacts/gobuster-{ts}.raw"
+  },
+  {
+    "ts": "2026-05-16T21:21:22.913853+00:00Z",
+    "tool": "web.gobuster",
+    "card_version": 4,
+    "gate": "GATE_GATE2TO5",
+    "test": "gate2.2_artifact_exists_true",
+    "status": "PASS",
+    "detail": "temp artifact /tmp/tmpjpashlnn.raw exists"
+  },
+  {
+    "ts": "2026-05-16T21:21:22.915100+00:00Z",
+    "tool": "web.gobuster",
+    "card_version": 4,
+    "gate": "GATE_GATE2TO5",
+    "test": "gate2.3_structured_result_has_total_findings",
+    "status": "PASS",
+    "detail": "parser result has total_findings=2"
+  },
+  {
+    "ts": "2026-05-16T21:21:22.915123+00:00Z",
+    "tool": "web.gobuster",
+    "card_version": 4,
+    "gate": "GATE_GATE2TO5",
+    "test": "gate2.4_empty_result_has_total_findings_zero",
+    "status": "PASS",
+    "detail": "empty result total_findings=0"
+  },
+  {
+    "ts": "2026-05-16T21:21:22.915138+00:00Z",
+    "tool": "web.gobuster",
+    "card_version": 4,
+    "gate": "GATE_GATE2TO5",
+    "test": "gate2.5_structured_output_has_all_required_keys",
+    "status": "PASS",
+    "detail": "keys present: {'found_paths', 'scan_info', 'stats', 'total_findings'}, missing: set()"
+  },
+  {
+    "ts": "2026-05-16T21:21:22.915146+00:00Z",
+    "tool": "web.gobuster",
+    "card_version": 4,
+    "gate": "GATE_GATE2TO5",
+    "test": "gate2.6_found_paths_is_list",
+    "status": "PASS",
+    "detail": "found_paths type: list"
+  },
+  {
+    "ts": "2026-05-16T21:21:22.915154+00:00Z",
+    "tool": "web.gobuster",
+    "card_version": 4,
+    "gate": "GATE_GATE2TO5",
+    "test": "gate2.7_path_entry_has_required_fields",
+    "status": "PASS",
+    "detail": "path entry keys: {'status_code', 'path', 'size'}"
+  },
+  {
+    "ts": "2026-05-16T21:21:22.915168+00:00Z",
+    "tool": "web.gobuster",
+    "card_version": 4,
+    "gate": "GATE_GATE2TO5",
+    "test": "gate3.1_card_has_explicit_timeout",
+    "status": "PASS",
+    "detail": "explicit timeout: 120"
+  },
+  {
+    "ts": "2026-05-16T21:21:22.915181+00:00Z",
+    "tool": "web.gobuster",
+    "card_version": 4,
+    "gate": "GATE_GATE2TO5",
+    "test": "gate3.2_timeout_in_reasonable_range",
+    "status": "PASS",
+    "detail": "timeout 120s in [60, 300]"
+  },
+  {
+    "ts": "2026-05-16T21:21:22.920010+00:00Z",
+    "tool": "web.gobuster",
+    "card_version": 4,
+    "gate": "GATE_GATE2TO5",
+    "test": "gate3.3_fast_command_completes_under_timeout",
+    "status": "PASS",
+    "detail": "gobuster -h completed in 0.00s (timeout: 120s)"
+  },
+  {
+    "ts": "2026-05-16T21:21:23.922682+00:00Z",
+    "tool": "web.gobuster",
+    "card_version": 4,
+    "gate": "GATE_GATE2TO5",
+    "test": "gate3.4_timeout_enforcement_works",
+    "status": "PASS",
+    "detail": "sleep 5 killed after 1.00s (expected ~1s)"
+  },
+  {
+    "ts": "2026-05-16T21:21:23.923282+00:00Z",
+    "tool": "web.gobuster",
+    "card_version": 4,
+    "gate": "GATE_GATE2TO5",
+    "test": "gate4.1_valid_output_passes_schema",
+    "status": "PASS",
+    "detail": "schema valid"
+  },
+  {
+    "ts": "2026-05-16T21:21:23.923349+00:00Z",
+    "tool": "web.gobuster",
+    "card_version": 4,
+    "gate": "GATE_GATE2TO5",
+    "test": "gate4.2_empty_output_passes_schema",
+    "status": "PASS",
+    "detail": "schema valid"
+  },
+  {
+    "ts": "2026-05-16T21:21:23.923386+00:00Z",
+    "tool": "web.gobuster",
+    "card_version": 4,
+    "gate": "GATE_GATE2TO5",
+    "test": "gate4.3_malformed_output_graceful_degradation",
+    "status": "PASS",
+    "detail": "malformed: 0 findings, schema valid: True"
+  },
+  {
+    "ts": "2026-05-16T21:21:23.923479+00:00Z",
+    "tool": "web.gobuster",
+    "card_version": 4,
+    "gate": "GATE_GATE2TO5",
+    "test": "gate4.4_parser_no_unhandled_exceptions",
+    "status": "PASS",
+    "detail": "tested 7 edge cases, all safe"
+  },
+  {
+    "ts": "2026-05-16T21:21:23.923563+00:00Z",
+    "tool": "web.gobuster",
+    "card_version": 4,
+    "gate": "GATE_GATE2TO5",
+    "test": "gate4.5_total_findings_matches_found_paths_length",
+    "status": "PASS",
+    "detail": "total=2, paths=2"
+  },
+  {
+    "ts": "2026-05-16T21:21:23.923591+00:00Z",
+    "tool": "web.gobuster",
+    "card_version": 4,
+    "gate": "GATE_GATE2TO5",
+    "test": "gate4.6_all_status_codes_valid",
+    "status": "PASS",
+    "detail": "statuses: [403, 302]"
+  },
+  {
+    "ts": "2026-05-16T21:21:23.937362+00:00Z",
+    "tool": "web.gobuster",
+    "card_version": 4,
+    "gate": "GATE_GATE2TO5",
+    "test": "gate5.3_command_completes_without_hanging",
+    "status": "PASS",
+    "detail": "exit=1, elapsed=0.01s"
+  },
+  {
+    "ts": "2026-05-16T21:21:23.937484+00:00Z",
+    "tool": "web.gobuster",
+    "card_version": 4,
+    "gate": "GATE_GATE2TO5",
+    "test": "gate5.4_parser_handles_actual_output",
+    "status": "PASS",
+    "detail": "parse ok=True, has result: True"
+  },
+  {
+    "ts": "2026-05-16T21:21:23.937868+00:00Z",
+    "tool": "web.gobuster",
+    "card_version": 4,
+    "gate": "GATE_GATE2TO5",
+    "test": "gate5.5_artifacts_directory_writable",
+    "status": "PASS",
+    "detail": "dir: /home/mark/.acid-burn/sessions/test-5/artifacts"
+  },
+  {
+    "ts": "2026-05-16T21:21:23.942410+00:00Z",
+    "tool": "web.gobuster",
+    "card_version": 4,
+    "gate": "GATE_GATE2TO5",
+    "test": "gate5.6_full_pipeline_validation",
+    "status": "PASS",
+    "detail": "pipeline clean"
+  }
+]

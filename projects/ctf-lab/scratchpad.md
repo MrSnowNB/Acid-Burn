@@ -11,7 +11,7 @@ Three critical flaws were patched in the audit runner CI/CD engine. All 21 tests
 
 ## PATCH 1: False Positive Fix (Default True -> False)
 
-**File:** `~/.securatron/global/bin/audit_runner.py` (lines 153-154)
+**File:** `~/.acid-burn/global/bin/audit_runner.py` (lines 153-154)
 **Change:** `json_output.get("ok", True)` -> `json_output.get("ok", False)`
 
 **Impact:** Tools that don't return an `ok` field now FAIL instead of PASS.
@@ -21,7 +21,7 @@ Three critical flaws were patched in the audit runner CI/CD engine. All 21 tests
 
 ## PATCH 2: State Bleed Fix (Session Isolation)
 
-**File:** `~/.securatron/global/bin/audit_runner.py` (line 71)
+**File:** `~/.acid-burn/global/bin/audit_runner.py` (line 71)
 **Change:** `"TEST"` -> `f"TEST-{tool_id}-{_ts}"`
 
 **Impact:** Each test gets a unique session ID (e.g., `TEST-kali.nmap-1778721600`), preventing `.state/` data from one tool polluting another.
@@ -31,12 +31,12 @@ Three critical flaws were patched in the audit runner CI/CD engine. All 21 tests
 
 ## PATCH 3: Blast Radius Fix (Safe Targets)
 
-**File:** `~/.securatron/global/bin/audit_runner.py` (line 26)
+**File:** `~/.acid-burn/global/bin/audit_runner.py` (line 26)
 **Change:** `_SAFETNET = "192.0.2.1"` -> `_SAFETNET = "127.0.0.1"`
 
 **Reasoning:** 192.0.2.1 causes TCP SYN connections to HANG (kernel SYN timeout, no RST). 127.0.0.1 (localhost) fails fast — connections are immediately refused or accepted.
 
-**Additional fix:** `~/.securatron/global/tools/auth.hydra.yaml`:
+**Additional fix:** `~/.acid-burn/global/tools/auth.hydra.yaml`:
 - Added `default: 65534` for `port` input
 - Added `default: http-head` for `service` input (was missing, caused empty-string command)
 - Added `{port}` to command template: `http-head://{target}:{port}`
@@ -50,7 +50,7 @@ Three critical flaws were patched in the audit runner CI/CD engine. All 21 tests
 
 ## PATCH 4: Auth.hydra Default Inputs
 
-**File:** `~/.securatron/global/tools/auth.hydra.yaml`
+**File:** `~/.acid-burn/global/tools/auth.hydra.yaml`
 
 The atom card was missing defaults for `service` and `port` inputs. Without defaults:
 - `service` became empty string: `hydra -L ... -P ... ://127.0.0.1 ...` (invalid URI)
@@ -62,7 +62,7 @@ The atom card was missing defaults for `service` and `port` inputs. Without defa
 
 ## IDENTIFIED DEFERRED ISSUE: Condition Evaluation Bug
 
-**Location:** `~/.securatron/global/bin/dispatch.py` — `_evaluate_condition()` (line 366)
+**Location:** `~/.acid-burn/global/bin/dispatch.py` — `_evaluate_condition()` (line 366)
 
 **Bug:** When a condition string lacks `{{...}}` template markers (e.g., `'steps.network_scan.result.ports contains 80 or 443'`), `eval()` fails with `NameError` (because `steps` is not defined). The except clause falls back to `bool(resolved_condition)`, which is **always True** for non-empty strings.
 
@@ -90,18 +90,18 @@ Molecules (9): auth.network.spray, ctf.full.pwn, ctf.priv_esc, ctf.recon.full,
                web.recon.explore
 ```
 
-**Report:** `~/.securatron/global/evidence/locker/AUDIT_REPORT_20260514_013221.md`
-**Evidence dir:** `~/.securatron/global/evidence/locker` (763 files)
+**Report:** `~/.acid-burn/global/evidence/locker/AUDIT_REPORT_20260514_013221.md`
+**Evidence dir:** `~/.acid-burn/global/evidence/locker` (763 files)
 
 ---
 
 ## TOOLS MODIFIED
 
-1. `~/.securatron/global/bin/audit_runner.py` — 3 patches
-2. `~/.securatron/global/tools/auth.hydra.yaml` — 3 additions (port default, service default, port injection)
+1. `~/.acid-burn/global/bin/audit_runner.py` — 3 patches
+2. `~/.acid-burn/global/tools/auth.hydra.yaml` — 3 additions (port default, service default, port injection)
 
 ## NO CHANGES TO
 
-- `~/.securatron/global/bin/dispatch.py` (condition bug identified but not fixed)
-- `~/.securatron/global/tools/*.yaml` (except auth.hydra)
-- `~/.securatron/global/skills/*.yaml` (molecule cards unchanged)
+- `~/.acid-burn/global/bin/dispatch.py` (condition bug identified but not fixed)
+- `~/.acid-burn/global/tools/*.yaml` (except auth.hydra)
+- `~/.acid-burn/global/skills/*.yaml` (molecule cards unchanged)

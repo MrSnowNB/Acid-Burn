@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Securatron Session State Sync Tool
+Acid Burn Session State Sync Tool
 
 This tool synchronizes the persistent state file with the current session's progress.
 It should be called at the end of each session to update the state with the latest progress.
@@ -22,7 +22,7 @@ from datetime import datetime, timezone
 
 def get_state_path(project_id: str) -> Path:
     """Get the path to the state file for a project."""
-    return Path.home() / ".securatron" / "projects" / project_id / "state.json"
+    return Path.home() / ".acid-burn" / "projects" / project_id / "state.json"
 
 
 def sync_session(project_id: str, session_id: str, status: str, findings: int = 0, notes: str = "") -> dict:
@@ -93,7 +93,7 @@ def sync_session(project_id: str, session_id: str, status: str, findings: int = 
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Securatron Session State Sync Tool")
+    parser = argparse.ArgumentParser(description="Acid Burn Session State Sync Tool")
     parser.add_argument("--project", required=True, help="Project ID")
     parser.add_argument("--session", required=True, help="Session ID")
     parser.add_argument("--status", required=True, choices=["success", "failed", "partial"],

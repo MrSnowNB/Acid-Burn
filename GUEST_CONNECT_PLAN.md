@@ -114,7 +114,7 @@ phases:
           result: pending
     exit_state:
       artifacts:
-        - "/home/mark/Desktop/hybrid_scratchpad/recon_outputs/wps_probe.txt"
+        - "/home/mark/Acid-Burn/recon_outputs/wps_probe.txt"
       next_phase_if_pass: P2
       next_phase_if_fail: P2 (skip WPS)
 
@@ -138,7 +138,7 @@ phases:
           result: pending
     exit_state:
       artifacts:
-        - "/home/mark/Desktop/hybrid_scratchpad/recon_outputs/subnet_map.txt"
+        - "/home/mark/Acid-Burn/recon_outputs/subnet_map.txt"
       next_phase_if_pass: P3
       next_phase_if_fail: HALT
 
@@ -158,14 +158,14 @@ phases:
     validate:
       tests:
         - test_id: T3.1
-          command: "test -f /home/mark/Desktop/hybrid_scratchpad/recon_outputs/hash_file.txt"
+          command: "test -f /home/mark/Acid-Burn/recon_outputs/hash_file.txt"
           expected: "exit 0"
           actual: PENDING_MEASUREMENT
           result: pending
     exit_state:
       artifacts:
-        - "/home/mark/Desktop/hybrid_scratchpad/recon_outputs/hash_file.txt"
-        - "/home/mark/Desktop/hybrid_scratchpad/recon_outputs/wordlist_results.txt"
+        - "/home/mark/Acid-Burn/recon_outputs/hash_file.txt"
+        - "/home/mark/Acid-Burn/recon_outputs/wordlist_results.txt"
       next_phase_if_pass: P4
       next_phase_if_fail: HALT
 
@@ -196,7 +196,7 @@ phases:
           result: pending
     exit_state:
       artifacts:
-        - "/home/mark/Desktop/hybrid_scratchpad/recon_outputs/connection_config.txt"
+        - "/home/mark/Acid-Burn/recon_outputs/connection_config.txt"
       next_phase_if_pass: SHIP
       next_phase_if_fail: HALT
 ```
@@ -220,11 +220,11 @@ recovery:
   last_known_good_utc: "2026-05-15T11:30:00Z"
   state_snapshot_path: "/home/mark/.local/share/hybrid_scratchpad/snapshots/"
   rollback_procedure:
-    - step: "cd /home/mark/Desktop/hybrid_scratchpad && git reset --hard HEAD"
+    - step: "cd /home/mark/Acid-Burn && git reset --hard HEAD"
       verifies: "positive — plan restored to latest committed state"
-    - step: "cat /home/mark/Desktop/hybrid_scratchpad/NBPS_GUEST_CONNECT_PLAN.md | head -10"
+    - step: "cat /home/mark/Acid-Burn/NBPS_GUEST_CONNECT_PLAN.md | head -10"
       verifies: "plan content verified after rollback"
   destroy_procedure:
-    - step: "rm -f /home/mark/Desktop/hybrid_scratchpad/NBPS_GUEST_CONNECT_PLAN.md"
+    - step: "rm -f /home/mark/Acid-Burn/NBPS_GUEST_CONNECT_PLAN.md"
       verifies: "plan file absent after destroy"
 ```

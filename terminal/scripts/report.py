@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Securatron Report Generator
+Acid Burn Report Generator
 First Principles Architecture — Reporting Layer
 
 Usage:

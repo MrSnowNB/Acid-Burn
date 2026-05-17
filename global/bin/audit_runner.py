@@ -14,7 +14,7 @@ import subprocess
 from pathlib import Path
 from datetime import datetime, timezone
 
-BASE_DIR = Path.home() / ".securatron"
+BASE_DIR = Path.home() / ".acid-burn"
 TOOLS_DIR = BASE_DIR / "global" / "tools"
 SKILLS_DIR = BASE_DIR / "global" / "skills"
 EVIDENCE_DIR = BASE_DIR / "global" / "evidence" / "locker"
@@ -48,7 +48,7 @@ def safe_mock_inputs_for_tool(tool_id: str, card: dict) -> dict:
         elif field_name in ("flags", "command"):
             mock[field_name] = field_def.get("default", "-h")
         elif field_name in ("user_list", "pass_list", "wordlist"):
-            tmp = Path(f"/tmp/securatron-test-{tool_id}-{field_name}.txt")
+            tmp = Path(f"/tmp/acid-burn-test-{tool_id}-{field_name}.txt")
             with open(tmp, "w") as f:
                 f.write("admin\ntest\nguest\n")
             mock[field_name] = str(tmp)
@@ -241,7 +241,7 @@ def generate_report(results: list[dict], discovered: list[dict], audit_ts: str) 
     mol_failed = sum(1 for r in molecule_results if r["status"] == "failed")
     
     lines = [
-        f"# SECURATRON AUTOMATED AUDIT REPORT",
+        f"# ACID BURN AUTOMATED AUDIT REPORT",
         f"",
         f"**Audit Timestamp:** {audit_ts}",
         f"**Generated:** {now}",

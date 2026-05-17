@@ -6,7 +6,7 @@ description: >
   handlers, parent context, form context, and ARIA states.
 id: web.browser.drill
 implementation:
-  atom_dir: ~/.securatron/global/tools/web.browser.drill
+  atom_dir: ~/.acid-burn/global/tools/web.browser.drill
   cmd: '{atom_dir}/browser_drill.py --url {url} --selector {selector} --selector-type {selector_type}'
   kind: shell
 inputs:

@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SECURATRON // Security Operations Center</title>
+    <title>ACID BURN // Security Operations Center</title>
     <style>
         /* ============================================
-           SECURATRON SECURITY OPERATIONS CENTER v2.0
+           ACID BURN SECURITY OPERATIONS CENTER v2.0
            First Principles Architecture
            ============================================ */
         
@@ -333,7 +333,7 @@
     <div class="soc-container" id="soc-container">
         <!-- Header -->
         <header class="soc-header">
-            <div class="title">[ SECURATRON // SECURITY OPERATIONS CENTER ]</div>
+            <div class="title">[ ACID BURN // SECURITY OPERATIONS CENTER ]</div>
             <div class="status">
                 <div class="status-item"><span class="status-dot"></span><span>SYSTEM ACTIVE</span></div>
                 <div class="status-item"><span id="model-count">4/4 MODELS</span></div>
@@ -371,7 +371,7 @@
         <!-- Main Content -->
         <main class="main-content">
             <div class="panel terminal" id="terminal">
-                <div class="line system">[INIT] SECURATRON Security Operations Center v2.0</div>
+                <div class="line system">[INIT] ACID BURN Security Operations Center v2.0</div>
                 <div class="line system">[INIT] First Principles Architecture — All systems nominal</div>
                 <div class="line system">[INIT] Models: LLM(GPU) | Image(GPU) | STT(GPU) | TTS(CPU)</div>
                 <div class="line system">[INIT] Voice input enabled — Click microphone to begin</div>
@@ -415,7 +415,7 @@
         
       <!-- Footer -->
         <footer class="soc-footer">
-            <span>SECURATRON v2.0 // EXPERIMENTAL BUILD</span>
+            <span>ACID BURN v2.0 // EXPERIMENTAL BUILD</span>
             <span id="current-time"></span>
             <span id="ws-status" style="color:var(--text-dim);">WS: DISCONNECTED</span>
             <span id="model-count">4/4 MODELS</span>
@@ -424,7 +424,7 @@
     
     <script>
         // ============================================
-        // SECURATRON SECURITY OPERATIONS CENTER v2.0
+        // ACID BURN SECURITY OPERATIONS CENTER v2.0
         // First Principles Architecture
         // ============================================
         
@@ -461,7 +461,7 @@
         // Boot sequence
         function bootSequence() {
             const bootLines = [
-                '[BOOT] SECURATRON Security Operations Center v2.0',
+                '[BOOT] ACID BURN Security Operations Center v2.0',
                 '[BOOT] Initializing First Principles Architecture...',
                 '[BOOT] Loading models: LLM(GPU), Image(GPU), STT(GPU), TTS(CPU)',
                 '[BOOT] Voice input: ENABLED',
@@ -1017,7 +1017,7 @@
         
         // Session management
         const SessionManager = {
-            sessions: JSON.parse(localStorage.getItem('securatron_sessions') || '[]'),
+            sessions: JSON.parse(localStorage.getItem('acid_burn_sessions') || '[]'),
             
             create(name) {
                 const session = {
@@ -1035,7 +1035,7 @@
             },
             
             save() {
-                localStorage.setItem('securatron_sessions', JSON.stringify(this.sessions));
+                localStorage.setItem('acid_burn_sessions', JSON.stringify(this.sessions));
             },
             
             load(id) {
@@ -1057,16 +1057,16 @@
             
             exportHTML() {
                 if (!this.current) return;
-                const html = `<!DOCTYPE html><html><head><title>Securatron Report</title>
+                const html = `<!DOCTYPE html><html><head><title>Acid Burn Report</title>
 <style>body{background:#0a0a0a;color:#00ff41;font-family:monospace;padding:20px;}
 .line{margin:5px 0;}.system{color:#00aa2a88;}.success{color:#00ff41;}.error{color:#ff4444;}.user{color:#0088ff;}.threat{color:#ff4444;font-weight:bold;}</style></head>
-<body><h1>Securatron Analysis Report</h1><p>Session: ${this.current.name}</p><p>Created: ${this.current.created}</p>
+<body><h1>Acid Burn Analysis Report</h1><p>Session: ${this.current.name}</p><p>Created: ${this.current.created}</p>
 ${this.current.logs.map(l => `<div class="line ${l.type}">${l.text}</div>`).join('')}</body></html>`;
                 const blob = new Blob([html], { type: 'text/html' });
                 const url = URL.createObjectURL(blob);
                 const a = document.createElement('a');
                 a.href = url;
-                a.download = `securatron-report-${this.current.id}.html`;
+                a.download = `acid-burn-report-${this.current.id}.html`;
                 a.click();
                 URL.revokeObjectURL(url);
                 addLine('system', '[SESSION] Report exported.');

@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+# Acid Burn CLI — Registry and Inspection Tool
+# Source-tree launcher. When installed, this points to the acid_burn.py in the package.
+
+set -euo pipefail
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+PYTHON="${PYTHON:-python3}"
+exec "$PYTHON" "$SCRIPT_DIR/../global/bin/acid_burn.py" "$@"

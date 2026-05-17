@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SECURATRON // VAULT TERMINAL</title>
+<title>ACID BURN // VAULT TERMINAL</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
 
@@ -450,7 +450,7 @@
   <!-- Header -->
   <div class="header">
     <div class="header-left">
-      <span class="header-title">SECURATRON // VAULT TERMINAL</span>
+      <span class="header-title">ACID BURN // VAULT TERMINAL</span>
       <span class="header-status">
         <span id="status-server"><span class="status-dot offline"></span>SERVER</span>
         <span id="status-mic"><span class="status-dot"></span>VOICE</span>
@@ -468,7 +468,7 @@
     <div class="chat-panel">
       <div class="chat-messages" id="chat-messages"></div>
       <div class="typing-indicator" id="typing">
-        SECURATRON IS THINKING<span class="dots"></span>
+        ACID BURN IS THINKING<span class="dots"></span>
       </div>
       <div class="input-area">
         <span class="input-prefix">&gt;</span>
@@ -519,7 +519,7 @@
 
 <script>
 // ============================================================
-// SECURATRON VAULT TERMINAL
+// ACID BURN VAULT TERMINAL
 // ============================================================
 
 const LEMONADE_HOST = '127.0.0.1';
@@ -539,7 +539,7 @@ let currentBackendUrl = null;
 
 // ---- Boot Sequence ----
 const bootLines = [
-  "SECURATRON v4.0.1 // VAULT TERMINAL INIT",
+  "ACID BURN v4.0.1 // VAULT TERMINAL INIT",
   "────────────────────────────────────────",
   "",
   "  MEMORY CHECK.......... 32768 MB OK",
@@ -557,7 +557,7 @@ const bootLines = [
   "    [OK] MODEL MANAGER",
   "",
   "  ALL SYSTEMS NOMINAL.",
-  "  WELCOME TO THE SECURATRON VAULT.",
+  "  WELCOME TO THE ACID BURN VAULT.",
   "",
   "  Commands: /status, /swap <model>, /clear, /help",
   "",
@@ -712,7 +712,7 @@ function addChat(role, text, imageBase64 = null) {
   const msg = document.createElement('div');
   msg.className = `message ${role}`;
 
-  const labels = { user: 'OPERATOR', assistant: 'SECURATRON', system: 'SYSTEM' };
+  const labels = { user: 'OPERATOR', assistant: 'ACID BURN', system: 'SYSTEM' };
   msg.innerHTML = `
     <div class="label">${labels[role] || role}</div>
     <div class="content">${escapeHtml(text)}</div>
@@ -916,7 +916,7 @@ async function handleCommand(text) {
 
     case '/help':
       addChat('system', [
-        'SECURATRON HELP',
+        'ACID BURN HELP',
         '─────────────────',
         '/status       - Refresh system status',
         '/clear        - Clear chat history',

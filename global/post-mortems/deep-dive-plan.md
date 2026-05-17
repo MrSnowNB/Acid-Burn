@@ -3,7 +3,8 @@
 **Date:** 2026-05-02  
 **Scope:** 87 autonomous sessions (2026-04-26 to 2026-05-02)  
 **Trigger:** Cron job 88962226f2c3 (every 30m, 24 iterations)  
-**Status:** Active deep-dive investigation
+**Status:** Active deep-dive investigation  
+**Archive:** Legacy Acid Burn record — preserved as part of Acid Burn historical archive
 
 ---
 
@@ -64,7 +65,7 @@ The `plan` skill expects the agent to write a markdown plan in `.hermes/plans/`,
 **Evidence:**
 The cron job's prompt instructs the agent to:
 ```
-1. Read ~/.securatron/projects/lab-internal/STATUS.md to find current progress and what's next.
+1. Read ~/.acid-burn/projects/lab-internal/STATUS.md to find current progress and what's next.
 ```
 
 But `STATUS.md` does not exist.

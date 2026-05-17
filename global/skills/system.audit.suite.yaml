@@ -11,7 +11,7 @@ implementation:
   kind: shell
 inputs:
   runner_script:
-    default: ~/.securatron/global/bin/audit_runner.py
+    default: ~/.acid-burn/global/bin/audit_runner.py
     description: Path to the audit runner Python script.
     type: string
 kind: molecule

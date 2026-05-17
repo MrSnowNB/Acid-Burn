@@ -1,11 +1,23 @@
 import json
 import hashlib
+import os
 from pathlib import Path
-from datetime import datetime
-from ulid import ULID
+from datetime import datetime, timezone
 
-BASE_DIR = Path.home() / ".securatron"
+# Standardize project root detection (Acid Burn Field Readiness)
+ACID_BURN_ROOT = os.environ.get("ACID_BURN_ROOT") or str(Path(__file__).parent.parent.parent.absolute())
+BASE_DIR = Path(ACID_BURN_ROOT)
+if not (BASE_DIR / "global" / "tools").exists():
+    BASE_DIR = Path.home() / ".acid-burn"
+
 LEDGER_DIR = BASE_DIR / "global" / "ledger"
+
+def _generate_fallback_id() -> str:
+    """Generate a cryptographically sound 24-character hex ID (no ULID dep)."""
+    entropy = os.urandom(12)
+    ts = datetime.now(timezone.utc).strftime("%Y%m%d%H%M%S")
+    raw = entropy + ts.encode("ascii")
+    return hashlib.sha256(raw).hexdigest()[:24]
 
 def inputs_hash(inputs: dict) -> str:
     """Generate a stable SHA-256 hash of the inputs for distinct input counting."""
@@ -20,10 +32,10 @@ def record_trial(skill_id: str, entry: dict):
     canonical = {
         "trial_id":           entry.get("trial_id") or 
                               entry.get("ulid") or 
-                              str(ULID()),
+                              _generate_fallback_id(),
         "ts":                 entry.get("ts") or 
                               entry.get("timestamp") or 
-                              datetime.utcnow().isoformat() + "Z",
+                              datetime.now(timezone.utc).isoformat() + "Z",
         "skill_id":           skill_id,
         "target":             entry.get("target") or
                               (entry.get("inputs_fingerprint") or {})

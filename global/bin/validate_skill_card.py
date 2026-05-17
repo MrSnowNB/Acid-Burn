@@ -25,7 +25,7 @@ if __name__ == "__main__":
         sys.exit(1)
     
     # Simple default paths for this harness
-    SCHEMA = os.path.expanduser("~/.securatron/global/schemas/skill-card.v1.yaml")
+    SCHEMA = os.path.expanduser("~/.acid-burn/global/schemas/skill-card.v1.yaml")
     
     success = True
     for path in sys.argv[1:]:

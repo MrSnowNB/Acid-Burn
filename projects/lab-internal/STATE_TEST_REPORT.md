@@ -79,7 +79,7 @@ All test artifacts were removed after the test run:
 
 ## State File Integrity
 
-- **Location:** `~/.securatron/projects/lab-internal/state.json`
+- **Location:** `~/.acid-burn/projects/lab-internal/state.json`
 - **Size:** ~4KB (well under 10KB limit)
 - **Format:** Valid JSON, 2-space indentation
 - **SHA256:** 79ba818e25afc994b48a44a47fbb5bbbfbaf48e2b985c3da3139755086f4c386

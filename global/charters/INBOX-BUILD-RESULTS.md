@@ -17,7 +17,7 @@
 
 ### Phase 0 — Schema File Integrity
 - **13/13 passed**
-- Schema draft 2020-12, `$id: securatron/inbox-ticket/1.0`
+- Schema draft 2020-12, `$id: acid-burn/inbox-ticket/1.0`
 - Required fields: ticket_id, source, skill, priority, created_at, status
 - additionalProperties=false, allOf constraint (destructive→human_gate)
 
@@ -59,15 +59,15 @@
 
 ## Logging Infrastructure
 
-- Phase result JSON files: `~/.securatron/logs/tests/phase-XX_results.json`
-- Phase log files: `~/.securatron/logs/tests/phase-XX.log`
-- Main watcher log: `~/.securatron/logs/inbox_watcher.log`
+- Phase result JSON files: `~/.acid-burn/logs/tests/phase-XX_results.json`
+- Phase log files: `~/.acid-burn/logs/tests/phase-XX.log`
+- Main watcher log: `~/.acid-burn/logs/inbox_watcher.log`
 - All logs include timestamps, test names, pass/fail status, and details
 
 ## Run Command
 
 ```bash
-python3 ~/.securatron/global/bin/test_inbox_validation.py --all
+python3 ~/.acid-burn/global/bin/test_inbox_validation.py --all
 ```
 
 ## Revision Proposals

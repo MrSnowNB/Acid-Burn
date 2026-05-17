@@ -12,9 +12,15 @@ import gate
 import mem
 from dispatch import dispatch
 
-mcp = FastMCP("securatron")
-TOOLS_DIR = Path.home() / ".securatron/global/tools"
-SKILLS_DIR = Path.home() / ".securatron/global/skills"
+# Standardize project root detection (Acid Burn Field Readiness)
+ACID_BURN_ROOT = os.environ.get("ACID_BURN_ROOT") or str(Path(__file__).parent.parent.parent.absolute())
+BASE_DIR = Path(ACID_BURN_ROOT)
+if not (BASE_DIR / "global" / "tools").exists():
+    BASE_DIR = Path.home() / ".acid-burn"
+
+mcp = FastMCP("acid-burn")
+TOOLS_DIR = BASE_DIR / "global/tools"
+SKILLS_DIR = BASE_DIR / "global/skills"
 
 def load_cards():
     """Load all skill cards from global tools and skills directories."""

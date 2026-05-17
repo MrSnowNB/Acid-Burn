@@ -1,6 +1,6 @@
 # Atom: web.browser.inspect
 # Progressive Browser Inspection Suite
-# Global Tier: ~/.securatron/global/tools/web.browser.inspect/
+# Global Tier: ~/.acid-burn/global/tools/web.browser.inspect/
 
 name: web.browser.inspect
 version: 1.0.0
@@ -12,7 +12,7 @@ description: >
 author: Acid Burn Outer Builder
 created: 2026-05-02T00:00:00Z
 tier: 1
-isolation_path: ~/.securatron/global/tools/web.browser.inspect/
+isolation_path: ~/.acid-burn/global/tools/web.browser.inspect/
 
 # === INPUT SCHEMA ===
 input_schema:

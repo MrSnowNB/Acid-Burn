@@ -1,0 +1,22 @@
+# Raw capture data - contains sensitive network information
+# This data stays local for the LLM and operators only.
+
+# airodump-ng output
+*.csv
+*.cap
+*.kismet.csv
+*.kismet.netxml
+*.kismet.xml
+
+# Any other raw wireless captures
+*.pcap
+*.pcapng
+*.ivs
+
+# Results that may contain sensitive parsed data
+results/**
+!results/.gitkeep
+
+# Temporary files
+*.tmp
+*~

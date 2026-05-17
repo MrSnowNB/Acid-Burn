@@ -1,4 +1,4 @@
-# Securatron Session Log — First Principles Build
+# Acid Burn Session Log — First Principles Build
 
 ## Session Overview
 **Date:** April 28, 2026

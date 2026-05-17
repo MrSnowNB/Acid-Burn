@@ -13,10 +13,10 @@ import sys
 import yaml
 
 # Load command builder
-sys.path.insert(0, "/home/mark/Desktop/hybrid_scratchpad/atoms")
+sys.path.insert(0, "/home/mark/Acid-Burn/atoms")
 from command_builder import build_command, dry_run_command
 
-ATOM_PATH = "/home/mark/Desktop/hybrid_scratchpad/atoms/nmap.yaml"
+ATOM_PATH = "/home/mark/Acid-Burn/atoms/nmap.yaml"
 with open(ATOM_PATH) as f:
     atom = yaml.safe_load(f)
 
