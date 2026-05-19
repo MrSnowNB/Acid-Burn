@@ -1,0 +1,78 @@
+author: hermes
+created: '2026-05-19T10:45:00Z'
+id: web.search
+kind: atom
+tier: global
+version: 1
+
+description: |
+  Fast, private, no-API-key web search powered by ddgr (DuckDuckGo terminal client).
+
+  This is the recommended general-purpose "search the internet" tool for Hermes
+  when running on a local Linux desktop. It supports the full range of DuckDuckGo
+  Bangs so the agent can instantly route queries to Google (!g), Wikipedia (!w),
+  GitHub (!gh), StackOverflow (!so), etc.
+
+  Much more reliable and maintainable than any Playwright-based Google scraper.
+
+  Installation (one time):
+    sudo apt install ddgr     # Debian, Ubuntu, Kali
+    sudo dnf install ddgr     # Fedora
+    brew install ddgr         # macOS
+
+implementation:
+  kind: shell
+  cmd: >
+    python3 {atom_dir}/web_search.py
+    --query {query}
+    --num-results {num_results}
+    --artifact {session}/artifacts/web_search-{ts}.json
+    --format text
+
+execution:
+  timeout_seconds: 35
+
+inputs:
+  query:
+    required: true
+    type: string
+    description: |
+      The search query. Fully supports DuckDuckGo Bang syntax.
+      Examples:
+        - "latest open source LLMs 2026"
+        - "Qwen3.6-35B MTP architecture !g"
+        - "AMD Strix Halo specs !w"
+        - "playwright python best practices site:github.com"
+        - "hermes agent framework"
+  num_results:
+    required: false
+    type: integer
+    default: 8
+    description: "Number of results to return (5-12 is usually best for agents)"
+
+outputs:
+  type: web.search.v1
+  artifact_path: '{session}/artifacts/web_search-{ts}.json'
+
+atom_dir: ~/.acid-burn/global/tools/web.search
+
+postconditions:
+  - result|length > 0
+
+preconditions:
+  - ddgr.installed
+
+promotion:
+  required_distinct_inputs: 3
+  required_success: 5
+  requires_human_review: false
+
+reversible: true
+risk: low
+side_effects:
+  - information_gather
+
+trials:
+  failure: 0
+  last_run: null
+  success: 0
